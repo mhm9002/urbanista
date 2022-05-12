@@ -14,6 +14,7 @@ const queryList = {
 	updateCategory: 'updateCategory',
 	getCategory: 'getCategory',
 	allCategories: 'allCategories',
+	login: 'login'
 };
 
 export default queryList;

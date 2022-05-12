@@ -29,6 +29,7 @@
 		"bulma": "^0.9.4",
 		"rollup-plugin-dev": "^2.0.4",
 		"sirv-cli": "^2.0.0",
+		"svelte-quill": "^1.2.0",
 		"svelte-routing": "^1.6.0"
 	}
 }

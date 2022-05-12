@@ -10,12 +10,6 @@
 		{ name: 'Planning', slug: 'planning' },
 	];
 
-	let defaultUser: User = {
-		id: '1',
-		name: 'Mohammad Najjar',
-		email: 'Something@gmail.com',
-		password: '',
-	};
 	let activeUser: User;
 
 	user.subscribe((value) => {
@@ -26,10 +20,7 @@
 		};
 	});
 
-	const login = () => {
-		console.log('jbnjk');
-		user.login(defaultUser);
-	};
+
 
 	const logout = () => user.logout();
 </script>
@@ -66,16 +57,15 @@
 			<div class="navbar-item">
 				{#if activeUser === undefined}
 					<div class="buttons">
-						<button class="button is-primary">
-							<strong>Sign up</strong>
-						</button>
-						<button on:click={login} class="button is-light"> Log in </button>
+						
+						<a href="\login" use:link class="button is-light"> Log in </a>
 					</div>
 				{:else}
 					<div class="navbar-item has-dropdown is-hoverable">
 						<a class="navbar-link"> {activeUser.name} </a>
-
+												
 						<div class="navbar-dropdown">
+							<a href='\newArticle' use:link class="navbar-item"> New Article </a>
 							<button on:click={logout} class="navbar-item"> Logout </button>
 						</div>
 					</div>

@@ -2,19 +2,19 @@
 	import type { Category } from '@prisma/client';
 
 	import { onMount } from 'svelte';
-	import { cats } from '../../appStore';
+	//import { cats } from '../../appStore';
 	import fetchApi from '../../helpers/api';
 	import queryList from '../../helpers/queryList';
 
-	let loadedCats: Category[];
+	let loadedCats: Category[] = [];
 
-	cats.subscribe((value) => (loadedCats = value));
+	//cats.subscribe((value) => (loadedCats = value));
 
 	onMount(async () => {
-		console.log('ssss');
+		
 		let res = await fetchApi(queryList.allCategories, {});
-		cats.load(res);
-		console.log(res);
+		//cats.load(res);
+		loadedCats = res
 
 		return () => {};
 	});
@@ -22,6 +22,6 @@
 
 <main>
 	{#each loadedCats as c}
-		{c.name}
+		{c.name}<br />
 	{/each}
 </main>

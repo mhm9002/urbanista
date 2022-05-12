@@ -32,6 +32,11 @@ const requests: Array<requestForm> = [
 		tokenValidation: true,
 	},
 	{
+		query: queryList.login,
+		function: userFunctions.login,
+		tokenValidation: false,
+	},
+	{
 		query: queryList.allUsers,
 		function: userFunctions.allUsers,
 		tokenValidation: true,

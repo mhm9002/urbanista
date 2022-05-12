@@ -44,9 +44,7 @@ export default {
 		file: 'public/build/bundle.js',
 	},
 	plugins: [
-		dev({
-			proxy: [{ from: '/api', to: 'http://localhost:4000/api' }],
-		}),
+		
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {

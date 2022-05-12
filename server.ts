@@ -11,14 +11,12 @@ const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 
-requests.forEach((r) => {
-	app.post(`/api/${r.query}`, (req, res) => {
-		console.log(req.body);
-		r.function(req, res);
+requests.forEach((r) => app.post(`/api/${r.query}`, r.function));
+		
+	
 		//!r.tokenValidation ? r.function : r.function
 		//(req, res) => validateToken(req, res, r.function)
-	});
-});
+	
 
 app.listen(port, () => {
 	console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

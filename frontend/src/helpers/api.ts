@@ -1,6 +1,6 @@
 const fetchApi = async (query: string, payload: any) => {
 	return (
-		await fetch(`api/${query}`, {
+		await fetch(`http://localhost:4000/api/${query}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

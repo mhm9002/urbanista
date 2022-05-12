@@ -8,6 +8,21 @@ const getUser = (req: Request, res: Response) => {
 	res.send('hi');
 };
 
+const login = async(req: Request, res: Response) => {
+	const {email, password} = req.body;
+	console.log(email)
+	console.log(password)
+
+	let user = await prisma.user.findFirst({where:{email, password}})
+	console.log(user)
+	if (user){
+		user.password = ''
+		res.send({success:true, user})
+	} else {
+		res.send({success:false})
+	}
+};
+
 const createUser = (req: Request, res: Response) => {};
 const removeUser = (req: Request, res: Response) => {};
 const updateUser = (req: Request, res: Response) => {};
@@ -18,4 +33,4 @@ const allUsers = async (req: Request, res: Response) => {
 	res.send(users);
 };
 
-export default { getUser, allUsers, createUser, removeUser, updateUser };
+export default { getUser, allUsers, createUser, removeUser, updateUser, login };

@@ -19,6 +19,7 @@ const createUser = () => {
 	};
 };
 
+/*
 const createCats = () => {
 	const { subscribe, update, set } = writable<Category[]>(
 		JSON.parse(localStorage.getItem('categories')) || []
@@ -36,6 +37,7 @@ const createCats = () => {
 		},
 	};
 };
+*/
 
 export const user = createUser();
-export const cats = createCats();
+//export const cats = createCats();
