@@ -1,27 +1,34 @@
 <script lang="ts">
-    import { user } from "../../appStore";
+	import { onMount } from 'svelte';
 
-    import fetchApi from "../../helpers/api";
-    import queryList from "../../helpers/queryList";
+	import { navigate } from 'svelte-routing';
+	import LoginForm from '../widgets/loginForm.svelte';
+	import RegisterForm from '../widgets/registerForm.svelte';
+	export let previousPage = '';
 
-    let messge:string = ''
-    let email:string=''
-    let password:string=''
+	let loginShow = true;
 
-    const login = () => {
-		fetchApi(queryList.login,{email, password}).then(res=>{
-			if (res.success){
-                user.login(res.user);
-            } else {
-                messge='Incorrect user or password'
-            }
-		})		
+	onMount(() => {
+		console.log(previousPage);
+	});
+
+	const onLogin = () => {
+		navigate(previousPage);
 	};
+
+	const onRegister = () => {};
 </script>
 
-<div>
-    <input type="text" on:change={(e)=>email=e.currentTarget.value} placeholder="Enter email...">
-    <input type="password" on:change={(e)=>password=e.currentTarget.value}>
-    <button on:click={login}>Login</button>
-    <p>{messge}</p>
+<div class="card">
+	{#if loginShow}
+		<LoginForm {onLogin} />
+		<button on:click={() => (loginShow = false)}
+			>Don't have account? Create a new one</button
+		>
+	{:else}
+		<button on:click={() => (loginShow = true)}
+			>Already have account! Sign in</button
+		>
+		<RegisterForm {onRegister} />
+	{/if}
 </div>

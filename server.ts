@@ -11,12 +11,14 @@ const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 
-requests.forEach((r) => app.post(`/api/${r.query}`, r.function));
-		
-	
-		//!r.tokenValidation ? r.function : r.function
-		//(req, res) => validateToken(req, res, r.function)
-	
+requests.forEach((r) =>
+	app.post(`/api/${r.query}`, async (req, res) =>
+		res.send(await r.function(req))
+	)
+);
+
+//  not r.tokenValidation ? r.function : r.function
+//(req, res) => validateToken(req, res, r.function)
 
 app.listen(port, () => {
 	console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

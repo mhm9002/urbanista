@@ -1,30 +1,46 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request } from 'express';
+import { queryRespose } from '../../frontend/src/commonTypes';
+import { missingReq } from './readyResponse';
 
 const prisma = new PrismaClient();
 
-const getCategory = (req: Request, res: Response) => {
-	console.log(1);
-	res.send('hi');
+const getCategory = async (req: Request) => {
+	const { id } = req.body;
+	if (id) {
+		let cat = await prisma.category.findUnique({ where: id });
+		if (cat) return { success: true, payload: cat };
+	}
+
+	return missingReq;
 };
 
-const createCategory = async (req: Request, res: Response) => {
+const createCategory = async (req: Request) => {
 	let { name } = req.body;
 
 	if (name) {
 		let category = await prisma.category.create({ data: { name } });
-		res.send('category created');
-	} else {
-		res.send('missing params');
+		if (category)
+			return {
+				success: true,
+				payload: category.id,
+				message: 'category created',
+			};
 	}
-};
-const removeCategory = (req: Request, res: Response) => {};
-const updateCategory = (req: Request, res: Response) => {};
-const allCategories = async (req: Request, res: Response) => {
-	console.log(1);
-	let categorys = await prisma.category.findMany({});
 
-	res.send(categorys);
+	return missingReq;
+};
+const removeCategory = async (req: Request) => {
+	return missingReq;
+};
+const updateCategory = async (req: Request) => {
+	return missingReq;
+};
+const allCategories = async (req: Request) => {
+	let categories = await prisma.category.findMany({});
+
+	let res: queryRespose = { success: true, payload: categories };
+	return res;
 };
 
 export default {

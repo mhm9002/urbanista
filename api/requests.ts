@@ -1,12 +1,13 @@
-import { Response, Request } from 'express';
+import { Request } from 'express';
 import userFunctions from './functions/user';
 import postFunctions from './functions/post';
 import catFunctions from './functions/categories';
-import queryList from '../client/src/queryList';
+import queryList from '../frontend/src/helpers/queryList';
+import { queryRespose } from '../frontend/src/commonTypes';
 
 type requestForm = {
-	query: queryList;
-	function: (req: Request, res: Response) => any;
+	query: string;
+	function: (req: Request) => Promise<queryRespose>;
 	tokenValidation?: boolean;
 };
 
@@ -65,6 +66,16 @@ const requests: Array<requestForm> = [
 		query: queryList.allPost,
 		function: postFunctions.allposts,
 		tokenValidation: true,
+	},
+	{
+		query: queryList.postByCategoryName,
+		function: postFunctions.byCategoryName,
+		tokenValidation: false,
+	},
+	{
+		query: queryList.postByAuthor,
+		function: postFunctions.byAuthor,
+		tokenValidation: false,
 	},
 	{
 		query: queryList.getCategory,

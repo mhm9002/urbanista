@@ -1,1 +1,5 @@
-<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" />
+<script lang="ts">
+	const logo = 'assets/logo_icon.png';
+</script>
+
+<img src={logo} width="28" height="28" />

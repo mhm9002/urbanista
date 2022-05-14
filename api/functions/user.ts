@@ -1,36 +1,47 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request } from 'express';
+import { missingReq } from './readyResponse';
 
 const prisma = new PrismaClient();
 
-const getUser = (req: Request, res: Response) => {
-	console.log(1);
-	res.send('hi');
-};
+const getUser = async (req: Request) => {
+	const { id } = req.body;
 
-const login = async(req: Request, res: Response) => {
-	const {email, password} = req.body;
-	console.log(email)
-	console.log(password)
-
-	let user = await prisma.user.findFirst({where:{email, password}})
-	console.log(user)
-	if (user){
-		user.password = ''
-		res.send({success:true, user})
+	let user = await prisma.user.findFirst({ where: { id } });
+	if (user) {
+		user.password = '';
+		return { success: true, payload: user };
 	} else {
-		res.send({success:false})
+		return missingReq;
 	}
 };
 
-const createUser = (req: Request, res: Response) => {};
-const removeUser = (req: Request, res: Response) => {};
-const updateUser = (req: Request, res: Response) => {};
-const allUsers = async (req: Request, res: Response) => {
-	console.log(2);
+const login = async (req: Request) => {
+	const { email, password } = req.body;
+
+	let user = await prisma.user.findFirst({ where: { email, password } });
+	console.log(user);
+	if (user) {
+		user.password = '';
+		return { success: true, payload: user };
+	} else {
+		return missingReq;
+	}
+};
+
+const createUser = async (req: Request) => {
+	return missingReq;
+};
+const removeUser = async (req: Request) => {
+	return missingReq;
+};
+const updateUser = async (req: Request) => {
+	return missingReq;
+};
+const allUsers = async (req: Request) => {
 	let users = await prisma.user.findMany({});
 
-	res.send(users);
+	return { success: true, payload: users };
 };
 
 export default { getUser, allUsers, createUser, removeUser, updateUser, login };

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Brand from './brand.svelte';
-	import { link } from 'svelte-routing';
+	import { link, navigate } from 'svelte-routing';
 	import { user } from '../../appStore';
 	import type { User } from '@prisma/client';
 
 	let mainCats = [
-		{ name: 'Architectue', slug: 'architecture' },
+		{ name: 'Architecture', slug: 'architecture' },
 		{ name: 'Urban Design', slug: 'urbandesign' },
-		{ name: 'Planning', slug: 'planning' },
+		{ name: 'Urban Planning', slug: 'planning' },
 	];
 
 	let activeUser: User;
@@ -20,9 +20,10 @@
 		};
 	});
 
-
-
-	const logout = () => user.logout();
+	const logout = () => {
+		user.logout();
+		navigate('/');
+	};
 </script>
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -47,7 +48,7 @@
 	<div id="navbarBasicExample" class="navbar-menu">
 		<div class="navbar-start">
 			{#each mainCats as cat}
-				<a class="navbar-item" use:link href="\cat\{cat.slug}">
+				<a class="bg-green-400" use:link href="\cat\{cat.name}">
 					{cat.name}
 				</a>
 			{/each}
@@ -57,15 +58,16 @@
 			<div class="navbar-item">
 				{#if activeUser === undefined}
 					<div class="buttons">
-						
 						<a href="\login" use:link class="button is-light"> Log in </a>
 					</div>
 				{:else}
 					<div class="navbar-item has-dropdown is-hoverable">
 						<a class="navbar-link"> {activeUser.name} </a>
-												
+
 						<div class="navbar-dropdown">
-							<a href='\newArticle' use:link class="navbar-item"> New Article </a>
+							<a href="\newArticle" use:link class="navbar-item">
+								New Article
+							</a>
 							<button on:click={logout} class="navbar-item"> Logout </button>
 						</div>
 					</div>

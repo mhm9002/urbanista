@@ -14,7 +14,9 @@ const queryList = {
 	updateCategory: 'updateCategory',
 	getCategory: 'getCategory',
 	allCategories: 'allCategories',
-	login: 'login'
+	login: 'login',
+	postByCategoryName: 'postByCategoryName',
+	postByAuthor: 'postByAuthor',
 };
 
 export default queryList;
