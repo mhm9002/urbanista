@@ -1,6 +1,6 @@
 <script lang="ts">
-	import './app.css';
-	import 'bulma/css/bulma.css';
+	//import './app.css';
+	
 	import Router from './routes/index.svelte';
 	export let name: string;
 </script>

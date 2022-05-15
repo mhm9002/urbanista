@@ -30,18 +30,19 @@
 	};
 </script>
 
-<main>
+<section class='post' >
 	{#if loaded}
-		<p class="title is-4">{post.title}</p>
-		<p class="subtitle is-6">{post.author.name}</p>
-		<p class="subtitle is-6">{new Date(post.createdAt).toDateString()}</p>
-		<div class="articleThing">
+	
+		<p class="post-title">{post.title}</p>
+		<p class="post-author">{post.author.name}</p>
+		<p class="post-date">{new Date(post.createdAt).toDateString()}</p>
+		<div class="post-content">
 			{@html post.content}
 		</div>
 	{:else}
 		<p>Loading</p>
 	{/if}
-</main>
+</section>
 
 <style>
 	div.articleThing h1 {

@@ -76,7 +76,7 @@
 
 	<div class="field is-grouped">
 		<div class="control">
-			<button class="button is-link" on:click={login}>Submit</button>
+			<button on:click={login}>Submit</button>
 		</div>
 	</div>
 </div>

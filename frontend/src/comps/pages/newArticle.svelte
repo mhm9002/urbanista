@@ -7,6 +7,9 @@
 	import { onMount } from 'svelte';
 	import fetchApi from '../../helpers/api';
 	import queryList from '../../helpers/queryList';
+import FormField from '../widgets/formField.svelte';
+import { navigate } from 'svelte-routing';
+import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 
 	let content: string = '';
 	let loadedCats: Category[] = [];
@@ -23,6 +26,7 @@
 	};
 
 	let autosaved = false;
+	let loading = false;
 
 	user.subscribe((value) => {
 		newPost.authorId = value.id;
@@ -35,7 +39,7 @@
 		let res = await fetchApi(queryList.allCategories, {});
 		if (res.success) {
 			loadedCats = res.payload;
-			newPost.categoryId = res[0].id;
+			newPost.categoryId = res.payload[0].id;
 		}
 
 		let autosave = setInterval(() => {
@@ -79,19 +83,18 @@
 	};
 
 	const sendReview = async () => {
+		loading = true
 		await savePost();
+		navigate('/');
 	};
 </script>
 
-<main>
+<main class="new-article-page">
+	
 	<slot>
-		<p>{autosaved ? 'Article autosaved' : ''}</p>
+		<p>{autosaved ? 'Article autosaved' : '_'}</p>
 	</slot>
-	<input
-		type="text"
-		placeholder="Title..."
-		on:change={(e) => (newPost.title = e.currentTarget.value)}
-	/>
+	<FormField onValueChange={(value)=>newPost.title=value} placeholder="Title..." type="text" />
 	<div class="select">
 		<select on:change={(e) => (newPost.categoryId = e.currentTarget.value)}>
 			{#each loadedCats as c}
@@ -99,7 +102,17 @@
 			{/each}
 		</select>
 	</div>
+	
 	<Editor onchange={(value) => (content = value)} />
-	<button on:click={savePost}>Save Draft</button>
-	<button on:click={sendReview}>Send For Review</button>
+	
+	<div class="field is-grouped">
+		<div class="control">
+			<button on:click={savePost}>Save Draft</button>
+			<button on:click={sendReview}>Send For Review</button>
+		</div>
+	</div>
+	
+	{#if loading}
+		<LoadingWrapper />
+	{/if}
 </main>

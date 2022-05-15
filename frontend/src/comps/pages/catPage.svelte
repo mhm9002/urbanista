@@ -37,8 +37,8 @@
 	};
 </script>
 
-<div>
-	<p class="title is-4">{name}</p>
+<div class="cat-page">
+	<h1 class="cat-title">{name}</h1>
 	{#each posts as p}
 		<PostCard post={p} />
 	{/each}

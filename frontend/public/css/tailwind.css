@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply font-mono
+}
+
+.menu-brand-div {
+    @apply px-2 self-center
+}
+
+.menu-center-div {
+    @apply justify-self-center self-center sm:hidden md:flex
+}
+
+.menu-right-div {
+    @apply self-center justify-end flex flex-row
+}
+
+.menu-item {
+    @apply px-4 py-2 mt-2 text-sm font-semibold text-pink-800 visited:text-pink-800 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
+}
+
+.drop-menu {
+    @apply origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none
+}
+
+.menu-brand {
+    @apply inline-block px-2 py-1 mt-2 text-sm font-semibold text-slate-700 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
+}
+
+#menu-button {
+    @apply inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500
+}
+
+.navbar {
+    @apply flex drop-shadow-lg shadow-slate-300 sticky  min-w-max content-between
+}
+
+
+.post {
+    @apply ml-40 mr-40 mt-10
+}
+
+.post-title {
+    @apply text-4xl 
+}
+
+.post-author {
+    @apply text-sm
+}
+
+.post-date {
+    @apply text-sm   
+}
+
+.post-content {
+    @apply border-2 p-2 border-purple-300 mt-3
+}
+
+.post-content h1 {
+    @apply text-3xl 
+}
+
+.post-content h2 {
+    @apply text-2xl  
+}
+
+.post-content blockquote {
+    @apply ml-8 italic p-2 border-l-4 border-slate-300
+}
+
+.post-content p {
+    @apply text-base 
+}
+
+.cat-page {
+    @apply ml-40 mr-40 mt-10 
+}
+
+.cat-title {
+    @apply text-4xl m-2 p-2 
+}
+
+.post-card {
+    @apply m-2  border-b border-slate-200 rounded-none
+}
+
+.post-card a {
+    @apply text-pink-900 hover:no-underline hover:text-pink-600
+}
+
+.post-card p {
+    @apply text-slate-800
+}
+
+.box {
+    @apply container max-w-lg ml-auto mr-auto mt-20 text-center flex
+}
+
+.login-page {
+    @apply w-screen h-screen flex 
+}
+
+.login-page nav {
+    @apply hidden
+}
+
+.login-box {
+    @apply left-0 w-4/12 min-w-max container text-center flex flex-col place-content-center p-4 shadow-md
+}
+
+.login-bg {
+    @apply w-full bg-pink-300 bg-repeat bg-blend-overlay;
+    background-image: url('../assets/bg.svg');
+}
+
+.switch-button {
+    @apply font-mono p-2 bg-transparent text-base border-none 
+}
+
+.control input {
+    @apply font-mono autofill:bg-pink-200
+}
+
+.control button {
+    @apply font-mono p-2 bg-pink-800 text-base text-white rounded-md
+}
+
+.loading-wraper {
+    @apply w-screen h-screen absolute -z-10 bg-pink-400 bg-opacity-60 
+}
+
+.new-article-page {
+    @apply ml-40 mr-40 mt-10 flex flex-col
+}
+
+.new-article-page {
+
+}
+
+.editor {
+    @apply mt-2 mb-2
+}

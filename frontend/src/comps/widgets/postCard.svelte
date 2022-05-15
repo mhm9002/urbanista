@@ -6,7 +6,7 @@
 </script>
 
 <main>
-	<div class="card">
+	<div class="post-card">
 		<div class="card-content">
 			<div class="media">
 				<div class="media-left">

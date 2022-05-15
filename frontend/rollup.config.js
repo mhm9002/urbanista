@@ -6,7 +6,6 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
-import dev from 'rollup-plugin-dev';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -48,7 +47,9 @@ export default {
 			preprocess: sveltePreprocess({
 				sourceMap: !production,
 				postcss: {
-					plugins: [require('tailwindcss')(), require('autoprefixer')()],
+					plugins: [
+						require('tailwindcss')(), 
+						require('autoprefixer')()],
 				},
 			}),
 			compilerOptions: {

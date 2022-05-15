@@ -10,6 +10,7 @@
 		{ name: 'Urban Planning', slug: 'planning' },
 	];
 
+	let showDropmenu = false
 	let activeUser: User;
 
 	user.subscribe((value) => {
@@ -26,53 +27,52 @@
 	};
 </script>
 
+
 <nav class="navbar" role="navigation" aria-label="main navigation">
-	<div class="navbar-brand">
-		<a class="navbar-item" use:link href="\">
-			<Brand />
-		</a>
 
-		<a
-			role="button"
-			class="navbar-burger"
-			aria-label="menu"
-			aria-expanded="false"
-			data-target="navbarBasicExample"
-		>
-			<span aria-hidden="true" />
-			<span aria-hidden="true" />
-			<span aria-hidden="true" />
-		</a>
-	</div>
+		<div class="menu-brand-div">
+			<a class="menu-brand"  use:link href="\">
+				<Brand />
+			</a>
 
-	<div id="navbarBasicExample" class="navbar-menu">
-		<div class="navbar-start">
-			{#each mainCats as cat}
-				<a class="bg-green-400" use:link href="\cat\{cat.name}">
-					{cat.name}
+			<a
+				role="button"
+				class="navbar-burger"
+				aria-label="menu"
+				aria-expanded="false"
+				data-target="navbarBasicExample"
+			>
+				<span aria-hidden="true" />
+				<span aria-hidden="true" />
+				<span aria-hidden="true" />
+			</a>
+		</div>
+
+		<div id="navbarBasicExample" class="menu-center-div">
+				{#each mainCats as cat}
+					<a class="menu-item" use:link href="\cat\{cat.name}">
+						{cat.name}
+					</a>
+				{/each}
+		</div>
+
+		<div class="menu-right-div">
+		
+		{#if activeUser === undefined}		
+			<a class="menu-item" href="\login" use:link > Log in </a>	
+		{:else}
+			
+			<button class="menu-item" id="menu-button" aria-expanded="true" aria-haspopup="true" > {activeUser.name} </button>
+
+			<div class="drop-menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+				<a href="\newArticle" use:link class="navbar-item">
+					New Article
 				</a>
-			{/each}
-		</div>
-
-		<div class="navbar-end">
-			<div class="navbar-item">
-				{#if activeUser === undefined}
-					<div class="buttons">
-						<a href="\login" use:link class="button is-light"> Log in </a>
-					</div>
-				{:else}
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link"> {activeUser.name} </a>
-
-						<div class="navbar-dropdown">
-							<a href="\newArticle" use:link class="navbar-item">
-								New Article
-							</a>
-							<button on:click={logout} class="navbar-item"> Logout </button>
-						</div>
-					</div>
-				{/if}
+				<button on:click={logout} class="navbar-item"> Logout </button>
 			</div>
+		
+		{/if}
+			
 		</div>
-	</div>
+
 </nav>
