@@ -27,11 +27,13 @@ const getpost = async (req: Request) => {
 };
 
 const createpost = async (req: Request) => {
-	let { postData } = req.body;
+	let { postData, keywords } = req.body;
 	let content = postData.content;
 
 	if (postData) {
 		delete postData.id;
+
+		postData.keywords = createKeywords(keywords);
 		postData.content = postData.content?.substring(0, 300);
 
 		let post = await prisma.post.create({ data: postData });
@@ -46,10 +48,12 @@ const removepost = async (req: Request) => {
 	return missingReq;
 };
 const updatepost = async (req: Request) => {
-	let { postData } = req.body;
+	let { postData, keywords } = req.body;
+
 	let content = postData.content;
 
 	if (postData) {
+		postData.keywords = createKeywords(keywords);
 		postData.content = postData.content?.substring(0, 300);
 
 		let post = await prisma.post.update({
@@ -64,7 +68,27 @@ const updatepost = async (req: Request) => {
 		return missingReq;
 	}
 };
+
+const createKeywords = async (keywords: string[]) => {
+	let promises = keywords.map(async (k: string) => {
+		let a = await prisma.keyword.findFirst({ where: { name: k } });
+		if (!a) a = await prisma.keyword.create({ data: { name: k } });
+
+		return a;
+	});
+
+	return await Promise.all(promises);
+};
+
 const allposts = async (req: Request) => {
+	let posts = await prisma.post.findMany({
+		where: {},
+		include: { author: true },
+	});
+
+	if (posts) {
+		return { success: true, payload: posts };
+	}
 	return missingReq;
 };
 const byCategoryName = async (req: Request) => {

@@ -1,4 +1,4 @@
-import type { Category, User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import { writable } from 'svelte/store';
 
 const createUser = () => {

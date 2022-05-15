@@ -7,7 +7,7 @@
 	export let id: string = '';
 	let articleId: string = '';
 	let post: Post;
-	let content: string;
+
 	let loaded: boolean = false;
 
 	$: {
@@ -30,11 +30,15 @@
 	};
 </script>
 
-<section class='post' >
+<section class="post">
 	{#if loaded}
-	
 		<p class="post-title">{post.title}</p>
 		<p class="post-author">{post.author.name}</p>
+		<div class="inline">
+			{#each post.keywords as k}
+				<p>{k.name}</p>
+			{/each}
+		</div>
 		<p class="post-date">{new Date(post.createdAt).toDateString()}</p>
 		<div class="post-content">
 			{@html post.content}

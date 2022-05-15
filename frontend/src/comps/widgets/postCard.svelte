@@ -3,41 +3,65 @@
 	import { link } from 'svelte-routing';
 
 	export let post: Post;
+	export let edit: boolean = false;
+
+	let keywords = ['Urban planning', 'Urban design', 'Keywording'];
 </script>
 
-<main>
-	<div class="post-card">
-		<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					<figure class="image is-128x128">
-						<img
-							src="https://bulma.io/images/placeholders/96x96.png"
-							alt="Placeholder image"
-						/>
-					</figure>
-				</div>
-				<div class="media-content" style="text-align: left">
-					<div class="content">
-						<a href="post/{post.id}" use:link class="linker"
-							><a href="/article/{post.id}" use:link class="title is-4"
-								>{post.title}</a
-							></a
-						>
-						<p>{post.content.substring(0, 300)}</p>
-						<a class="subtitle is-6" href="\author\{post.authorId}" use:link
-							>{post.author.name}</a
-						>
+<div class="post-card">
+	<div class="media-left">
+		<div class="inline">
+			<a
+				class="inline post-card-author"
+				href="\author\{post.authorId}"
+				use:link
+			>
+				<img
+					class="profile-inline"
+					src="https://bulma.io/images/placeholders/96x96.png"
+					alt="Placeholder image"
+				/>
 
-						<time datetime={new Date(post.createdAt).toDateString()}
-							>{new Date(post.createdAt).toDateString()}</time
-						>
-					</div>
-				</div>
-			</div>
+				{post.author.name}</a
+			>
+			in
+			<a class="post-card-author" href="\cat\{post.category.name}" use:link
+				>{post.category.name}</a
+			>
+			-
+			<time
+				class="post-card-time"
+				datetime={new Date(post.createdAt).toDateString()}
+				>{new Date(post.createdAt).toDateString()}</time
+			>
+		</div>
+
+		<a class="post-card-title" href="/article/{post.id}" use:link
+			>{post.title}</a
+		>
+		<p class="post-card-content">{post.content.substring(0, 300)}</p>
+		<div class="media-bar">
+			{#each keywords as k}
+				<a href="#" class="keyword">{k}</a>
+			{/each}
+			<p class="reading-time">2 min. read</p>
 		</div>
 	</div>
-</main>
+	<div class="media-content">
+		<figure>
+			<img
+				src="https://bulma.io/images/placeholders/96x96.png"
+				alt="Placeholder image"
+			/>
+		</figure>
+	</div>
+	{#if edit}
+		<div>
+			Actions
+			<a href="newArticle/{post.id}" use:link>Edit</a>
+		</div>
+	{/if}
+</div>
 
 <style>
 	.linker:hover {

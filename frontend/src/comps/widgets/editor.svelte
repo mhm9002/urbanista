@@ -21,9 +21,8 @@
 	<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 </svelte:head>
 
-
 <div
-	class="editor"
+	class="editor article-editor"
 	use:quill={options}
 	on:text-change={(e) => onchange(e.detail.html)}
 />

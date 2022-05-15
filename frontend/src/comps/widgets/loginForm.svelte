@@ -21,7 +21,7 @@
 	};
 </script>
 
-<div>
+<form on:submit={(e) => e.preventDefault()}>
 	<FormField
 		onValueChange={(value) => (email = value)}
 		type="email"
@@ -40,4 +40,4 @@
 			<button on:click={login}>Submit</button>
 		</div>
 	</div>
-</div>
+</form>

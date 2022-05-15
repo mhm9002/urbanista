@@ -39,7 +39,7 @@
 	const login = () => {
 		fetchApi(queryList.login, { name, email, password }).then((res) => {
 			if (res.success) {
-				user.login(res.user);
+				user.login(res.payload);
 				onRegister();
 			} else {
 				//message = 'Incorrect username or password';
@@ -48,7 +48,7 @@
 	};
 </script>
 
-<div>
+<form>
 	<FormField
 		onValueChange={(value) => (name = value)}
 		type="name"
@@ -79,4 +79,4 @@
 			<button on:click={login}>Submit</button>
 		</div>
 	</div>
-</div>
+</form>

@@ -10,7 +10,7 @@
 		{ name: 'Urban Planning', slug: 'planning' },
 	];
 
-	let showDropmenu = false
+	let showDropmenu = false;
 	let activeUser: User;
 
 	user.subscribe((value) => {
@@ -25,54 +25,90 @@
 		user.logout();
 		navigate('/');
 	};
+
+	//{showDropmenu ? 'absolute' : 'hidden'}"
 </script>
 
-
 <nav class="navbar" role="navigation" aria-label="main navigation">
+	<div class="menu-brand-div">
+		<a class="menu-brand" use:link href="\">
+			<Brand />
+		</a>
 
-		<div class="menu-brand-div">
-			<a class="menu-brand"  use:link href="\">
-				<Brand />
+		<a
+			role="button"
+			class="navbar-burger"
+			aria-label="menu"
+			aria-expanded="false"
+			data-target="navbarBasicExample"
+		>
+			<span aria-hidden="true" />
+			<span aria-hidden="true" />
+			<span aria-hidden="true" />
+		</a>
+	</div>
+
+	<div id="navbarBasicExample" class="menu-center-div">
+		{#each mainCats as cat}
+			<a class="menu-item" use:link href="\cat\{cat.name}">
+				{cat.name}
 			</a>
+		{/each}
+	</div>
 
-			<a
-				role="button"
-				class="navbar-burger"
-				aria-label="menu"
-				aria-expanded="false"
-				data-target="navbarBasicExample"
-			>
-				<span aria-hidden="true" />
-				<span aria-hidden="true" />
-				<span aria-hidden="true" />
-			</a>
-		</div>
-
-		<div id="navbarBasicExample" class="menu-center-div">
-				{#each mainCats as cat}
-					<a class="menu-item" use:link href="\cat\{cat.name}">
-						{cat.name}
-					</a>
-				{/each}
-		</div>
-
-		<div class="menu-right-div">
-		
-		{#if activeUser === undefined}		
-			<a class="menu-item" href="\login" use:link > Log in </a>	
+	<div class="menu-right-div">
+		{#if activeUser === undefined}
+			<a class="menu-item" href="\login" use:link> Log in </a>
 		{:else}
-			
-			<button class="menu-item" id="menu-button" aria-expanded="true" aria-haspopup="true" > {activeUser.name} </button>
+			<div class="relative">
+				<button
+					class=""
+					on:click={() => (showDropmenu = true)}
+					id="menu-button"
+					aria-expanded="true"
+					aria-haspopup="true"
+				>
+					{activeUser.name}
+				</button>
+				<div
+					class=" {showDropmenu
+						? 'fixed'
+						: 'hidden'} h-screen w-screen left-0 right-0 top-0 bottom-0 bg-black bg-opacity-30"
+					on:click={() => (showDropmenu = false)}
+				/>
 
-			<div class="drop-menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-				<a href="\newArticle" use:link class="navbar-item">
-					New Article
-				</a>
-				<button on:click={logout} class="navbar-item"> Logout </button>
+				<div
+					class="drop-menu flex flex-col {showDropmenu ? 'relative' : 'hidden'}"
+					role="menu"
+					aria-orientation="vertical"
+					aria-labelledby="menu-button"
+					tabindex="-1"
+				>
+					<a
+						on:click={() => (showDropmenu = false)}
+						href="\newArticle"
+						use:link
+						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+					>
+						New Article
+					</a>
+					<a
+						on:click={() => (showDropmenu = false)}
+						href="\userArticles"
+						use:link
+						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+					>
+						My Articles
+					</a>
+					<a
+						href="#"
+						on:click={logout}
+						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+					>
+						Logout
+					</a>
+				</div>
 			</div>
-		
 		{/if}
-			
-		</div>
-
+	</div>
 </nav>

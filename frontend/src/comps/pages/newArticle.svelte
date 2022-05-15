@@ -7,9 +7,12 @@
 	import { onMount } from 'svelte';
 	import fetchApi from '../../helpers/api';
 	import queryList from '../../helpers/queryList';
-import FormField from '../widgets/formField.svelte';
-import { navigate } from 'svelte-routing';
-import LoadingWrapper from '../widgets/loadingWrapper.svelte';
+	import FormField from '../widgets/formField.svelte';
+	import { navigate } from 'svelte-routing';
+	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
+	import FormFieldSelect from '../widgets/formFieldSelect.svelte';
+
+	export let id: string = '';
 
 	let content: string = '';
 	let loadedCats: Category[] = [];
@@ -24,6 +27,8 @@ import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 		published: false,
 		id: '',
 	};
+
+	let keywords: string[] = [];
 
 	let autosaved = false;
 	let loading = false;
@@ -42,6 +47,13 @@ import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 			newPost.categoryId = res.payload[0].id;
 		}
 
+		if (id) {
+			let res = await fetchApi(queryList.getPost, { id });
+			if (res.success) {
+				newPost = res.payload;
+			}
+		}
+
 		let autosave = setInterval(() => {
 			if (content !== newPost.content) {
 				savePost();
@@ -57,14 +69,17 @@ import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 		};
 	});
 
-	const savePost = async () => {
+	const savePost = async (sendKeywords: boolean = false) => {
 		newPost.content = content;
 		newPost.createdAt = new Date();
+
+		if (newPost.title === '') newPost.title = 'Draft';
 
 		let res = await fetchApi(
 			newPost.id === '' ? queryList.createPost : queryList.updatePost,
 			{
 				postData: { ...newPost },
+				keywords: sendKeywords ? keywords : [],
 			}
 		);
 
@@ -83,35 +98,46 @@ import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 	};
 
 	const sendReview = async () => {
-		loading = true
-		await savePost();
+		loading = true;
+		await savePost(true);
 		navigate('/');
 	};
 </script>
 
 <main class="new-article-page">
-	
 	<slot>
-		<p>{autosaved ? 'Article autosaved' : '_'}</p>
+		<p>{autosaved ? 'Article autosaved' : 'Ready'}</p>
 	</slot>
-	<FormField onValueChange={(value)=>newPost.title=value} placeholder="Title..." type="text" />
-	<div class="select">
-		<select on:change={(e) => (newPost.categoryId = e.currentTarget.value)}>
-			{#each loadedCats as c}
-				<option value={c.id}>{c.name}</option>
-			{/each}
-		</select>
+	<FormField
+		onValueChange={(value) => (newPost.title = value)}
+		placeholder="Title..."
+		type="text"
+	/>
+	<FormField
+		onValueChange={(value) => (keywords = value.split(' '))}
+		placeholder="Keywords... separate by whitespace"
+		type="text"
+	/>
+
+	<FormFieldSelect
+		onValueChange={(value) => (newPost.categoryId = value)}
+		options={loadedCats.map((c) => {
+			return { value: c.id, name: c.name };
+		})}
+		defaultValue={loadedCats[0]?.id || ''}
+	/>
+
+	<div class="control">
+		<Editor onchange={(value) => (content = value)} />
 	</div>
-	
-	<Editor onchange={(value) => (content = value)} />
-	
+
 	<div class="field is-grouped">
 		<div class="control">
 			<button on:click={savePost}>Save Draft</button>
 			<button on:click={sendReview}>Send For Review</button>
 		</div>
 	</div>
-	
+
 	{#if loading}
 		<LoadingWrapper />
 	{/if}

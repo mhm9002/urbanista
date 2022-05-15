@@ -6,6 +6,18 @@
     @apply font-mono
 }
 
+.main-box {
+    @apply container flex flex-row left-0
+}
+
+.route-page {
+    @apply w-9/12 left-0
+}
+
+.side-bar {
+    @apply w-2/12 border-l border-slate-200
+}
+
 .menu-brand-div {
     @apply px-2 self-center
 }
@@ -35,12 +47,16 @@
 }
 
 .navbar {
-    @apply flex drop-shadow-lg shadow-slate-300 sticky  min-w-max content-between
+    @apply flex drop-shadow-sm shadow-sm shadow-black  fixed bg-white  min-w-max justify-between w-screen top-0 left-0 right-0 p-2
+}
+
+.footer {
+    @apply mt-20 p-6 flex flex-row items-center w-screen bg-slate-800  text-slate-300
 }
 
 
 .post {
-    @apply ml-40 mr-40 mt-10
+    @apply ml-20 mr-20 mt-20
 }
 
 .post-title {
@@ -76,7 +92,7 @@
 }
 
 .cat-page {
-    @apply ml-40 mr-40 mt-10 
+    @apply ml-20 mr-20 mt-20 
 }
 
 .cat-title {
@@ -84,15 +100,49 @@
 }
 
 .post-card {
-    @apply m-2  border-b border-slate-200 rounded-none
+    @apply m-2 pb-2 pt-2 flex flex-row border-b border-slate-200 rounded-none
 }
 
-.post-card a {
-    @apply text-pink-900 hover:no-underline hover:text-pink-600
+.post-card-title {
+    @apply mt-2 mb-2 font-bold text-2xl visited:text-pink-900 text-pink-900 hover:no-underline hover:text-pink-600
 }
 
-.post-card p {
-    @apply text-slate-800
+.post-card-author {
+    @apply text-sm visited:text-pink-900 text-pink-900 hover:no-underline hover:text-pink-600
+}
+
+.post-card-time {
+    @apply text-slate-600 text-sm
+}
+
+.profile-inline {
+    @apply inline rounded-full border-2 border-white align-middle self-center shadow-md ;
+    width: 32px;
+    height: 32px;
+}
+
+.post-card-content {
+    @apply text-sm text-slate-800
+}
+
+.keyword {
+    @apply rounded-full bg-slate-200 p-0.5 text-xs mr-1 hover:no-underline
+}
+
+.reading-time {
+    @apply text-xs text-slate-400 self-center
+}
+
+.media-left {
+    @apply p-2 w-8/12 flex flex-col
+}
+
+.media-content {
+   @apply ml-4 min-w-fit max-w-fit
+}
+
+.media-bar {
+    @apply mt-2 inline-flex overflow-scroll
 }
 
 .box {
@@ -120,12 +170,16 @@
     @apply font-mono p-2 bg-transparent text-base border-none 
 }
 
+.control {
+    @apply mt-4
+}
+
 .control input {
-    @apply font-mono autofill:bg-pink-200
+    @apply font-mono autofill:bg-pink-200 p-2 m-2 w-full rounded-3xl
 }
 
 .control button {
-    @apply font-mono p-2 bg-pink-800 text-base text-white rounded-md
+    @apply font-mono p-3 bg-pink-800 text-base text-white rounded-3xl
 }
 
 .loading-wraper {
@@ -133,13 +187,23 @@
 }
 
 .new-article-page {
-    @apply ml-40 mr-40 mt-10 flex flex-col
+    @apply ml-20 mr-20 mt-20 flex flex-col
 }
 
 .new-article-page {
 
 }
 
-.editor {
-    @apply mt-2 mb-2
+.article-editor {
+    min-height: 200px;
+}
+
+ql-formats button {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.select select  {
+    @apply font-mono autofill:bg-pink-200 p-2 m-2 w-full rounded-3xl focus-visible:border-pink-500
+
 }
