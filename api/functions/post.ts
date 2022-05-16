@@ -100,7 +100,7 @@ const byCategoryName = async (req: Request) => {
 		if (cat) {
 			let posts = await loadby({ categoryId: cat.id }, createdAt);
 			if (posts) {
-				return { success: true, payload: posts,  ...responseCodes.success };
+				return { success: true, payload: posts, ...responseCodes.success };
 			}
 		}
 	}
@@ -114,7 +114,7 @@ const byAuthor = async (req: Request) => {
 		let posts = await loadby({ authorId: id }, createdAt);
 
 		if (posts) {
-			return { success: true, payload: posts,  ...responseCodes.success, };
+			return { success: true, payload: posts, ...responseCodes.success };
 		}
 	}
 	return missingReq;

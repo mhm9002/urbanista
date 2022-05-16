@@ -1,5 +1,10 @@
-<script>
-	import { quill } from 'svelte-quill';
+<script lang="ts">
+	import Quill from 'quill';
+	import { onMount } from 'svelte';
+
+	export let onchange;
+
+	let editor;
 
 	let options = {
 		modules: {
@@ -11,18 +16,21 @@
 				['clean'],
 			],
 		},
+		theme: 'snow',
 		placeholder: 'Write something from outside...',
 	};
 
-	export let onchange;
+	onMount(async () => {
+		let quill = new Quill(editor, options);
+	});
 </script>
 
 <svelte:head>
-	<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" />
 </svelte:head>
 
 <div
 	class="editor article-editor"
-	use:quill={options}
+	bind:this={editor}
 	on:text-change={(e) => onchange(e.detail.html)}
 />
