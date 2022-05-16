@@ -15,7 +15,7 @@
 }
 
 .side-bar {
-    @apply w-2/12 border-l border-slate-200
+    @apply w-2/12 border-l border-slate-200 min-h-full
 }
 
 .menu-brand-div {
@@ -50,8 +50,8 @@
     @apply flex drop-shadow-sm shadow-sm shadow-black  fixed bg-white  min-w-max justify-between w-screen top-0 left-0 right-0 p-2
 }
 
-.footer {
-    @apply mt-20 p-6 flex flex-row items-center w-screen bg-slate-800  text-slate-300
+.page-footer {
+    @apply  p-6 bottom-0  flex flex-row items-center w-screen bg-slate-800  text-slate-300
 }
 
 
@@ -142,7 +142,7 @@
 }
 
 .media-bar {
-    @apply mt-2 inline-flex overflow-scroll
+    @apply mt-2 inline-flex overflow-x-auto 
 }
 
 .box {
@@ -201,6 +201,10 @@
 ql-formats button {
     width: 40px !important;
     height: 40px !important;
+}
+
+.select {
+    @apply w-full rounded-full
 }
 
 .select select  {

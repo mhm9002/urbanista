@@ -4,17 +4,21 @@
 	"scripts": {
 		"client": "npm run dev --prefix frontend",
 		"server": "nodemon server.ts",
-		"start": "concurrently \"npm run server\" \"npm run client\""
+		"start": "concurrently \"npm run server\" \"npm run client\"",
+		"updateSchema": "prisma db push",
+		"upateModels": "prisma generate"
 	},
 	"dependencies": {
 		"@prisma/client": "^3.12.0",
 		"@types/jsonwebtoken": "^8.5.8",
+		"@types/nodemailer": "^6.4.4",
 		"body-parser": "^1.19.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.0",
 		"express": "^4.17.1",
 		"fsevents": "^2.3.2",
-		"jsonwebtoken": "^8.5.1"
+		"jsonwebtoken": "^8.5.1",
+		"nodemailer": "^6.7.5"
 	},
 	"devDependencies": {
 		"@types/express": "^4.17.13",

@@ -486,6 +486,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .italic {
   font-style: italic;
 }
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -546,6 +550,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .side-bar {
+  min-height: 100%;
   width: 16.666667%;
   border-left-width: 1px;
   --tw-border-opacity: 1;
@@ -811,8 +816,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.footer {
-  margin-top: 5rem;
+.page-footer {
+  bottom: 0px;
   display: flex;
   width: 100vw;
   flex-direction: row;
@@ -1014,7 +1019,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 .media-bar {
   margin-top: 0.5rem;
   display: inline-flex;
-  overflow: scroll;
+  overflow-x: auto;
 }
 
 .box {
@@ -1206,6 +1211,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 ql-formats button {
     width: 40px !important;
     height: 40px !important;
+}
+
+.select {
+  width: 100%;
+  border-radius: 9999px;
 }
 
 .select select {

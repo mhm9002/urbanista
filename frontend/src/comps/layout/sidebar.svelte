@@ -6,6 +6,7 @@
 	import Keyword from '../widgets/keyword.svelte';
 	import ShortAuthorCard from '../widgets/shortAuthorCard.svelte';
 	import ShortPostCard from '../widgets/shortPostCard.svelte';
+import Footer from './footer.svelte';
 
 	let recommendedReadings: Post[] = [];
 	let cats: Category[] = [];
@@ -52,4 +53,5 @@
 	{#each recommendedAuthors as author}
 		<ShortAuthorCard {author} />
 	{/each}
+	
 </div>

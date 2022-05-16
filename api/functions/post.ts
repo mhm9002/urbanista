@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Request } from 'express';
 import { readFile, readFileSync, writeFile } from 'fs';
-import { missingReq } from './readyResponse';
+import { missingReq, responseCodes } from './readyResponse';
 
 const prisma = new PrismaClient();
 
@@ -20,7 +20,7 @@ const getpost = async (req: Request) => {
 					`${__dirname}/articles/${id}.html`
 				).toString();
 
-			return { success: true, payload: post };
+			return { success: true, ...responseCodes.success, payload: post };
 		}
 	}
 	return missingReq;
@@ -39,7 +39,7 @@ const createpost = async (req: Request) => {
 		let post = await prisma.post.create({ data: postData });
 		writeFile(`${__dirname}/articles/${post.id}.html`, content, () => {});
 
-		return { success: true, message: 'category created', payload: post.id };
+		return { success: true, ...responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
@@ -63,7 +63,7 @@ const updatepost = async (req: Request) => {
 
 		writeFile(`${__dirname}/articles/${post.id}.html`, content, () => {});
 
-		return { success: true, message: 'category updated', payload: post.id };
+		return { success: true, ...responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
@@ -87,7 +87,7 @@ const allposts = async (req: Request) => {
 	});
 
 	if (posts) {
-		return { success: true, payload: posts };
+		return { success: true, payload: posts, ...responseCodes.success };
 	}
 	return missingReq;
 };
@@ -100,7 +100,7 @@ const byCategoryName = async (req: Request) => {
 		if (cat) {
 			let posts = await loadby({ categoryId: cat.id }, createdAt);
 			if (posts) {
-				return { success: true, payload: posts };
+				return { success: true, payload: posts,  ...responseCodes.success };
 			}
 		}
 	}
@@ -114,7 +114,7 @@ const byAuthor = async (req: Request) => {
 		let posts = await loadby({ authorId: id }, createdAt);
 
 		if (posts) {
-			return { success: true, payload: posts };
+			return { success: true, payload: posts,  ...responseCodes.success, };
 		}
 	}
 	return missingReq;

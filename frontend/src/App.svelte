@@ -2,7 +2,7 @@
 	//import './app.css';
 
 	import Router from './routes/index.svelte';
-	export let name: string;
+
 </script>
 
 <Router />

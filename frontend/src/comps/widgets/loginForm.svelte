@@ -15,7 +15,7 @@
 				user.login(res.payload);
 				onLogin();
 			} else {
-				message = 'Incorrect username or password';
+				message = res.message;
 			}
 		});
 	};
@@ -26,18 +26,19 @@
 		onValueChange={(value) => (email = value)}
 		type="email"
 		placeholder="Enter your email..."
-		{message}
+		
 	/>
 	<FormField
 		onValueChange={(value) => (password = value)}
 		type="password"
 		placeholder="Enter your password..."
-		{message}
+		
 	/>
-
+	<div><p class='text-red-400'>{message}</p></div>
 	<div class="field is-grouped">
 		<div class="control">
 			<button on:click={login}>Submit</button>
 		</div>
 	</div>
+	
 </form>

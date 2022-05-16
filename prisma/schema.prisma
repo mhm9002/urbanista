@@ -14,6 +14,8 @@ model User {
   name     String?
   posts    Post[]
   likes    Like[]
+  desc     String?
+  activated Boolean @default(false)
 }
 
 model Post {
@@ -21,6 +23,7 @@ model Post {
   createdAt  DateTime  @default(now())
   title      String
   content    String?
+  exerpt     String?
   authorId   String
   author     User      @relation(fields: [authorId], references: [id])
   categoryId String
@@ -28,8 +31,8 @@ model Post {
   keywords   Keyword[]
   likes      Like[]
   featured   Boolean   @default(false)
+  featuredOn  DateTime?
   published  Boolean   @default(false)
-
 }
 
 model Category {
