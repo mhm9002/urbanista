@@ -6,7 +6,7 @@
 
 	import { onMount } from 'svelte';
 	import { fetchApi } from '../../helpers/api';
-	import { queryList} from '../../helpers/queryList';
+	import { queryList } from '../../helpers/queryList';
 	import FormField from '../widgets/formField.svelte';
 	import { navigate } from 'svelte-routing';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
@@ -27,7 +27,7 @@
 		published: false,
 		id: '',
 		exerpt: '',
-		featuredOn: null
+		featuredOn: null,
 	};
 
 	let keywords: string[] = [];
@@ -49,17 +49,17 @@
 			newPost.categoryId = res.payload[0].id;
 		}
 
-		if (id!=="") {
+		if (id !== '') {
 			let res = await fetchApi(queryList.getPost, { id });
 			if (res.code.success) {
 				newPost = res.payload;
-				postContent=newPost.content
+				postContent = newPost.content;
 			}
 		}
 
-		let autosave = setInterval(() => {	
+		let autosave = setInterval(() => {
 			if (postContent !== newPost.content) {
-				//savePost();
+				savePost();
 				setTimeout(() => {
 					autosaved = false;
 				}, 2000);
@@ -110,39 +110,38 @@
 	<slot>
 		<p>{autosaved ? 'Article autosaved' : 'Ready'}</p>
 	</slot>
-	<FormField
-		onValueChange={(value) => (newPost.title = value)}
-		placeholder="Title..."
-		type="text"
-	/>
-	<FormField
-		onValueChange={(value) => (keywords = value.split(' '))}
-		placeholder="Keywords... separate by whitespace"
-		type="text"
-	/>
+	<div class="inline flex fixed top-20 left-auto right-auto">
+		<FormField
+			onValueChange={(value) => (newPost.title = value)}
+			placeholder="Title..."
+			type="text"
+		/>
+		<FormField
+			onValueChange={(value) => (keywords = value.split(' '))}
+			placeholder="Keywords... separate by whitespace"
+			type="text"
+		/>
 
-	<FormFieldSelect
-		onValueChange={(value) => (newPost.categoryId = value)}
-		options={loadedCats.map((c) => {
-			return { value: c.id, name: c.name };
-		})}
-		defaultValue={loadedCats[0]?.id || ''}
-	/>
-
-	<div class="">
-		<Editor onchange={(content, exerpt) => {
-			postContent = content
-			newPost.exerpt = exerpt
-
-		}} />
-	</div>
-
-	<div class="field is-grouped">
-		<div class="control">
-			<button on:click={savePost}>Save Draft</button>
-			<button on:click={sendReview}>Send For Review</button>
+		<FormFieldSelect
+			onValueChange={(value) => (newPost.categoryId = value)}
+			options={loadedCats.map((c) => {
+				return { value: c.id, name: c.name };
+			})}
+			defaultValue={loadedCats[0]?.id || ''}
+		/>
+		<div class="field is-grouped">
+			<div class="control">
+				<button on:click={sendReview}>Send For Review</button>
+			</div>
 		</div>
 	</div>
+
+	<Editor
+		onchange={(content, exerpt) => {
+			postContent = content;
+			newPost.exerpt = exerpt;
+		}}
+	/>
 
 	{#if loading}
 		<LoadingWrapper />

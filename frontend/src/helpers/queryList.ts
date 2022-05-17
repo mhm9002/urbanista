@@ -17,12 +17,12 @@ const queryList = {
 	login: 'login',
 	postByCategoryName: 'postByCategoryName',
 	postByAuthor: 'postByAuthor',
-	
+	validateUser: 'validateUser',
 };
 
 const uploadQueryList = {
-	uploadImage:'uploadImage',
-	loadImage:'loadImage'
-}
+	uploadImage: 'uploadImage',
+	loadImage: 'loadImage',
+};
 
-export {queryList, uploadQueryList};
+export { queryList, uploadQueryList };

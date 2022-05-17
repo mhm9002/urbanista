@@ -19,6 +19,24 @@ const createUser = () => {
 	};
 };
 
+const createToken = () => {
+	const { subscribe, update, set } = writable<string>(
+		JSON.parse(localStorage.getItem('token')) || undefined
+	);
+
+	return {
+		subscribe,
+		saveToken: (value) => {
+			localStorage.setItem('token', JSON.stringify(value));
+			set(value);
+		},
+		removeToken: () => {
+			localStorage.removeItem('token');
+			set(undefined);
+		},
+	};
+};
+
 /*
 const createCats = () => {
 	const { subscribe, update, set } = writable<Category[]>(
@@ -40,4 +58,5 @@ const createCats = () => {
 */
 
 export const user = createUser();
+export const token = createToken();
 //export const cats = createCats();

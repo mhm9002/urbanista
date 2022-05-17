@@ -19,7 +19,8 @@
 	<div class="main-box">
 		<div class="route-page">
 			<Route path="/"><Home /></Route>
-			<Route path="login"><LoginPage previousPage={url} /></Route>
+			<Route path="login"><LoginPage /></Route>
+			<Route path="login/:id" let:params><LoginPage id={params.id} /></Route>
 			<Route path="cat/:name" let:params><CatPage name={params.name} /></Route>
 			<Route path="article/:id" let:params><ArticlePage id={params.id} /></Route
 			>
@@ -30,9 +31,10 @@
 			<Route path="userArticles" let:params><UserArticles /></Route>
 			<Route path="author/:id" let:params><AuthorPage id={params.id} /></Route>
 		</div>
+		<!--
 		<div class="side-bar">
 			<Sidebar />
-		</div>
+		</div>-->
 	</div>
 
 	<Footer />

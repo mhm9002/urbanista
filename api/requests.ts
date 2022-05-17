@@ -3,7 +3,7 @@ import userFunctions from './functions/user';
 import postFunctions from './functions/post';
 import catFunctions from './functions/categories';
 import imageFunctions from './functions/images';
-import { queryList, uploadQueryList} from '../frontend/src/helpers/queryList';
+import { queryList, uploadQueryList } from '../frontend/src/helpers/queryList';
 import { queryRespose } from '../frontend/src/commonTypes';
 
 type requestForm = {
@@ -32,6 +32,11 @@ const requests: Array<requestForm> = [
 		query: queryList.getUser,
 		function: userFunctions.getUser,
 		tokenValidation: true,
+	},
+	{
+		query: queryList.validateUser,
+		function: userFunctions.validateUser,
+		tokenValidation: false,
 	},
 	{
 		query: queryList.login,
@@ -105,12 +110,12 @@ const requests: Array<requestForm> = [
 	},
 ];
 
-const uploadRequests:Array<requestForm> = [
+const uploadRequests: Array<requestForm> = [
 	{
 		query: uploadQueryList.uploadImage,
 		function: imageFunctions.upload,
-		tokenValidation: true
-	}
-]
+		tokenValidation: true,
+	},
+];
 
-export {requests, uploadRequests};
+export { requests, uploadRequests };

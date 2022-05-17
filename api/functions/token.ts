@@ -1,5 +1,6 @@
+import { User } from '@prisma/client';
 import { Request, Response } from 'express';
-import jwt, { Secret } from 'jsonwebtoken';
+import jwt, { Secret, sign } from 'jsonwebtoken';
 
 const validateToken = (
 	req: Request,
@@ -47,4 +48,11 @@ const validateToken = (
 	}
 };
 
-export default validateToken;
+const getToken = (user: User) => {
+	let secret: Secret = process.env.JWT_SECRET || '';
+	return sign({ user_id: user.id, email: user.email }, secret, {
+		expiresIn: '2 days',
+	});
+};
+
+export { validateToken, getToken };

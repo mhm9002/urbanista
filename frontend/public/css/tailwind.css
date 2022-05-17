@@ -11,7 +11,7 @@
 }
 
 .route-page {
-    @apply w-9/12 left-0
+    @apply h-screen left-0
 }
 
 .side-bar {
@@ -47,7 +47,7 @@
 }
 
 .navbar {
-    @apply flex drop-shadow-sm shadow-sm shadow-black  fixed bg-white  min-w-max justify-between w-screen top-0 left-0 right-0 p-2
+    @apply z-50 flex drop-shadow-sm shadow-sm shadow-black  fixed bg-white  min-w-max justify-between w-screen top-0 left-0 right-0 p-2
 }
 
 .page-footer {
@@ -56,7 +56,12 @@
 
 
 .post {
-    @apply ml-20 mr-20 mt-20
+    @apply fixed left-40 right-40 mr-20 mt-20 overflow-y-scroll text-justify;
+    width: 60%;
+    height: 80% !important;
+    min-height: 200px;
+    position: fixed !important;
+    
 }
 
 .post-title {
@@ -68,19 +73,20 @@
 }
 
 .post-date {
-    @apply text-sm   
+    @apply text-sm mb-6 
 }
 
 .post-content {
-    @apply border-2 p-2 border-purple-300 mt-3
+    @apply  left-24 top-48 bottom-16  overflow-x-visible;
+   
 }
 
 .post-content h1 {
-    @apply text-3xl 
+    @apply text-3xl mt-4 mb-4
 }
 
 .post-content h2 {
-    @apply text-2xl  
+    @apply text-2xl   mt-2 mb-2
 }
 
 .post-content blockquote {
@@ -89,6 +95,10 @@
 
 .post-content p {
     @apply text-base 
+}
+
+.post-content img {
+    @apply ml-auto mr-auto mt-3 mb-3
 }
 
 .cat-page {
@@ -195,13 +205,22 @@
 }
 
 .article-editor {
+    @apply fixed left-24 top-36 bottom-16 overflow-y-scroll overflow-x-visible;
+    width: 75%;
+    height: 70% !important;
     min-height: 200px;
+    position: fixed !important;
 }
 
 ql-formats button {
     width: 40px !important;
     height: 40px !important;
 }
+
+.ql-editor img {
+    @apply ml-auto mr-auto mt-3 mb-3
+}
+
 
 .select {
     @apply w-full rounded-full

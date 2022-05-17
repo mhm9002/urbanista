@@ -445,6 +445,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bottom-0 {
   bottom: 0px;
 }
+.top-20 {
+  top: 5rem;
+}
+.left-auto {
+  left: auto;
+}
+.right-auto {
+  right: auto;
+}
 .ml-4 {
   margin-left: 1rem;
 }
@@ -546,7 +555,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .route-page {
   left: 0px;
-  width: 75%;
+  height: 100vh;
 }
 
 .side-bar {
@@ -798,6 +807,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 0px;
   left: 0px;
   right: 0px;
+  z-index: 50;
   display: flex;
   width: 100vw;
   min-width: -webkit-max-content;
@@ -831,9 +841,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 
 .post {
-  margin-left: 5rem;
+  left: 10rem;
+  right: 10rem;
   margin-right: 5rem;
   margin-top: 5rem;
+  overflow-y: scroll;
+  text-align: justify;
+    width: 60%;
+    height: 80% !important;
+    min-height: 200px;
+    position: fixed !important;
 }
 
 .post-title {
@@ -847,24 +864,28 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .post-date {
+  margin-bottom: 1.5rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
 .post-content {
-  margin-top: 0.75rem;
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(216 180 254 / var(--tw-border-opacity));
-  padding: 0.5rem;
+  left: 6rem;
+  top: 12rem;
+  bottom: 4rem;
+  overflow-x: visible;
 }
 
 .post-content h1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
 
 .post-content h2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   font-size: 1.5rem;
   line-height: 2rem;
 }
@@ -881,6 +902,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .post-content p {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.post-content img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .cat-page {
@@ -1204,13 +1232,29 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .article-editor {
+  left: 6rem;
+  top: 9rem;
+  bottom: 4rem;
+  overflow-x: visible;
+  overflow-y: scroll;
+    width: 75%;
+    height: 70% !important;
     min-height: 200px;
+    position: fixed !important;
 }
 
 ql-formats button {
     width: 40px !important;
     height: 40px !important;
 }
+
+.ql-editor img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
 
 .select {
   width: 100%;

@@ -2,30 +2,48 @@
 	import { onMount } from 'svelte';
 
 	import { navigate } from 'svelte-routing';
+	import { fetchApi } from '../../helpers/api';
+	import { queryList } from '../../helpers/queryList';
 	import LoginForm from '../widgets/loginForm.svelte';
 	import RegisterForm from '../widgets/registerForm.svelte';
-	export let previousPage = '';
+	export let id: string = '';
 
-	let loginShow = true;
-	let message = ''
+	let loginShow: boolean = true;
+	let message: string = '';
+	let validationMsg: string = '';
 
 	onMount(() => {
-		console.log(previousPage);
+		console.log(id);
+		if (id !== '') {
+			validateUser();
+		}
 	});
+
+	const validateUser = async () => {
+		let res = await fetchApi(queryList.validateUser, { id });
+		if (res.code.success) {
+			validationMsg = 'The user is validated. You may sign in NOW';
+		} else {
+			validationMsg = 'Wrong validation code';
+		}
+	};
 
 	const onLogin = () => {
 		navigate('/', { replace: true });
 	};
 
 	const onRegister = () => {
-		message = "Thank you for creating your account. Please check your email to verify this account"
+		message =
+			'Thank you for creating your account. Please check your email to verify this account';
 	};
 </script>
 
 <div class="login-page">
 	<div class="login-box">
 		<p class="cat-title">Login for member benefits</p>
-		{#if (message==='')}
+		{#if id !== ''}
+			<p>{validationMsg}</p>
+		{:else if message === ''}
 			{#if loginShow}
 				<LoginForm {onLogin} />
 				<button class="switch-button" on:click={() => (loginShow = false)}
