@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Category, Post, User } from '@prisma/client';
 	import { onMount } from 'svelte';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 	import Keyword from '../widgets/keyword.svelte';
 	import ShortAuthorCard from '../widgets/shortAuthorCard.svelte';
 	import ShortPostCard from '../widgets/shortPostCard.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { user } from '../../appStore';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 	import FormField from './formField.svelte';
 
 	export let onLogin;
@@ -11,11 +11,11 @@
 
 	const login = () => {
 		fetchApi(queryList.login, { email, password }).then((res) => {
-			if (res.success) {
+			if (res.code.success) {
 				user.login(res.payload);
 				onLogin();
 			} else {
-				message = res.message;
+				message = res.code.message;
 			}
 		});
 	};

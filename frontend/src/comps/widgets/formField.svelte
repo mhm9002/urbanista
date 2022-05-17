@@ -14,9 +14,7 @@
 			{placeholder}
 			on:change={(e) => onValueChange(e.currentTarget.value)}
 		/>
-		<span class="icon is-small is-left">
-			<i class="fas fa-user" />
-		</span>
+		
 	</div>
 	<p class="help is-danger">{message}</p>
 </div>

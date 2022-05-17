@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Post } from '@prisma/client';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 	import PostCard from '../widgets/postCard.svelte';
 
 	export let name: string = '';
@@ -27,7 +27,7 @@
 			name,
 			createdAt: latestDate,
 		});
-		if (res.success) {
+		if (res.code.success) {
 			//console.log(res.payload)
 			posts = [...posts, ...res.payload];
 			latestDate = posts[posts.length - 1].createdAt;

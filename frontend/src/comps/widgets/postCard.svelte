@@ -39,7 +39,7 @@
 		<a class="post-card-title" href="/article/{post.id}" use:link
 			>{post.title}</a
 		>
-		<p class="post-card-content">{post.content.substring(0, 300)}</p>
+		<p class="post-card-content">{post.exerpt}</p>
 		<div class="media-bar">
 			{#each keywords as k}
 				<a href="#" class="keyword">{k}</a>

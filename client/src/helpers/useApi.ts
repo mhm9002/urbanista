@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import queryList from '../queryList';
+import { queryList} from '../queryList';
 
 const useApi = () => {
 	const fetchApi = async (query: queryList, payload: any) => {

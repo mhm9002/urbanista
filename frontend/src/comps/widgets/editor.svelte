@@ -1,12 +1,23 @@
 <script lang="ts">
-	import Quill from 'quill';
+	import Quill, { QuillOptionsStatic } from 'quill';
+	import ImageUploader from 'quill-image-uploader'
+	import {uploadApi} from '../../helpers/api'
 	import { onMount } from 'svelte';
+import { uploadQueryList} from '../../helpers/queryList';
+
 
 	export let onchange;
 
-	let editor;
+	Quill.register("modules/imageUploader",ImageUploader)
 
-	let options = {
+	let editor;
+	let quill:Quill;
+
+
+	//let Delta = Quill.import('delta')
+	//let change = new Delta();
+	
+	let options: QuillOptionsStatic = {
 		modules: {
 			toolbar: [
 				[{ header: 1 }, { header: 2 }, 'blockquote', 'link', 'image', 'video'],
@@ -15,13 +26,31 @@
 				[{ align: [] }],
 				['clean'],
 			],
+			imageUploader: {
+				upload: (file:File)=>uploadApi(uploadQueryList.uploadImage, file)
+										
+				
+				
+			}
 		},
 		theme: 'snow',
 		placeholder: 'Write something from outside...',
 	};
 
 	onMount(async () => {
-		let quill = new Quill(editor, options);
+		
+		quill = new Quill(editor, options);
+		
+		let changeHandler= (delta)=>{
+			//change = change.compose(delta)	
+			
+			//onchange(quill.getContents(),quill.getText(0,300))
+			onchange(quill.root.innerHTML, quill.getText(0,300))
+		}
+
+		quill.on('text-change', changeHandler)
+
+		return (()=>{quill.off('text-change',changeHandler)})
 	});
 </script>
 
@@ -32,5 +61,5 @@
 <div
 	class="editor article-editor"
 	bind:this={editor}
-	on:text-change={(e) => onchange(e.detail.html)}
+	
 />

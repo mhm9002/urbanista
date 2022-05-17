@@ -20,7 +20,7 @@ const getpost = async (req: Request) => {
 					`${__dirname}/articles/${id}.html`
 				).toString();
 
-			return { success: true, ...responseCodes.success, payload: post };
+			return { code:responseCodes.success, payload: post };
 		}
 	}
 	return missingReq;
@@ -39,7 +39,7 @@ const createpost = async (req: Request) => {
 		let post = await prisma.post.create({ data: postData });
 		writeFile(`${__dirname}/articles/${post.id}.html`, content, () => {});
 
-		return { success: true, ...responseCodes.success, payload: post.id };
+		return { code:responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
@@ -50,20 +50,18 @@ const removepost = async (req: Request) => {
 const updatepost = async (req: Request) => {
 	let { postData, keywords } = req.body;
 
-	let content = postData.content;
-
 	if (postData) {
 		postData.keywords = createKeywords(keywords);
-		postData.content = postData.content?.substring(0, 300);
+		
 
 		let post = await prisma.post.update({
 			where: { id: postData.id },
 			data: postData,
 		});
 
-		writeFile(`${__dirname}/articles/${post.id}.html`, content, () => {});
+		writeFile(`${__dirname}/articles/${post.id}.html`, postData.content, () => {});
 
-		return { success: true, ...responseCodes.success, payload: post.id };
+		return { code:responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
@@ -87,7 +85,7 @@ const allposts = async (req: Request) => {
 	});
 
 	if (posts) {
-		return { success: true, payload: posts, ...responseCodes.success };
+		return { payload: posts, code:responseCodes.success };
 	}
 	return missingReq;
 };
@@ -100,7 +98,7 @@ const byCategoryName = async (req: Request) => {
 		if (cat) {
 			let posts = await loadby({ categoryId: cat.id }, createdAt);
 			if (posts) {
-				return { success: true, payload: posts, ...responseCodes.success };
+				return { code:responseCodes.success, payload: posts };
 			}
 		}
 	}
@@ -114,7 +112,7 @@ const byAuthor = async (req: Request) => {
 		let posts = await loadby({ authorId: id }, createdAt);
 
 		if (posts) {
-			return { success: true, payload: posts, ...responseCodes.success };
+			return { payload: posts, code:responseCodes.success };
 		}
 	}
 	return missingReq;

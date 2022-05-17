@@ -1,8 +1,8 @@
 <script lang="ts">
 
 	import { user } from '../../appStore';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 	import FormField from './formField.svelte';
 
 	export let onRegister;
@@ -60,11 +60,11 @@
 			return
 
 		fetchApi(queryList.createUser, { name, email, password }).then((res) => {
-			if (res.success) {
+			if (res.code.success) {
 				
 				onRegister();
 			} else {
-				message = res.message;
+				message = res.code.message;
 			}
 		});
 	};

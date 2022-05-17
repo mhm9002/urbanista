@@ -1154,14 +1154,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .control {
-  margin-top: 1rem;
+  display: flex;
+  width: 100%;
+  padding: 0.5rem;
 }
 
 .control input {
-  margin: 0.5rem;
-  width: 100%;
   border-radius: 1.5rem;
-  padding: 0.5rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 

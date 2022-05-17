@@ -1,7 +1,7 @@
 import { Category } from '@prisma/client';
 import React, { useState } from 'react';
 import useApi from '../../helpers/useApi';
-import queryList from '../../queryList';
+import { queryList} from '../../queryList';
 
 const UserList: React.FC = () => {
 	const [name, setName] = useState<string>('');

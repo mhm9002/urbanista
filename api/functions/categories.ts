@@ -9,7 +9,7 @@ const getCategory = async (req: Request) => {
 	const { id } = req.body;
 	if (id) {
 		let cat = await prisma.category.findUnique({ where: id });
-		if (cat) return { success: true, payload: cat,  ...responseCodes.success };
+		if (cat) return { code:responseCodes.success, payload: cat  };
 	}
 
 	return missingReq;
@@ -22,9 +22,9 @@ const createCategory = async (req: Request) => {
 		let category = await prisma.category.create({ data: { name } });
 		if (category)
 			return {
-				success: true,
+				code:responseCodes.success,
 				payload: category.id,
-				...responseCodes.success,
+				
 			};
 	}
 
@@ -39,7 +39,7 @@ const updateCategory = async (req: Request) => {
 const allCategories = async (req: Request) => {
 	let categories = await prisma.category.findMany({});
 
-	let res: queryRespose = { success: true, payload: categories,  ...responseCodes.success };
+	let res: queryRespose = { code:responseCodes.success, payload: categories};
 	return res;
 };
 

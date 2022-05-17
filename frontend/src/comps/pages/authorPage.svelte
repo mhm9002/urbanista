@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Post, User } from '@prisma/client';
 	import { onMount } from 'svelte';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 	import PostCard from '../widgets/postCard.svelte';
 
 	export let id: string = '';
@@ -28,7 +28,7 @@
 	const getAuthorDetails = async () => {
 		let res = await fetchApi(queryList.getUser, { id });
 
-		if (res.success) {
+		if (res.code.success) {
 			author = res.payload;
 		} else {
 		}
@@ -40,7 +40,7 @@
 			createdAt: latestDate,
 		});
 
-		if (res.success) {
+		if (res.code.success) {
 			let newPosts = res.payload.map((p) => {
 				return { ...p, author };
 			});

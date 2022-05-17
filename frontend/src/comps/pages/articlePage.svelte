@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Post } from '@prisma/client';
 
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 
 	export let id: string = '';
 	let articleId: string = '';
@@ -23,7 +23,7 @@
 			fullPost: true,
 		});
 
-		if (res.success) {
+		if (res.code.success) {
 			loaded = true;
 			post = res.payload;
 		}

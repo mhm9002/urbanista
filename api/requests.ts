@@ -2,7 +2,8 @@ import { Request } from 'express';
 import userFunctions from './functions/user';
 import postFunctions from './functions/post';
 import catFunctions from './functions/categories';
-import queryList from '../frontend/src/helpers/queryList';
+import imageFunctions from './functions/images';
+import { queryList, uploadQueryList} from '../frontend/src/helpers/queryList';
 import { queryRespose } from '../frontend/src/commonTypes';
 
 type requestForm = {
@@ -104,4 +105,12 @@ const requests: Array<requestForm> = [
 	},
 ];
 
-export default requests;
+const uploadRequests:Array<requestForm> = [
+	{
+		query: uploadQueryList.uploadImage,
+		function: imageFunctions.upload,
+		tokenValidation: true
+	}
+]
+
+export {requests, uploadRequests};

@@ -5,8 +5,8 @@
 	import Editor from '../widgets/editor.svelte';
 
 	import { onMount } from 'svelte';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import { fetchApi } from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 	import FormField from '../widgets/formField.svelte';
 	import { navigate } from 'svelte-routing';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
@@ -14,7 +14,7 @@
 
 	export let id: string = '';
 
-	let content: string = '';
+	let postContent: string = '';
 	let loadedCats: Category[] = [];
 
 	let newPost: Post = {
@@ -26,6 +26,8 @@
 		featured: false,
 		published: false,
 		id: '',
+		exerpt: '',
+		featuredOn: null
 	};
 
 	let keywords: string[] = [];
@@ -42,22 +44,22 @@
 
 	onMount(async () => {
 		let res = await fetchApi(queryList.allCategories, {});
-		if (res.success) {
+		if (res.code.success) {
 			loadedCats = res.payload;
 			newPost.categoryId = res.payload[0].id;
 		}
 
-		if (id) {
+		if (id!=="") {
 			let res = await fetchApi(queryList.getPost, { id });
-			if (res.success) {
+			if (res.code.success) {
 				newPost = res.payload;
+				postContent=newPost.content
 			}
 		}
 
-		let autosave = setInterval(() => {
-			if (content !== newPost.content) {
-				savePost();
-
+		let autosave = setInterval(() => {	
+			if (postContent !== newPost.content) {
+				//savePost();
 				setTimeout(() => {
 					autosaved = false;
 				}, 2000);
@@ -70,7 +72,7 @@
 	});
 
 	const savePost = async (sendKeywords: boolean = false) => {
-		newPost.content = content;
+		newPost.content = postContent;
 		newPost.createdAt = new Date();
 
 		if (newPost.title === '') newPost.title = 'Draft';
@@ -78,12 +80,12 @@
 		let res = await fetchApi(
 			newPost.id === '' ? queryList.createPost : queryList.updatePost,
 			{
-				postData: { ...newPost },
+				postData: newPost,
 				keywords: sendKeywords ? keywords : [],
 			}
 		);
 
-		if (res.success) {
+		if (res.code.success) {
 			autosaved = true;
 			if (newPost.id == '') {
 				newPost.id = res.payload;
@@ -100,7 +102,7 @@
 	const sendReview = async () => {
 		loading = true;
 		await savePost(true);
-		navigate('/');
+		navigate('userArticles');
 	};
 </script>
 
@@ -127,8 +129,12 @@
 		defaultValue={loadedCats[0]?.id || ''}
 	/>
 
-	<div class="control">
-		<Editor onchange={(value) => (content = value)} />
+	<div class="">
+		<Editor onchange={(content, exerpt) => {
+			postContent = content
+			newPost.exerpt = exerpt
+
+		}} />
 	</div>
 
 	<div class="field is-grouped">

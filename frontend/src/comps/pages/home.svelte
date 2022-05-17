@@ -2,14 +2,14 @@
 	import type { Category } from '@prisma/client';
 
 	import { onMount } from 'svelte';
-	import fetchApi from '../../helpers/api';
-	import queryList from '../../helpers/queryList';
+	import {fetchApi} from '../../helpers/api';
+	import { queryList} from '../../helpers/queryList';
 
 	let loadedCats: Category[] = [];
 
 	onMount(async () => {
 		let res = await fetchApi(queryList.allCategories, {});
-		if (res.success) {
+		if (res.code.success) {
 			loadedCats = res.payload;
 		}
 

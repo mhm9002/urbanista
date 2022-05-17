@@ -17,6 +17,12 @@ const queryList = {
 	login: 'login',
 	postByCategoryName: 'postByCategoryName',
 	postByAuthor: 'postByAuthor',
+	
 };
 
-export default queryList;
+const uploadQueryList = {
+	uploadImage:'uploadImage',
+	loadImage:'loadImage'
+}
+
+export {queryList, uploadQueryList};

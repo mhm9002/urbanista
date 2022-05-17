@@ -1,7 +1,7 @@
 import { Category, User } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import useApi from '../../helpers/useApi';
-import queryList from '../../queryList';
+import { queryList} from '../../queryList';
 import AddCategoryForm from '../widgets/addCategoryForm';
 import CategoryList from '../widgets/categoryList';
 import UserList from '../widgets/userList';

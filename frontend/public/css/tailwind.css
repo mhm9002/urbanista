@@ -171,11 +171,11 @@
 }
 
 .control {
-    @apply mt-4
+    @apply p-2 flex w-full
 }
 
 .control input {
-    @apply font-mono autofill:bg-pink-200 p-2 m-2 w-full rounded-3xl
+    @apply font-mono autofill:bg-pink-200  rounded-3xl
 }
 
 .control button {
