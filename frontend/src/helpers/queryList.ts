@@ -19,6 +19,8 @@ const queryList = {
 	postByAuthor: 'postByAuthor',
 	validateUser: 'validateUser',
 	publishPost: 'publishPost',
+	userBookmarks: 'userBookmarks',
+	addBookmark: 'addBookmark',
 };
 
 const uploadQueryList = {

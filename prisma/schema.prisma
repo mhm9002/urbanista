@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  email     String  @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   password  String
   name      String?
   posts     Post[]
   likes     Like[]
+  bookmarks Bookmark[]
   desc      String?
-  activated Boolean @default(false)
+  activated Boolean    @default(false)
 }
 
 model Post {
@@ -55,4 +56,12 @@ model Keyword {
   id    String @id @default(cuid())
   name  String
   posts Post[]
+}
+
+model Bookmark {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  postId       String
+  bookmarkedAt DateTime @default(now())
 }

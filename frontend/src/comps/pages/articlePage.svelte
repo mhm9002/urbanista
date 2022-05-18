@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Post } from '@prisma/client';
+	import type { Post, User } from '@prisma/client';
+	import { user } from '../../appStore';
 
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
@@ -10,8 +11,16 @@
 	let post: Post;
 
 	let liked = false;
+	let bookmarked = false;
 	let loaded: boolean = false;
 	let loginRequired: boolean = false;
+
+	let activeUser: User = null;
+
+	user.subscribe((value) => {
+		activeUser = value;
+		return () => (activeUser = null);
+	});
 
 	$: {
 		if (articleId !== id) {
@@ -36,6 +45,20 @@
 			loginRequired = true;
 		}
 		loaded = true;
+	};
+
+	const addBookmark = async () => {
+		let res = await fetchApi(
+			queryList.addBookmark,
+			{ postId: articleId, userId: activeUser.id },
+			true
+		);
+
+		if (res.code.success) {
+			bookmarked = true;
+		} else {
+			console.log(res.code.message);
+		}
 	};
 </script>
 
@@ -83,7 +106,10 @@
 				</span>
 			</div>
 			<div class="post-interaction-right">
-				<span class="action-clickable">
+				<span
+					on:click={addBookmark}
+					class="action-clickable {bookmarked ? 'action-active' : ''}"
+				>
 					<i class="material-icons">book</i>
 				</span>
 

@@ -49,6 +49,16 @@ const requests: Array<requestForm> = [
 		tokenValidation: true,
 	},
 	{
+		query: queryList.userBookmarks,
+		function: userFunctions.getUserBookmarks,
+		tokenValidation: true,
+	},
+	{
+		query: queryList.addBookmark,
+		function: userFunctions.addToBookmarks,
+		tokenValidation: true,
+	},
+	{
 		query: queryList.createPost,
 		function: postFunctions.createpost,
 		tokenValidation: true,

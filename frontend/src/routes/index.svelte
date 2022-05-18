@@ -10,6 +10,7 @@
 	import LoginPage from '../comps/pages/loginPage.svelte';
 	import NewArticle from '../comps/pages/newArticle.svelte';
 	import UserArticles from '../comps/pages/userArticles.svelte';
+	import UserBookmarks from '../comps/pages/userBookmarks.svelte';
 	export let url = '';
 </script>
 
@@ -30,6 +31,7 @@
 			>
 			<Route path="userArticles" let:params><UserArticles /></Route>
 			<Route path="author/:id" let:params><AuthorPage id={params.id} /></Route>
+			<Route path="userBookmarks"><UserBookmarks /></Route>
 		</div>
 		<!--
 		<div class="side-bar">

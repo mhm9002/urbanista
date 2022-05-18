@@ -174,8 +174,10 @@ const loadby = async (
 	createdAt: Date = new Date(),
 	published: boolean = true
 ) => {
+	if (published) criteria = { ...criteria, published: true };
+
 	let posts = await prisma.post.findMany({
-		where: { ...criteria, createdAt: { lt: createdAt }, published },
+		where: { ...criteria, createdAt: { lt: createdAt } },
 		include: { author: true, category: true, keywords: true },
 		orderBy: { createdAt: 'desc' },
 		take: 5,
