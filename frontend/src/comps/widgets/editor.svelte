@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Quill, { QuillOptionsStatic } from 'quill';
+	import Quill, { QuillOptionsStatic, Sources } from 'quill';
 	import ImageUploader from 'quill-image-uploader';
 	import { uploadApi } from '../../helpers/api';
 	import { onMount } from 'svelte';
@@ -43,12 +43,19 @@
 
 	onMount(async () => {
 		quill = new Quill(editor, options);
+		let placeholder = 'Write something from outside...';
+		quill.setText(placeholder);
+		quill.setSelection(0, placeholder.length, 'user');
 
 		let changeHandler = (delta) => {
 			//change = change.compose(delta)
 
 			//onchange(quill.getContents(),quill.getText(0,300))
-			onchange(quill.root.innerHTML, quill.getText(0, 100));
+			onchange(
+				quill.root.innerHTML,
+				quill.getText(0, 100),
+				quill.root.innerText.split(' ').length
+			);
 		};
 
 		quill.on('text-change', changeHandler);

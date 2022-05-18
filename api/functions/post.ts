@@ -20,53 +20,95 @@ const getpost = async (req: Request) => {
 					`${__dirname}/articles/${id}.html`
 				).toString();
 
-			return { code:responseCodes.success, payload: post };
+			return { code: responseCodes.success, payload: post };
 		}
 	}
 	return missingReq;
 };
 
 const createpost = async (req: Request) => {
-	let { postData, keywords } = req.body;
-	let content = postData.content;
+	let { postData } = req.body;
+	//let content = postData.content;
 
 	if (postData) {
 		delete postData.id;
+		let keywords = postData.keywords;
+		delete postData.keywords;
 
-		postData.keywords = createKeywords(keywords);
-		postData.content = postData.content?.substring(0, 300);
+		//postData.keywords = createKeywords(keywords);
+		//postData.content = postData.content?.substring(0, 300);
 
-		let post = await prisma.post.create({ data: postData });
-		writeFile(`${__dirname}/articles/${post.id}.html`, content, () => {});
+		let post = await prisma.post.create({
+			data: {
+				...postData,
+				keywords: {
+					create: keywords,
+				},
+			},
+		});
+		writeFile(
+			`${__dirname}/articles/${post.id}.html`,
+			postData.content,
+			() => {}
+		);
 
-		return { code:responseCodes.success, payload: post.id };
+		return { code: responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
 };
+
+const publishPost = async (req: Request) => {
+	let { id } = req.body;
+	//let content = postData.content;
+
+	if (id) {
+		let post = await prisma.post.update({
+			where: { id },
+			data: {
+				published: true,
+			},
+		});
+
+		return { code: responseCodes.success, payload: post.id };
+	} else {
+		return missingReq;
+	}
+};
+
 const removepost = async (req: Request) => {
 	return missingReq;
 };
 const updatepost = async (req: Request) => {
-	let { postData, keywords } = req.body;
+	let { postData } = req.body;
 
 	if (postData) {
-		postData.keywords = createKeywords(keywords);
-		
+		let keywords = postData.keywords;
+		delete postData.keywords;
 
 		let post = await prisma.post.update({
 			where: { id: postData.id },
-			data: postData,
+			data: {
+				...postData,
+				keywords: {
+					create: keywords,
+				},
+			},
 		});
 
-		writeFile(`${__dirname}/articles/${post.id}.html`, postData.content, () => {});
+		writeFile(
+			`${__dirname}/articles/${post.id}.html`,
+			postData.content,
+			() => {}
+		);
 
-		return { code:responseCodes.success, payload: post.id };
+		return { code: responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
 };
 
+/*
 const createKeywords = async (keywords: string[]) => {
 	let promises = keywords.map(async (k: string) => {
 		let a = await prisma.keyword.findFirst({ where: { name: k } });
@@ -77,6 +119,7 @@ const createKeywords = async (keywords: string[]) => {
 
 	return await Promise.all(promises);
 };
+*/
 
 const allposts = async (req: Request) => {
 	let posts = await prisma.post.findMany({
@@ -85,20 +128,24 @@ const allposts = async (req: Request) => {
 	});
 
 	if (posts) {
-		return { payload: posts, code:responseCodes.success };
+		return { payload: posts, code: responseCodes.success };
 	}
 	return missingReq;
 };
 const byCategoryName = async (req: Request) => {
 	let { name } = req.body;
-	let { createdAt } = req.body || new Date();
+	let { options } = req.body;
 
 	if (name) {
 		let cat = await prisma.category.findFirst({ where: { name } });
 		if (cat) {
-			let posts = await loadby({ categoryId: cat.id }, createdAt);
+			let posts = await loadby(
+				{ categoryId: cat.id },
+				options.createdAt,
+				options.published
+			);
 			if (posts) {
-				return { code:responseCodes.success, payload: posts };
+				return { code: responseCodes.success, payload: posts };
 			}
 		}
 	}
@@ -106,21 +153,29 @@ const byCategoryName = async (req: Request) => {
 };
 const byAuthor = async (req: Request) => {
 	let { id } = req.body;
-	let { createdAt } = req.body || new Date();
+	let { options } = req.body;
 
 	if (id) {
-		let posts = await loadby({ authorId: id }, createdAt);
+		let posts = await loadby(
+			{ authorId: id },
+			options.createdAt,
+			options.published
+		);
 
 		if (posts) {
-			return { payload: posts, code:responseCodes.success };
+			return { payload: posts, code: responseCodes.success };
 		}
 	}
 	return missingReq;
 };
 
-const loadby = async (criteria: {}, createdAt: any) => {
+const loadby = async (
+	criteria: {},
+	createdAt: Date = new Date(),
+	published: boolean = true
+) => {
 	let posts = await prisma.post.findMany({
-		where: { ...criteria, createdAt: { lt: createdAt } },
+		where: { ...criteria, createdAt: { lt: createdAt }, published },
 		include: { author: true, category: true, keywords: true },
 		orderBy: { createdAt: 'desc' },
 		take: 5,
@@ -132,6 +187,7 @@ export default {
 	getpost,
 	allposts,
 	createpost,
+	publishPost,
 	removepost,
 	updatepost,
 	byCategoryName,

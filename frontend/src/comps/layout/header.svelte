@@ -32,9 +32,7 @@
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
 	<div class="menu-brand-div">
-		<a class="menu-brand" use:link href="\">
-			<Brand />
-		</a>
+		<Brand />
 
 		<a
 			role="button"
@@ -93,6 +91,7 @@
 					>
 						New Article
 					</a>
+					<hr />
 					<a
 						on:click={() => (showDropmenu = false)}
 						href="\userArticles"
@@ -101,6 +100,23 @@
 					>
 						My Articles
 					</a>
+					<a
+						on:click={() => (showDropmenu = false)}
+						href="\userBookmarks"
+						use:link
+						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+					>
+						My Bookmarks
+					</a>
+					<a
+						on:click={() => (showDropmenu = false)}
+						href="\userProfile"
+						use:link
+						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+					>
+						My Profile
+					</a>
+					<hr />
 					<a
 						href="#"
 						on:click={logout}

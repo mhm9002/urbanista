@@ -54,6 +54,11 @@ const requests: Array<requestForm> = [
 		tokenValidation: true,
 	},
 	{
+		query: queryList.publishPost,
+		function: postFunctions.publishPost,
+		tokenValidation: true,
+	},
+	{
 		query: queryList.removePost,
 		function: postFunctions.removepost,
 		tokenValidation: true,

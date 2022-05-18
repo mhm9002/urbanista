@@ -18,6 +18,7 @@ const queryList = {
 	postByCategoryName: 'postByCategoryName',
 	postByAuthor: 'postByAuthor',
 	validateUser: 'validateUser',
+	publishPost: 'publishPost',
 };
 
 const uploadQueryList = {

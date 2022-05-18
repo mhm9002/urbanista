@@ -1,15 +1,22 @@
 <script lang="ts">
 	import type { Post, User } from '@prisma/client';
 	import { onMount } from 'svelte';
-	import {fetchApi} from '../../helpers/api';
-	import { queryList} from '../../helpers/queryList';
+	import type { postReqOptions } from '../../commonTypes';
+	import { fetchApi } from '../../helpers/api';
+	import { queryList } from '../../helpers/queryList';
+	import LoadMore from '../widgets/loadMore.svelte';
 	import PostCard from '../widgets/postCard.svelte';
 
 	export let id: string = '';
 	let currentId: string = '';
 	let author: User;
 	let posts: Post[] = [];
-	let latestDate = new Date();
+	let allPostsLoaded = false;
+
+	let options: postReqOptions = {
+		createdAt: new Date(),
+		published: true,
+	};
 
 	$: {
 		if (currentId != id) {
@@ -17,7 +24,7 @@
 
 			getAuthorDetails().then((res) => {
 				posts = [];
-				latestDate = new Date();
+				options.createdAt = new Date();
 				loadPosts();
 			});
 		}
@@ -26,7 +33,7 @@
 	onMount(() => {});
 
 	const getAuthorDetails = async () => {
-		let res = await fetchApi(queryList.getUser, { id });
+		let res = await fetchApi(queryList.getUser, { id, options });
 
 		if (res.code.success) {
 			author = res.payload;
@@ -37,7 +44,7 @@
 	const loadPosts = async () => {
 		let res = await fetchApi(queryList.postByAuthor, {
 			id,
-			createdAt: latestDate,
+			options,
 		});
 
 		if (res.code.success) {
@@ -45,8 +52,12 @@
 				return { ...p, author };
 			});
 
-			posts = [...posts, ...newPosts];
-			latestDate = posts[posts.length - 1].createdAt;
+			if (newPosts.length === 0) {
+				allPostsLoaded = true;
+			} else {
+				posts = [...posts, ...newPosts];
+				options.createdAt = posts[posts.length - 1].createdAt;
+			}
 		} else {
 			//posts = [];
 		}
@@ -58,5 +69,7 @@
 	{#each posts as p}
 		<PostCard post={p} />
 	{/each}
-	<button on:click={loadPosts}>Load more...</button>
+	{#if !allPostsLoaded}
+		<LoadMore load={loadPosts} />
+	{/if}
 </div>

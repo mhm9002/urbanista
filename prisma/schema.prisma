@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  email    String  @unique
-  password String
-  name     String?
-  posts    Post[]
-  likes    Like[]
-  desc     String?
+  id        String  @id @default(cuid())
+  email     String  @unique
+  password  String
+  name      String?
+  posts     Post[]
+  likes     Like[]
+  desc      String?
   activated Boolean @default(false)
 }
 
@@ -31,9 +31,10 @@ model Post {
   keywords   Keyword[]
   likes      Like[]
   featured   Boolean   @default(false)
-  featuredOn  DateTime?
+  featuredOn DateTime?
   published  Boolean   @default(false)
-  image      String @default("")
+  image      String    @default("")
+  words      Int       @default(0)
 }
 
 model Category {

@@ -40,7 +40,10 @@
 }
 
 .menu-brand {
-    @apply inline-block px-2 py-1 mt-2 text-sm font-semibold text-slate-700 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
+    @apply text-pink-700 font-bold text-lg px-2 py-1 mt-2 bg-transparent rounded-lg 
+    md:mt-0 md:ml-4 hover:text-pink-900 focus:text-pink-900 
+    focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
+    visited:text-pink-700
 }
 
 #menu-button {
@@ -107,6 +110,10 @@
 
 .post-content img {
     @apply ml-auto mr-auto mt-3 mb-3
+}
+
+.post-content * {
+    @apply mt-3
 }
 
 .post-interaction {
@@ -270,6 +277,9 @@ ql-formats button {
     @apply ml-auto mr-auto mt-3 mb-3 hover:border-pink-700 hover:border
 }
 
+.ql-editor * {
+   margin-top: 12px !important;
+}
 
 .select {
     @apply w-full rounded-full

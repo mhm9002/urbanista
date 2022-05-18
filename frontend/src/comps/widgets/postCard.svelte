@@ -1,59 +1,57 @@
 <script lang="ts">
 	import type { Post } from '@prisma/client';
-import moment from 'moment';
+	import moment from 'moment';
 	import { link } from 'svelte-routing';
-	
+	import { fetchApi } from '../../helpers/api';
+	import { queryList } from '../../helpers/queryList';
+
 	export let post: Post;
 	export let edit: boolean = false;
 
-	let keywords = ['Urban planning', 'Urban design', 'Keywording'];
+	const publishDraft = async () => {
+		let res = await fetchApi(queryList.publishPost, { id: post.id }, true);
 
-
+		if (res.code.success) {
+			post.published = true;
+		}
+	};
 </script>
 
 <div class="post-card">
 	<div class="post-card-meta">
 		<img
-		class="profile-inline"
-		src="https://bulma.io/images/placeholders/96x96.png"
-		alt="Placeholder image"
-	/>
+			class="profile-inline"
+			src="https://bulma.io/images/placeholders/96x96.png"
+			alt="Placeholder image"
+		/>
 		<p>
-		<a
-			class="post-card-author"
-			href="\author\{post.authorId}"
-			use:link
-		>
-
-			{post.author.name}</a
-		>
-		 in 
-		<a class="post-card-author" href="\cat\{post.category.name}" use:link
-			>{post.category.name}</a
-		>
-		-
-		<time
-			class="post-card-time"
-			datetime={new Date(post.createdAt)}
-			>{moment(new Date(post.createdAt),false).fromNow()}</time
-		>
+			<a class="post-card-author" href="\author\{post.authorId}" use:link>
+				{post.author.name}</a
+			>
+			in
+			<a class="post-card-author" href="\cat\{post.category.name}" use:link
+				>{post.category.name}</a
+			>
+			-
+			<time class="post-card-time" datetime={new Date(post.createdAt)}
+				>{moment(new Date(post.createdAt), false).fromNow()}</time
+			>
 		</p>
 	</div>
 	<div class="flex flex-row">
 		<div class="media-left">
-			
-
 			<a class="post-card-title" href="/article/{post.id}" use:link
 				>{post.title}</a
 			>
 			<p class="post-card-content">{post.exerpt}</p>
-			
 		</div>
 		<div class="media-content">
 			<figure>
 				<img
 					class="post-card-image"
-					src={post.image!==''?"http://localhost:4000/api/images/"+post.image: "https://bulma.io/images/placeholders/96x96.png"}
+					src={post.image !== ''
+						? 'http://localhost:4000/api/images/' + post.image
+						: 'https://bulma.io/images/placeholders/96x96.png'}
 					alt="Placeholder image"
 				/>
 			</figure>
@@ -62,14 +60,17 @@ import moment from 'moment';
 			<div>
 				Actions
 				<a href="newArticle/{post.id}" use:link>Edit</a>
+				{#if !post.published}
+					<a href="#" on:click={publishDraft}>Publish</a>
+				{/if}
 			</div>
 		{/if}
 	</div>
 	<div class="media-bar">
-		{#each keywords as k}
-			<a href="#" class="keyword">{k}</a>
+		{#each post.keywords as k}
+			<a href="#" class="keyword">{k.name}</a>
 		{/each}
-		<p class="reading-time">2 min. read</p>
+		<p class="reading-time">{Math.ceil(post.words / 225)} min. read</p>
 	</div>
 </div>
 

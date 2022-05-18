@@ -28,7 +28,9 @@
 		id: '',
 		exerpt: '',
 		featuredOn: null,
-		image: ''
+		image: '',
+		words: 0,
+		keywords: [],
 	};
 
 	let keywords: string[] = [];
@@ -76,19 +78,23 @@
 		newPost.content = postContent;
 		newPost.createdAt = new Date();
 
-		let imagefile = ''
-		let firstImage = postContent.indexOf('api/images/')
-		if (firstImage>-1){
-			let end = postContent.indexOf('"', firstImage)
-			if (end>-1){
-				imagefile = postContent.substring(firstImage+11, end)
-				console.log(imagefile)
+		let imagefile = '';
+		let firstImage = postContent.indexOf('api/images/');
+		if (firstImage > -1) {
+			let end = postContent.indexOf('"', firstImage);
+			if (end > -1) {
+				imagefile = postContent.substring(firstImage + 11, end);
+				console.log(imagefile);
 				newPost.image = imagefile;
 				//console.log(imagefile)
 			}
 		}
 
-		
+		if (sendKeywords) {
+			newPost.keywords = keywords.map((k) => {
+				return { name: k };
+			});
+		}
 
 		if (newPost.title === '') newPost.title = 'Draft';
 
@@ -96,8 +102,8 @@
 			newPost.id === '' ? queryList.createPost : queryList.updatePost,
 			{
 				postData: newPost,
-				keywords: sendKeywords ? keywords : [],
-			}, true
+			},
+			true
 		);
 
 		if (res.code.success) {
@@ -122,9 +128,6 @@
 </script>
 
 <main class="new-article-page">
-	
-	
-	
 	<div class="new-article-top-bar">
 		<p>{autosaved ? 'Article autosaved' : '_____________'}</p>
 		<FormField
@@ -153,9 +156,10 @@
 	</div>
 
 	<Editor
-		onchange={(content, exerpt) => {
+		onchange={(content, exerpt, words) => {
 			postContent = content;
 			newPost.exerpt = exerpt;
+			newPost.words = words;
 		}}
 	/>
 
