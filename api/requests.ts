@@ -16,7 +16,7 @@ const requests: Array<requestForm> = [
 	{
 		query: queryList.createUser,
 		function: userFunctions.createUser,
-		tokenValidation: true,
+		tokenValidation: false,
 	},
 	{
 		query: queryList.removeUser,
@@ -31,7 +31,7 @@ const requests: Array<requestForm> = [
 	{
 		query: queryList.getUser,
 		function: userFunctions.getUser,
-		tokenValidation: true,
+		tokenValidation: false,
 	},
 	{
 		query: queryList.validateUser,

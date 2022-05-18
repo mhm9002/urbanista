@@ -1,66 +1,76 @@
 <script lang="ts">
 	import type { Post } from '@prisma/client';
+import moment from 'moment';
 	import { link } from 'svelte-routing';
-
+	
 	export let post: Post;
 	export let edit: boolean = false;
 
 	let keywords = ['Urban planning', 'Urban design', 'Keywording'];
+
+
 </script>
 
 <div class="post-card">
-	<div class="media-left">
-		<div class="inline">
-			<a
-				class="inline post-card-author"
-				href="\author\{post.authorId}"
-				use:link
+	<div class="post-card-meta">
+		<img
+		class="profile-inline"
+		src="https://bulma.io/images/placeholders/96x96.png"
+		alt="Placeholder image"
+	/>
+		<p>
+		<a
+			class="post-card-author"
+			href="\author\{post.authorId}"
+			use:link
+		>
+
+			{post.author.name}</a
+		>
+		 in 
+		<a class="post-card-author" href="\cat\{post.category.name}" use:link
+			>{post.category.name}</a
+		>
+		-
+		<time
+			class="post-card-time"
+			datetime={new Date(post.createdAt)}
+			>{moment(new Date(post.createdAt),false).fromNow()}</time
+		>
+		</p>
+	</div>
+	<div class="flex flex-row">
+		<div class="media-left">
+			
+
+			<a class="post-card-title" href="/article/{post.id}" use:link
+				>{post.title}</a
 			>
+			<p class="post-card-content">{post.exerpt}</p>
+			
+		</div>
+		<div class="media-content">
+			<figure>
 				<img
-					class="profile-inline"
-					src="https://bulma.io/images/placeholders/96x96.png"
+					class="post-card-image"
+					src={post.image!==''?"http://localhost:4000/api/images/"+post.image: "https://bulma.io/images/placeholders/96x96.png"}
 					alt="Placeholder image"
 				/>
-
-				{post.author.name}</a
-			>
-			in
-			<a class="post-card-author" href="\cat\{post.category.name}" use:link
-				>{post.category.name}</a
-			>
-			-
-			<time
-				class="post-card-time"
-				datetime={new Date(post.createdAt).toDateString()}
-				>{new Date(post.createdAt).toDateString()}</time
-			>
+			</figure>
 		</div>
-
-		<a class="post-card-title" href="/article/{post.id}" use:link
-			>{post.title}</a
-		>
-		<p class="post-card-content">{post.exerpt}</p>
-		<div class="media-bar">
-			{#each keywords as k}
-				<a href="#" class="keyword">{k}</a>
-			{/each}
-			<p class="reading-time">2 min. read</p>
-		</div>
+		{#if edit}
+			<div>
+				Actions
+				<a href="newArticle/{post.id}" use:link>Edit</a>
+			</div>
+		{/if}
 	</div>
-	<div class="media-content">
-		<figure>
-			<img
-				src="https://bulma.io/images/placeholders/96x96.png"
-				alt="Placeholder image"
-			/>
-		</figure>
+	<div class="media-bar">
+		{#each keywords as k}
+			<a href="#" class="keyword">{k}</a>
+		{/each}
+		<p class="reading-time">2 min. read</p>
 	</div>
-	{#if edit}
-		<div>
-			Actions
-			<a href="newArticle/{post.id}" use:link>Edit</a>
-		</div>
-	{/if}
 </div>
 
 <style>

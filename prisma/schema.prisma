@@ -33,6 +33,7 @@ model Post {
   featured   Boolean   @default(false)
   featuredOn  DateTime?
   published  Boolean   @default(false)
+  image      String @default("")
 }
 
 model Category {

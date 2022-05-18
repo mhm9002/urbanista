@@ -34,6 +34,9 @@ const createToken = () => {
 			localStorage.removeItem('token');
 			set(undefined);
 		},
+		get: ()=>{
+			return JSON.parse(localStorage.getItem('token')) || undefined
+		}
 	};
 };
 

@@ -28,6 +28,7 @@
 		id: '',
 		exerpt: '',
 		featuredOn: null,
+		image: ''
 	};
 
 	let keywords: string[] = [];
@@ -50,7 +51,7 @@
 		}
 
 		if (id !== '') {
-			let res = await fetchApi(queryList.getPost, { id });
+			let res = await fetchApi(queryList.getPost, { id }, true);
 			if (res.code.success) {
 				newPost = res.payload;
 				postContent = newPost.content;
@@ -75,6 +76,20 @@
 		newPost.content = postContent;
 		newPost.createdAt = new Date();
 
+		let imagefile = ''
+		let firstImage = postContent.indexOf('api/images/')
+		if (firstImage>-1){
+			let end = postContent.indexOf('"', firstImage)
+			if (end>-1){
+				imagefile = postContent.substring(firstImage+11, end)
+				console.log(imagefile)
+				newPost.image = imagefile;
+				//console.log(imagefile)
+			}
+		}
+
+		
+
 		if (newPost.title === '') newPost.title = 'Draft';
 
 		let res = await fetchApi(
@@ -82,7 +97,7 @@
 			{
 				postData: newPost,
 				keywords: sendKeywords ? keywords : [],
-			}
+			}, true
 		);
 
 		if (res.code.success) {
@@ -107,10 +122,11 @@
 </script>
 
 <main class="new-article-page">
-	<slot>
-		<p>{autosaved ? 'Article autosaved' : 'Ready'}</p>
-	</slot>
-	<div class="inline flex fixed top-20 left-auto right-auto">
+	
+	
+	
+	<div class="new-article-top-bar">
+		<p>{autosaved ? 'Article autosaved' : '_____________'}</p>
 		<FormField
 			onValueChange={(value) => (newPost.title = value)}
 			placeholder="Title..."

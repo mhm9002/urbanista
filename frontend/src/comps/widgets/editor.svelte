@@ -32,21 +32,8 @@
 					let res = await resizeImage(file);
 
 					let res2 = await uploadApi(uploadQueryList.uploadImage, res);
-					console.log(res2);
 
 					return res2;
-
-					/*
-					return new Promise((resolve, reject) => {
-						resizeImage(file).then((res) => {
-							console.log(res);
-							uploadApi(uploadQueryList.uploadImage, res).then((res2) => {
-								console.log(res2);
-								resolve(res2);
-							});
-						});
-					});
-					*/
 				},
 			},
 		},
@@ -61,7 +48,7 @@
 			//change = change.compose(delta)
 
 			//onchange(quill.getContents(),quill.getText(0,300))
-			onchange(quill.root.innerHTML, quill.getText(0, 300));
+			onchange(quill.root.innerHTML, quill.getText(0, 100));
 		};
 
 		quill.on('text-change', changeHandler);

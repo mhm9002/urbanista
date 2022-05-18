@@ -1,51 +1,37 @@
 import { User } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import jwt, { Secret, sign } from 'jsonwebtoken';
+import { responseCodes } from './readyResponse';
 
 const validateToken = (
 	req: Request,
-	res: Response,
-	next: (req: Request, res: Response) => any
+	next: (req: Request) => Promise<any>
 ) => {
-	//temp
-	if (1 === 1) {
-		next(req, res);
-		return;
-	}
-
+	
 	let token = (
 		req.headers['x-access-token'] || req.headers['authorization']
 	)?.toString(); // Express headers are auto converted to lowercase
 
 	if (!token) {
-		return res.json({
-			error: 'Auth token is not supplied',
-		});
+		return({code: responseCodes.invalidToken, payload:null})
 	}
 	if (token.startsWith('Bearer ')) {
 		// Remove Bearer from string
-
 		token = token.slice(7, token.length);
 	}
 
-	let secret: Secret = process.env.JWT_SECRET?.toString() || '';
+	let secret: Secret = process.env.JWT_SECRET || '';
 
-	if (token) {
-		jwt.verify(token, secret, (err, decoded) => {
-			if (err) {
-				return res.json({
-					error: 'Token is not valid',
-				});
+	return new Promise((resolve, reject)=>{
+		jwt.verify(token||'', secret, (err, decoded) => {
+			if (!err) {
+				console.log(decoded)
+				next(req).then(resolve)		
 			} else {
-				//req.decoded = decoded;
-				next(req, res);
+				resolve({code: responseCodes.invalidToken, payload:null})
 			}
 		});
-	} else {
-		return res.json({
-			error: 'Auth token is not supplied',
-		});
-	}
+	})
 };
 
 const getToken = (user: User) => {
@@ -55,4 +41,4 @@ const getToken = (user: User) => {
 	});
 };
 
-export { validateToken, getToken };
+export { validateToken, getToken }

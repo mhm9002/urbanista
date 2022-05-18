@@ -1,17 +1,25 @@
+import { token } from '../appStore';
 import type { queryRespose } from '../commonTypes';
 import { queryList, uploadQueryList } from './queryList';
 
-const fetchApi = async (query: string, payload: any) => {
+const fetchApi = async (query: string, payload: any, tokenNeeded: boolean = false) => {
+	let authorization = tokenNeeded?{'authorization': 'Bearer '+token.get()}:{}
+	
+	
 	let a = await fetch(`http://localhost:4000/api/${query}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			...authorization		
 		},
 		body: JSON.stringify(payload),
 	});
 
 	let res = await a.json();
 	let res2: queryRespose = { ...res };
+
+	
+
 
 	return await res2;
 };

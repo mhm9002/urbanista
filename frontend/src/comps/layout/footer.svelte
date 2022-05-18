@@ -2,6 +2,7 @@
 	import Brand from './brand.svelte';
 </script>
 
+<!--
 <div class="page-footer">
 	<Brand />
 	<p class="ml-4 text-xs">
@@ -9,3 +10,4 @@
 		consider contributing to it by adding your thoughts in form of articles
 	</p>
 </div>
+-->

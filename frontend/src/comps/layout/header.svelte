@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Brand from './brand.svelte';
 	import { link, navigate } from 'svelte-routing';
-	import { user } from '../../appStore';
+	import { token, user } from '../../appStore';
 	import type { User } from '@prisma/client';
 
 	let mainCats = [
@@ -23,6 +23,7 @@
 
 	const logout = () => {
 		user.logout();
+		token.removeToken();
 		navigate('/');
 	};
 

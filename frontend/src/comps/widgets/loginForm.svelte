@@ -9,13 +9,22 @@
 	let email: string = '';
 	let password: string = '';
 
-	const login = () => {
+	const login =  () => {
+		
+		if (email===''||password===''){
+			message = 'Incomplete credentials'
+			return
+		}
+		
 		fetchApi(queryList.login, { email, password }).then((res) => {
+		
 			if (res.code.success) {
+				console.log(res.payload)
 				user.login(res.payload.user);
 				token.saveToken(res.payload.token);
 				onLogin();
 			} else {
+		
 				message = res.code.message;
 			}
 		});
