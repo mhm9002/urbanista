@@ -5,6 +5,7 @@
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
+import PostActionBar from '../widgets/postActionBar.svelte';
 
 	export let id: string = '';
 	let articleId: string = '';
@@ -12,6 +13,7 @@
 
 	let liked = false;
 	let bookmarked = false;
+	
 	let loaded: boolean = false;
 	let loginRequired: boolean = false;
 
@@ -35,31 +37,21 @@
 			{
 				id: articleId,
 				fullPost: true,
+				userId: activeUser?.id||''
 			},
 			true
 		);
 
 		if (res.code.success) {
-			post = res.payload;
+			post = res.payload.post;
+			bookmarked = res.payload.bookmarked;
+			liked =res.payload.liked;
 		} else if (res.code.code === 998) {
 			loginRequired = true;
 		}
 		loaded = true;
 	};
 
-	const addBookmark = async () => {
-		let res = await fetchApi(
-			queryList.addBookmark,
-			{ postId: articleId, userId: activeUser.id },
-			true
-		);
-
-		if (res.code.success) {
-			bookmarked = true;
-		} else {
-			console.log(res.code.message);
-		}
-	};
 </script>
 
 <svelte:head>
@@ -79,6 +71,9 @@
 {:else if !loaded}
 	<LoadingWrapper message="Loading" />
 {:else}
+	{#if activeUser}
+		<PostActionBar {articleId} userId={activeUser.id} {liked} {bookmarked} />
+	{/if}
 	<section class="post">
 		<div class="inline-flex mb-1 justify-between items-baseline w-full">
 			<p class="post-author">{post.author.name}</p>
@@ -93,31 +88,7 @@
 		<div class="post-content">
 			{@html post.content}
 		</div>
-		<div class="post-interaction">
-			<div class="post-interaction-left">
-				<span class="action-clickable">
-					<i class="material-icons">chat_bubble</i>
-				</span>
-				<span
-					on:click={() => (liked = !liked)}
-					class="action-clickable {liked ? 'action-active' : ''}"
-				>
-					<i class="material-icons">favorite</i>
-				</span>
-			</div>
-			<div class="post-interaction-right">
-				<span
-					on:click={addBookmark}
-					class="action-clickable {bookmarked ? 'action-active' : ''}"
-				>
-					<i class="material-icons">book</i>
-				</span>
-
-				<span class="action-clickable">
-					<i class="material-icons">flag</i>
-				</span>
-			</div>
-		</div>
+		
 	</section>
 {/if}
 

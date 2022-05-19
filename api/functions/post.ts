@@ -6,7 +6,7 @@ import { missingReq, responseCodes } from './readyResponse';
 const prisma = new PrismaClient();
 
 const getpost = async (req: Request) => {
-	let { id, fullPost } = req.body;
+	let { id, fullPost, userId } = req.body;
 
 	if (id) {
 		let post = await prisma.post.findUnique({
@@ -20,7 +20,14 @@ const getpost = async (req: Request) => {
 					`${__dirname}/articles/${id}.html`
 				).toString();
 
-			return { code: responseCodes.success, payload: post };
+			let bookmark = await prisma.bookmark.findFirst({where:{userId, postId:id}})
+			let bookmarked = bookmark?true:false
+
+			let like = await prisma.like.findFirst({where:{likerId:userId}})
+			let liked = like?true:false
+
+
+			return { code: responseCodes.success, payload: {post, bookmarked, liked} };
 		}
 	}
 	return missingReq;

@@ -17,6 +17,7 @@ model User {
   bookmarks Bookmark[]
   desc      String?
   activated Boolean    @default(false)
+  comments  Comment[]
 }
 
 model Post {
@@ -31,6 +32,7 @@ model Post {
   category   Category  @relation(fields: [categoryId], references: [id])
   keywords   Keyword[]
   likes      Like[]
+  comments    Comment[]
   featured   Boolean   @default(false)
   featuredOn DateTime?
   published  Boolean   @default(false)
@@ -64,4 +66,18 @@ model Bookmark {
   user         User     @relation(fields: [userId], references: [id])
   postId       String
   bookmarkedAt DateTime @default(now())
+}
+
+model Comment {
+  id      String @id @default(cuid())
+  commenterId String
+  commenter   User   @relation(fields: [commenterId], references: [id])
+  postId  String
+  post    Post   @relation(fields: [postId], references: [id])
+  content String  @default("")
+
+  Children  Comment[] @relation("Comment_Children")
+  parent    Comment?  @relation("Comment_Children", fields: [parent_id], references: [id])
+  parent_id String?
+
 }

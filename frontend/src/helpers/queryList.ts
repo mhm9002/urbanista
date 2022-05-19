@@ -20,7 +20,9 @@ const queryList = {
 	validateUser: 'validateUser',
 	publishPost: 'publishPost',
 	userBookmarks: 'userBookmarks',
-	addBookmark: 'addBookmark',
+	bookmarkPost: 'bookmarkPost',
+	userLikes:'userLikes',
+	likePost: 'likePost'
 };
 
 const uploadQueryList = {

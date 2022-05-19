@@ -3,6 +3,8 @@ import userFunctions from './functions/user';
 import postFunctions from './functions/post';
 import catFunctions from './functions/categories';
 import imageFunctions from './functions/images';
+import bookmarkFunctions from './functions/bookmarks'
+import likeFunctions from './functions/like'
 import { queryList, uploadQueryList } from '../frontend/src/helpers/queryList';
 import { queryRespose } from '../frontend/src/commonTypes';
 
@@ -50,12 +52,22 @@ const requests: Array<requestForm> = [
 	},
 	{
 		query: queryList.userBookmarks,
-		function: userFunctions.getUserBookmarks,
+		function: bookmarkFunctions.getUserBookmarks,
 		tokenValidation: true,
 	},
 	{
-		query: queryList.addBookmark,
-		function: userFunctions.addToBookmarks,
+		query: queryList.bookmarkPost,
+		function: bookmarkFunctions.addToBookmarks,
+		tokenValidation: true,
+	},
+	{
+		query: queryList.userLikes,
+		function: likeFunctions.getUserLikes,
+		tokenValidation: true,
+	},
+	{
+		query: queryList.likePost,
+		function: likeFunctions.likePost,
 		tokenValidation: true,
 	},
 	{

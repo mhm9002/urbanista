@@ -10,10 +10,15 @@ export const responseCodes: { [key: string]: responseCode } = {
 		message: 'Please activate your account via the link sent to your email',
 	},
 	userEmailUsed: { success: false, code: 202, message: 'Email already exists' },
-	bookmarkedAlready: {
-		success: false,
+	bookmarkedRemoved: {
+		success: true,
 		code: 251,
-		message: 'Already Bookmarked',
+		message: 'Bookmark removed',
+	},
+	likeRemoved: {
+		success: true,
+		code: 271,
+		message: 'Like removed',
 	},
 };
 

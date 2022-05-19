@@ -34,11 +34,11 @@ const validateToken = (
 	})
 };
 
-const getToken = (user: User) => {
+const generateToken = (user: User) => {
 	let secret: Secret = process.env.JWT_SECRET || '';
 	return sign({ user_id: user.id, email: user.email }, secret, {
 		expiresIn: '2 days',
 	});
 };
 
-export { validateToken, getToken }
+export { validateToken, generateToken }

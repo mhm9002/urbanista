@@ -117,15 +117,16 @@
 }
 
 .post-interaction {
-    @apply flex fixed w-1/4 justify-between mt-12 bg-white rounded-full p-4 left-0 right-0 ml-auto mr-auto shadow-md bottom-40 ;
+    @apply flex flex-col absolute h-1/4 justify-between bg-white 
+    rounded-full p-4 left-6 top-48 shadow-lg;
 }
 
 .post-interaction div {
-    @apply flex
+    @apply flex flex-col
 }
 
 .action-clickable {
-    @apply text-slate-500 hover:text-pink-400 w-6 h-6 ml-4
+    @apply text-slate-500 hover:text-pink-400 w-6 h-6 mt-4 border-none
 }
 
 .action-active {
