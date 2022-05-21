@@ -87,7 +87,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\newArticle"
 						use:link
-						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
 					>
 						New Article
 					</a>
@@ -96,7 +96,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\userArticles"
 						use:link
-						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
 					>
 						My Articles
 					</a>
@@ -104,7 +104,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\userBookmarks"
 						use:link
-						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
 					>
 						My Bookmarks
 					</a>
@@ -112,7 +112,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\userProfile"
 						use:link
-						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
 					>
 						My Profile
 					</a>
@@ -120,7 +120,7 @@
 					<a
 						href="#"
 						on:click={logout}
-						class="menu-item block p-2 hover:bg-pink-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
 					>
 						Logout
 					</a>

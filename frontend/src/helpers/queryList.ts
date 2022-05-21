@@ -21,8 +21,9 @@ const queryList = {
 	publishPost: 'publishPost',
 	userBookmarks: 'userBookmarks',
 	bookmarkPost: 'bookmarkPost',
-	userLikes:'userLikes',
-	likePost: 'likePost'
+	userLikes: 'userLikes',
+	likePost: 'likePost',
+	addComment: 'addComment',
 };
 
 const uploadQueryList = {

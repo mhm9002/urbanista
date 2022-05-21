@@ -11,7 +11,20 @@ const getpost = async (req: Request) => {
 	if (id) {
 		let post = await prisma.post.findUnique({
 			where: { id },
-			include: { author: true, category: true, keywords: true, likes: true },
+			include: {
+				author: true,
+				category: true,
+				keywords: true,
+				likes: true,
+				comments: {
+					include: {
+						commenter: true,
+						Children: {
+							include: { commenter: true },
+						},
+					},
+				},
+			},
 		});
 
 		if (post) {
@@ -20,14 +33,18 @@ const getpost = async (req: Request) => {
 					`${__dirname}/articles/${id}.html`
 				).toString();
 
-			let bookmark = await prisma.bookmark.findFirst({where:{userId, postId:id}})
-			let bookmarked = bookmark?true:false
+			let bookmark = await prisma.bookmark.findFirst({
+				where: { userId, postId: id },
+			});
+			let bookmarked = bookmark ? true : false;
 
-			let like = await prisma.like.findFirst({where:{likerId:userId}})
-			let liked = like?true:false
+			let like = await prisma.like.findFirst({ where: { likerId: userId } });
+			let liked = like ? true : false;
 
-
-			return { code: responseCodes.success, payload: {post, bookmarked, liked} };
+			return {
+				code: responseCodes.success,
+				payload: { post, bookmarked, liked },
+			};
 		}
 	}
 	return missingReq;

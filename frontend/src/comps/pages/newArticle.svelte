@@ -156,7 +156,7 @@
 	</div>
 
 	<Editor
-		onchange={(content, exerpt, words) => {
+		onContentChange={(content, exerpt, words) => {
 			postContent = content;
 			newPost.exerpt = exerpt;
 			newPost.words = words;

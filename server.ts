@@ -14,7 +14,11 @@ app.use(bodyParser.json());
 
 requests.forEach((r) =>
 	app.post(`/api/${r.query}`, async (req, res) =>
-		res.send (r.tokenValidation? await validateToken(req,r.function):await r.function(req))
+		res.send(
+			r.tokenValidation
+				? await validateToken(req, r.function)
+				: await r.function(req)
+		)
 	)
 );
 

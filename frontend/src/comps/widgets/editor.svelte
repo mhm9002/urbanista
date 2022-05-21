@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import { uploadQueryList } from '../../helpers/queryList';
 
-	export let onchange;
+	export let onContentChange;
 
 	Quill.register('modules/imageUploader', ImageUploader);
 
@@ -51,7 +51,7 @@
 			//change = change.compose(delta)
 
 			//onchange(quill.getContents(),quill.getText(0,300))
-			onchange(
+			onContentChange(
 				quill.root.innerHTML,
 				quill.getText(0, 100),
 				quill.root.innerText.split(' ').length

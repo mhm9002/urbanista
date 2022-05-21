@@ -1,11 +1,12 @@
 <script lang="ts">
-	import type { Post, User } from '@prisma/client';
+	import type { Post, User, Comment } from '@prisma/client';
 	import { user } from '../../appStore';
 
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
+	import CommentBox from '../widgets/commentBox.svelte';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
-import PostActionBar from '../widgets/postActionBar.svelte';
+	import PostActionBar from '../widgets/postActionBar.svelte';
 
 	export let id: string = '';
 	let articleId: string = '';
@@ -13,7 +14,7 @@ import PostActionBar from '../widgets/postActionBar.svelte';
 
 	let liked = false;
 	let bookmarked = false;
-	
+
 	let loaded: boolean = false;
 	let loginRequired: boolean = false;
 
@@ -37,7 +38,7 @@ import PostActionBar from '../widgets/postActionBar.svelte';
 			{
 				id: articleId,
 				fullPost: true,
-				userId: activeUser?.id||''
+				userId: activeUser?.id || '',
 			},
 			true
 		);
@@ -45,13 +46,12 @@ import PostActionBar from '../widgets/postActionBar.svelte';
 		if (res.code.success) {
 			post = res.payload.post;
 			bookmarked = res.payload.bookmarked;
-			liked =res.payload.liked;
+			liked = res.payload.liked;
 		} else if (res.code.code === 998) {
 			loginRequired = true;
 		}
 		loaded = true;
 	};
-
 </script>
 
 <svelte:head>
@@ -72,7 +72,13 @@ import PostActionBar from '../widgets/postActionBar.svelte';
 	<LoadingWrapper message="Loading" />
 {:else}
 	{#if activeUser}
-		<PostActionBar {articleId} userId={activeUser.id} {liked} {bookmarked} />
+		<PostActionBar
+			{articleId}
+			userId={activeUser.id}
+			{liked}
+			{bookmarked}
+			comments={post.comments}
+		/>
 	{/if}
 	<section class="post">
 		<div class="inline-flex mb-1 justify-between items-baseline w-full">
@@ -88,7 +94,6 @@ import PostActionBar from '../widgets/postActionBar.svelte';
 		<div class="post-content">
 			{@html post.content}
 		</div>
-		
 	</section>
 {/if}
 
