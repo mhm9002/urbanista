@@ -45,17 +45,17 @@
 			>
 			<p class="post-card-content">{post.exerpt}</p>
 		</div>
+		{#if post.image !== ''}
 		<div class="media-content">
 			<figure>
 				<img
-					class="post-card-image"
-					src={post.image !== ''
-						? 'http://localhost:4000/api/images/' + post.image
-						: 'https://bulma.io/images/placeholders/96x96.png'}
+					class="post-card-image" 
+					src={'http://localhost:4000/api/images/' + post.image}
 					alt="Placeholder image"
 				/>
 			</figure>
 		</div>
+		{/if}
 		{#if edit}
 			<div>
 				Actions

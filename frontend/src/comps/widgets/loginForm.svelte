@@ -33,12 +33,12 @@
 
 <form on:submit={(e) => e.preventDefault()}>
 	<FormField
-		onValueChange={(value) => (email = value)}
+		bind:value={email}
 		type="email"
 		placeholder="Enter your email..."
 	/>
 	<FormField
-		onValueChange={(value) => (password = value)}
+	bind:value={password}
 		type="password"
 		placeholder="Enter your password..."
 	/>

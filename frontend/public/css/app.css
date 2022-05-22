@@ -424,6 +424,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.visible {
+  visibility: visible;
+}
 .fixed {
   position: fixed;
 }
@@ -1475,6 +1478,37 @@ ql-formats button {
 .select select:focus-visible {
   --tw-border-opacity: 1;
   border-color: rgb(20 184 166 / var(--tw-border-opacity));
+}
+
+.profile-user-prop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom-width: 2px;
+  padding-bottom: 0.5rem;
+}
+
+.profile-user-prop-name {
+  font-weight: 900;
+}
+
+.profile-user-prop-desc {
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.profile-user-prop-actions {
+  margin-top: 0.5rem;
+}
+
+.profile-user-prop-actions button {
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
+  padding: 0.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:bg-orange-300:hover {

@@ -1,16 +1,20 @@
 <script lang="ts">
 	import CommentEditor from './commentEditor.svelte';
 
-	import Editor from './editor.svelte';
-
-	import FormField from './formField.svelte';
-
 	export let addComment: (content) => void;
-	let content = '';
+	let content:string = '';
+
+	const resetContent = ()=>{
+		content = ''
+	}
 </script>
 
 <div class="comment-adder">
-	<CommentEditor onContentChange={(c, e, l) => (content = c)} />
+	<CommentEditor bind:content={content} />
 
-	<button on:click={() => addComment(content)}>Add comment</button>
+	<button on:click={() => {
+		
+		addComment(content)
+		resetContent()
+	}}>Add comment</button>
 </div>

@@ -17,13 +17,13 @@
 	let password: string = '';
 	let password2: string = '';
 
-	const checkName = (value:string)=>{
-		nameMsg=value===''?'Name shall be filled':''
-		return value!==''
+	const checkName = ()=>{
+		nameMsg=name===''?'Name shall be filled':''
+		return name!==''
 	}
 
-	const checkEmail = (value: string) => {
-		if (!value.includes('@')) {
+	const checkEmail = () => {
+		if (!email.includes('@')) {
 			emailMsg = 'The entered value does not follow email format';
 			return false
 		} else {
@@ -32,8 +32,8 @@
 		}
 	};
 
-	const checkPwd = (value: string) => {
-			if (value.length < 8 || !value.includes('@')) {
+	const checkPwd = () => {
+			if (password.length < 8 || !password.includes('@')) {
 			passwordMsg =
 				'Password shall include 8 characters and @ shall be one of them';
 			return false
@@ -44,9 +44,9 @@
 		}
 	};
 
-	const checkPwd2 = (value: string) => {
+	const checkPwd2 = () => {
 		
-		if (value !== password) {
+		if (password2 !== password) {
 			password2Msg = 'The entered value does not match the password entered';
 			return false
 		} else {
@@ -56,7 +56,7 @@
 	};
 
 	const register = () => {
-		if (!checkName(name) || !checkEmail(email) || !checkPwd(password) || !checkPwd2(password2))
+		if (!checkName() || !checkEmail() || !checkPwd() || !checkPwd2())
 			return
 
 		fetchApi(queryList.createUser, { name, email, password }).then((res) => {
@@ -72,40 +72,32 @@
 
 <form on:submit={(e) => e.preventDefault()}>
 	<FormField
-		onValueChange={(value) => {
-			name = value
-			checkName(value)
-		}}
+		bind:value={name}
 		type="name"
 		placeholder="Enter your name.."
 		message={nameMsg}
+		onChange={checkName}
 	/>
 	<FormField
-		onValueChange={(value) => {
-			email = value;
-			checkEmail(value);
-		}}
+		bind:value={email}
 		type="email"
 		placeholder="Enter your email..."
 		message={emailMsg}
+		onChange={checkEmail}
 	/>
 	<FormField
-		onValueChange={(value) => {
-			password = value;
-			checkPwd(value);
-		}}
+		bind:value={password}
 		type="password"
 		placeholder="Enter your password..."
 		message={passwordMsg}
+		onChange={checkPwd}
 	/>
 	<FormField
-		onValueChange={(value) => {
-			password2 = value;
-			checkPwd2(value);
-		}}
+		bind:value={password2}
 		type="password"
 		placeholder="Confirm your password..."
 		message={password2Msg}
+		onChange={checkPwd2}
 	/>
 
 	<div class="field is-grouped">

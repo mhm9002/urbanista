@@ -22,13 +22,13 @@
 			/>
 			<div class="comment-card-user">
 				{comment.commenter?.name}
-				<div class="comment-card-content">{comment.content}</div>
+				<div class="comment-card-content">{@html comment.content}</div>
 			</div>
 		</div>
 
 		<div class="comment-card-actions">
 			<button
-				class="w-fit"
+				class="w-fit text-xs"
 				on:click={() => {
 					showChildren = !showChildren;
 					if (showChildren) {

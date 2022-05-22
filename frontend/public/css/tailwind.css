@@ -335,3 +335,23 @@ ql-formats button {
     @apply font-mono autofill:bg-teal-200 p-2 m-2 w-full rounded-3xl focus-visible:border-teal-500
 
 }
+
+.profile-user-prop {
+    @apply border-b-2 pb-2 flex flex-row justify-between
+}
+
+.profile-user-prop-name {
+    @apply font-black
+}
+
+.profile-user-prop-desc {
+    @apply text-xs p-2
+}
+
+.profile-user-prop-actions {
+    @apply mt-2
+}
+
+.profile-user-prop-actions button {
+    @apply bg-teal-600 p-1 text-white rounded-full
+}

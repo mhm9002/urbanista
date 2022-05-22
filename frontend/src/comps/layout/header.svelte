@@ -35,6 +35,7 @@
 		<Brand />
 
 		<a
+			href="/"
 			role="button"
 			class="navbar-burger"
 			aria-label="menu"
