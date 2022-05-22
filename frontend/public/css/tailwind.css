@@ -32,7 +32,7 @@
 }
 
 .menu-item {
-    @apply px-4 py-2 mt-2 text-sm font-semibold text-teal-800 visited:text-teal-800 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
+    @apply px-4 py-2 mt-2 text-sm font-semibold text-pink-800 visited:text-pink-800 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
 }
 
 .drop-menu {
@@ -40,10 +40,10 @@
 }
 
 .menu-brand {
-    @apply text-teal-700 font-bold text-lg px-2 py-1 mt-2 bg-transparent rounded-lg 
-    md:mt-0 md:ml-4 hover:text-teal-900 focus:text-teal-900 
+    @apply text-pink-700 font-bold text-lg px-2 py-1 mt-2 bg-transparent rounded-lg 
+    md:mt-0 md:ml-4 hover:text-pink-900 focus:text-pink-900 
     focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
-    visited:text-teal-700
+    visited:text-pink-700
 }
 
 #menu-button {
@@ -130,11 +130,11 @@
 }
 
 .action-clickable {
-    @apply text-slate-500 hover:text-teal-400 w-6 h-6 mt-4 border-none
+    @apply text-slate-500 hover:text-pink-400 w-6 h-6 mt-4 border-none
 }
 
 .action-active {
-    @apply text-teal-800
+    @apply text-pink-800
 }
 
 .comment-adder {
@@ -146,7 +146,7 @@
 }
 
 .comment-adder button {
-    @apply bg-teal-300 text-white
+    @apply bg-pink-300 text-white
 }
 
 .comment-box {
@@ -158,7 +158,7 @@
 }
 
 .comment-card {
-    @apply bg-teal-50
+    @apply bg-pink-50
 }
 
 .comment-card-user {
@@ -199,11 +199,11 @@
 }
 
 .post-card-title {
-    @apply mt-2 mb-2 font-bold text-2xl visited:text-teal-900 text-teal-900 hover:no-underline hover:text-teal-600
+    @apply mt-2 mb-2 font-bold text-2xl visited:text-pink-900 text-pink-900 hover:no-underline hover:text-pink-600
 }
 
 .post-card-author {
-    @apply text-sm visited:text-teal-900 text-teal-900 hover:no-underline hover:text-teal-600
+    @apply text-sm visited:text-pink-900 text-pink-900 hover:no-underline hover:text-pink-600
 }
 
 .post-card-time {
@@ -261,7 +261,7 @@
 }
 
 .login-bg {
-    @apply w-full bg-teal-300 bg-repeat bg-blend-overlay;
+    @apply w-full bg-pink-300 bg-repeat bg-blend-overlay;
     background-image: url('../assets/bg.svg');
 }
 
@@ -274,15 +274,15 @@
 }
 
 .control input {
-    @apply font-mono autofill:bg-teal-200  rounded-3xl
+    @apply font-mono autofill:bg-pink-200  rounded-3xl
 }
 
 .control button {
-    @apply font-mono p-3 bg-teal-800 text-base text-white rounded-3xl
+    @apply font-mono p-3 bg-pink-800 text-base text-white rounded-3xl
 }
 
 .loading-wrapper {
-    @apply fixed left-0 right-0 top-0 bottom-0 flex opacity-80  bg-gradient-to-b overflow-clip from-slate-100 bg-teal-600;
+    @apply fixed left-0 right-0 top-0 bottom-0 flex opacity-80  bg-gradient-to-b overflow-clip from-slate-100 bg-pink-600;
     z-index: 100;
 }
 
@@ -320,7 +320,7 @@ ql-formats button {
 }
 
 .ql-editor img {
-    @apply ml-auto mr-auto mt-3 mb-3 hover:border-teal-700 hover:border
+    @apply ml-auto mr-auto mt-3 mb-3 hover:border-pink-700 hover:border
 }
 
 .ql-editor * {
@@ -332,7 +332,7 @@ ql-formats button {
 }
 
 .select select  {
-    @apply font-mono autofill:bg-teal-200 p-2 m-2 w-full rounded-3xl focus-visible:border-teal-500
+    @apply font-mono autofill:bg-pink-200 p-2 m-2 w-full rounded-3xl focus-visible:border-pink-500
 
 }
 
@@ -353,5 +353,5 @@ ql-formats button {
 }
 
 .profile-user-prop-actions button {
-    @apply bg-teal-600 p-1 text-white rounded-full
+    @apply bg-pink-600 p-1 text-white rounded-full
 }

@@ -635,11 +635,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.25rem;
   font-weight: 600;
   --tw-text-opacity: 1;
-  color: rgb(17 94 89 / var(--tw-text-opacity));
+  color: rgb(157 23 77 / var(--tw-text-opacity));
 }
 
 .menu-item:visited {
-  color: rgb(17 94 89 );
+  color: rgb(157 23 77 );
 }
 
 .menu-item:hover {
@@ -730,16 +730,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.75rem;
   font-weight: 700;
   --tw-text-opacity: 1;
-  color: rgb(15 118 110 / var(--tw-text-opacity));
+  color: rgb(190 24 93 / var(--tw-text-opacity));
 }
 
 .menu-brand:visited {
-  color: rgb(15 118 110 );
+  color: rgb(190 24 93 );
 }
 
 .menu-brand:hover {
   --tw-text-opacity: 1;
-  color: rgb(19 78 74 / var(--tw-text-opacity));
+  color: rgb(131 24 67 / var(--tw-text-opacity));
   -webkit-text-decoration-line: none;
           text-decoration-line: none;
 }
@@ -748,7 +748,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(19 78 74 / var(--tw-text-opacity));
+  color: rgb(131 24 67 / var(--tw-text-opacity));
   --tw-shadow: 0 0 #0000;
   --tw-shadow-colored: 0 0 #0000;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -967,12 +967,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .action-clickable:hover {
   --tw-text-opacity: 1;
-  color: rgb(45 212 191 / var(--tw-text-opacity));
+  color: rgb(244 114 182 / var(--tw-text-opacity));
 }
 
 .action-active {
   --tw-text-opacity: 1;
-  color: rgb(17 94 89 / var(--tw-text-opacity));
+  color: rgb(157 23 77 / var(--tw-text-opacity));
 }
 
 .comment-adder {
@@ -993,7 +993,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .comment-adder button {
   --tw-bg-opacity: 1;
-  background-color: rgb(94 234 212 / var(--tw-bg-opacity));
+  background-color: rgb(249 168 212 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -1009,7 +1009,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .comment-card {
   --tw-bg-opacity: 1;
-  background-color: rgb(240 253 250 / var(--tw-bg-opacity));
+  background-color: rgb(253 242 248 / var(--tw-bg-opacity));
 }
 
 .comment-card-user {
@@ -1084,16 +1084,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 2rem;
   font-weight: 700;
   --tw-text-opacity: 1;
-  color: rgb(19 78 74 / var(--tw-text-opacity));
+  color: rgb(131 24 67 / var(--tw-text-opacity));
 }
 
 .post-card-title:visited {
-  color: rgb(19 78 74 );
+  color: rgb(131 24 67 );
 }
 
 .post-card-title:hover {
   --tw-text-opacity: 1;
-  color: rgb(13 148 136 / var(--tw-text-opacity));
+  color: rgb(219 39 119 / var(--tw-text-opacity));
   -webkit-text-decoration-line: none;
           text-decoration-line: none;
 }
@@ -1102,16 +1102,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
-  color: rgb(19 78 74 / var(--tw-text-opacity));
+  color: rgb(131 24 67 / var(--tw-text-opacity));
 }
 
 .post-card-author:visited {
-  color: rgb(19 78 74 );
+  color: rgb(131 24 67 );
 }
 
 .post-card-author:hover {
   --tw-text-opacity: 1;
-  color: rgb(13 148 136 / var(--tw-text-opacity));
+  color: rgb(219 39 119 / var(--tw-text-opacity));
   -webkit-text-decoration-line: none;
           text-decoration-line: none;
 }
@@ -1321,7 +1321,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 .login-bg {
   width: 100%;
   --tw-bg-opacity: 1;
-  background-color: rgb(94 234 212 / var(--tw-bg-opacity));
+  background-color: rgb(249 168 212 / var(--tw-bg-opacity));
   background-repeat: repeat;
   background-blend-mode: overlay;
     background-image: url('../assets/bg.svg');
@@ -1348,18 +1348,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .control input:-webkit-autofill {
   --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity));
+  background-color: rgb(251 207 232 / var(--tw-bg-opacity));
 }
 
 .control input:autofill {
   --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity));
+  background-color: rgb(251 207 232 / var(--tw-bg-opacity));
 }
 
 .control button {
   border-radius: 1.5rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(17 94 89 / var(--tw-bg-opacity));
+  background-color: rgb(157 23 77 / var(--tw-bg-opacity));
   padding: 0.75rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 1rem;
@@ -1377,7 +1377,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: flex;
   overflow: clip;
   --tw-bg-opacity: 1;
-  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
+  background-color: rgb(219 39 119 / var(--tw-bg-opacity));
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
   --tw-gradient-from: #f1f5f9;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(241 245 249 / 0));
@@ -1445,7 +1445,7 @@ ql-formats button {
 .ql-editor img:hover {
   border-width: 1px;
   --tw-border-opacity: 1;
-  border-color: rgb(15 118 110 / var(--tw-border-opacity));
+  border-color: rgb(190 24 93 / var(--tw-border-opacity));
 }
 
 .ql-editor * {
@@ -1467,17 +1467,17 @@ ql-formats button {
 
 .select select:-webkit-autofill {
   --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity));
+  background-color: rgb(251 207 232 / var(--tw-bg-opacity));
 }
 
 .select select:autofill {
   --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity));
+  background-color: rgb(251 207 232 / var(--tw-bg-opacity));
 }
 
 .select select:focus-visible {
   --tw-border-opacity: 1;
-  border-color: rgb(20 184 166 / var(--tw-border-opacity));
+  border-color: rgb(236 72 153 / var(--tw-border-opacity));
 }
 
 .profile-user-prop {
@@ -1505,7 +1505,7 @@ ql-formats button {
 .profile-user-prop-actions button {
   border-radius: 9999px;
   --tw-bg-opacity: 1;
-  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
+  background-color: rgb(219 39 119 / var(--tw-bg-opacity));
   padding: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));

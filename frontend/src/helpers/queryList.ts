@@ -29,6 +29,7 @@ const queryList = {
 const uploadQueryList = {
 	uploadImage: 'uploadImage',
 	loadImage: 'loadImage',
+	uploadProfile: 'uploadProfile',
 };
 
 export { queryList, uploadQueryList };

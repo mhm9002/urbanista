@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { requests, uploadRequests } from './api/requests';
 import { validateToken } from './api/functions/token';
 import multer from 'multer';
+import { queryList, uploadQueryList } from './frontend/src/helpers/queryList';
 
 dotenv.config();
 
@@ -25,7 +26,11 @@ requests.forEach((r) =>
 app.use('/api/images', express.static(__dirname + '/api/functions/images'));
 
 uploadRequests.forEach((r) => {
-	const upload = multer({ dest: 'api/functions/images/' });
+	let dest =
+		r.query === uploadQueryList.uploadImage
+			? 'api/functions/images/'
+			: 'api/functions/profiles/';
+	const upload = multer({ dest });
 
 	app.post(`/api/${r.query}`, upload.single('file'), async (req, res) =>
 		res.send(await r.function(req))

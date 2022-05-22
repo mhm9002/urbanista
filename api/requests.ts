@@ -149,6 +149,11 @@ const uploadRequests: Array<requestForm> = [
 		function: imageFunctions.upload,
 		tokenValidation: true,
 	},
+	{
+		query: uploadQueryList.uploadProfile,
+		function: imageFunctions.upload,
+		tokenValidation: true,
+	},
 ];
 
 export { requests, uploadRequests };
