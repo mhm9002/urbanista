@@ -101,6 +101,14 @@ const publishPost = async (req: Request) => {
 };
 
 const removepost = async (req: Request) => {
+	let { id } = req.body;
+	//let content = postData.content;
+
+	if (id) {
+		await prisma.post.delete({where: { id }, include:{likes:true, comments:true}});
+		return { code: responseCodes.success, payload:null };
+
+	}
 	return missingReq;
 };
 const updatepost = async (req: Request) => {
@@ -148,7 +156,7 @@ const createKeywords = async (keywords: string[]) => {
 const allposts = async (req: Request) => {
 	let posts = await prisma.post.findMany({
 		where: {},
-		include: { author: true },
+		include: { author: true, _count:{select:{likes:true, comments:true}} },
 	});
 
 	if (posts) {

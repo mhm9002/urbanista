@@ -1,5 +1,5 @@
 <script lang="ts">
-import FormField from "./formField.svelte"
+import FormField from "../forms/formField.svelte"
 
     export let name:string
     export let description: string

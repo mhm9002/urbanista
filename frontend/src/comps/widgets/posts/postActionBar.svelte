@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { fetchApi } from '../../helpers/api';
-	import { queryList } from '../../helpers/queryList';
-	import CommentAdder from './commentAdder.svelte';
-	import CommentBox from './commentBox.svelte';
+	import { fetchApi } from '../../../helpers/api';
+	import { queryList } from '../../../helpers/queryList';
+	import CommentAdder from '../comments/commentAdder.svelte';
+	import CommentBox from '../comments/commentBox.svelte';
 
 	export let userId: string = '';
 	export let articleId: string = '';

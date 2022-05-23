@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { token, user } from '../../appStore';
-	import { fetchApi } from '../../helpers/api';
-	import { queryList } from '../../helpers/queryList';
+	import { token, user } from './../../../appStore';
+	import { fetchApi } from './../../../helpers/api';
+	import { queryList } from './../../../helpers/queryList';
 	import FormField from './formField.svelte';
 
 	export let onLogin;

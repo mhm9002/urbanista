@@ -23,6 +23,31 @@
     @apply px-2 self-center
 }
 
+.menu-brand-div span {
+    @apply text-white
+}
+
+.menu-brand-div span:first-child {
+    @apply text-pink-700
+}
+
+
+.menu-brand-div-animated span {
+    @apply text-white;
+    animation: color 2s infinite;
+    animation-delay: calc(.1s * var(--i))
+}
+
+@keyframes color {
+    0%, 80% {
+        color: rgb(calc(35*var(--i)),calc(15*var(--i)),calc(40*var(--i)))
+    }
+    50% {
+        color: white
+    }
+
+}
+
 .menu-center-div {
     @apply justify-self-center self-center sm:hidden md:flex
 }
@@ -354,4 +379,29 @@ ql-formats button {
 
 .profile-user-prop-actions button {
     @apply bg-pink-600 p-1 text-white rounded-full
+}
+
+.profile-user-photo {
+    @apply w-32 h-32 rounded-full border-2 border-white shadow-lg
+}
+
+.profile-user-photo-edit {
+    filter: opacity(0.5);
+}
+
+.basic-table {
+    @apply table-auto mt-6 w-full
+}
+
+.basic-table th {
+    @apply bg-pink-900 text-white font-black p-4
+}
+
+.basic-table tr {
+    @apply text-xs hover:bg-slate-100 hover:font-bold
+}
+
+
+.basic-table td {
+    @apply p-4
 }

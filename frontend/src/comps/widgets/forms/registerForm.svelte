@@ -1,8 +1,7 @@
 <script lang="ts">
 
-	import { user } from '../../appStore';
-	import {fetchApi} from '../../helpers/api';
-	import { queryList} from '../../helpers/queryList';
+		import {fetchApi} from '../../../helpers/api';
+	import { queryList} from '../../../helpers/queryList';
 	import FormField from './formField.svelte';
 
 	export let onRegister;

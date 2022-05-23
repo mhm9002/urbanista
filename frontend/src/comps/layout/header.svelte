@@ -62,12 +62,13 @@
 		{:else}
 			<div class="relative">
 				<button
-					class=""
+					class="inline-flex items-center"
 					on:click={() => (showDropmenu = true)}
 					id="menu-button"
 					aria-expanded="true"
 					aria-haspopup="true"
 				>
+					<img class="profile-inline" src={activeUser.profile!==''?'http://localhost:4000/api/profiles/'+activeUser.profile:"https://bulma.io/images/placeholders/96x96.png"} />
 					{activeUser.name}
 				</button>
 				<div
@@ -88,7 +89,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\newArticle"
 						use:link
-						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
 					>
 						New Article
 					</a>
@@ -97,7 +98,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\userArticles"
 						use:link
-						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
 					>
 						My Articles
 					</a>
@@ -105,7 +106,7 @@
 						on:click={() => (showDropmenu = false)}
 						href="\userBookmarks"
 						use:link
-						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
 					>
 						My Bookmarks
 					</a>
@@ -113,15 +114,27 @@
 						on:click={() => (showDropmenu = false)}
 						href="\userProfile"
 						use:link
-						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
 					>
 						My Profile
 					</a>
 					<hr />
+					{#if  activeUser.role>0}
+					<a
+						on:click={() => (showDropmenu = false)}
+						href="\admin"
+						use:link
+						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+					>
+						Admin Page
+					</a>
+					
+					<hr />
+					{/if}
 					<a
 						href="#"
 						on:click={logout}
-						class="menu-item block p-2 hover:bg-orange-300 hover:text-white"
+						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
 					>
 						Logout
 					</a>

@@ -4,7 +4,7 @@
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
 	import LoadMore from '../widgets/loadMore.svelte';
-	import PostCard from '../widgets/postCard.svelte';
+import PostCard from '../widgets/posts/postCard.svelte';
 
 	export let name: string = '';
 	let currentName: string = '';

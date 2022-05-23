@@ -151,7 +151,7 @@ const uploadRequests: Array<requestForm> = [
 	},
 	{
 		query: uploadQueryList.uploadProfile,
-		function: imageFunctions.upload,
+		function: imageFunctions.uploadProfile,
 		tokenValidation: true,
 	},
 ];

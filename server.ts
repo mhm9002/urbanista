@@ -24,6 +24,7 @@ requests.forEach((r) =>
 );
 
 app.use('/api/images', express.static(__dirname + '/api/functions/images'));
+app.use('/api/profiles', express.static(__dirname + '/api/functions/profiles'));
 
 uploadRequests.forEach((r) => {
 	let dest =
@@ -33,6 +34,7 @@ uploadRequests.forEach((r) => {
 	const upload = multer({ dest });
 
 	app.post(`/api/${r.query}`, upload.single('file'), async (req, res) =>
+		
 		res.send(await r.function(req))
 	);
 });

@@ -82,7 +82,7 @@ const updateUser = async (req: Request) => {
 	return missingReq;
 };
 const allUsers = async (req: Request) => {
-	let users = await prisma.user.findMany({});
+	let users = await prisma.user.findMany({include:{_count:{select:{posts:true}}}});
 
 	return { code: responseCodes.success, payload: users };
 };

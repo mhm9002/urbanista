@@ -18,6 +18,8 @@ model User {
   desc      String?
   activated Boolean    @default(false)
   comments  Comment[]
+  role  Int @default(0)
+  profile String  @default("")
 }
 
 model Post {
@@ -44,6 +46,10 @@ model Category {
   id    String @id @default(cuid())
   name  String
   posts Post[]
+
+  Children  Category[] @relation("Category_Children")
+  parent    Category?  @relation("Category_Children", fields: [parent_id], references: [id])
+  parent_id String?
 }
 
 model Like {

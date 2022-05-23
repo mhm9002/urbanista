@@ -4,7 +4,7 @@
 	import { user } from '../../appStore';
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-	import PostCard from '../widgets/postCard.svelte';
+	import PostCard from '../widgets/posts/postCard.svelte';
 
 	let userValue: User = undefined;
 	let posts: Post[] = [];

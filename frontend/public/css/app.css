@@ -463,6 +463,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .inline-flex {
   display: inline-flex;
 }
+.table {
+  display: table;
+}
 .hidden {
   display: none;
 }
@@ -485,6 +488,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .flex-col {
   flex-direction: column;
+}
+.items-center {
+  align-items: center;
 }
 .items-baseline {
   align-items: baseline;
@@ -525,6 +531,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 * {
@@ -595,6 +604,46 @@ Ensure the default browser behavior of the `hidden` attribute.
   align-self: center;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.menu-brand-div span {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.menu-brand-div span:first-child {
+  --tw-text-opacity: 1;
+  color: rgb(190 24 93 / var(--tw-text-opacity));
+}
+
+
+.menu-brand-div-animated span {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+    -webkit-animation: color 2s infinite;
+            animation: color 2s infinite;
+    -webkit-animation-delay: calc(.1s * var(--i));
+            animation-delay: calc(.1s * var(--i));
+}
+
+@-webkit-keyframes color {
+    0%, 80% {
+        color: rgb(calc(35*var(--i)),calc(15*var(--i)),calc(40*var(--i)))
+    }
+    50% {
+        color: white
+    }
+
+}
+
+@keyframes color {
+    0%, 80% {
+        color: rgb(calc(35*var(--i)),calc(15*var(--i)),calc(40*var(--i)))
+    }
+    50% {
+        color: white
+    }
+
 }
 
 .menu-center-div {
@@ -1511,10 +1560,59 @@ ql-formats button {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.hover\:bg-orange-300:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(253 186 116 / var(--tw-bg-opacity));
+.profile-user-photo {
+  height: 8rem;
+  width: 8rem;
+  border-radius: 9999px;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+.profile-user-photo-edit {
+    filter: opacity(0.5);
+}
+
+.basic-table {
+  margin-top: 1.5rem;
+  width: 100%;
+  table-layout: auto;
+}
+
+.basic-table th {
+  --tw-bg-opacity: 1;
+  background-color: rgb(131 24 67 / var(--tw-bg-opacity));
+  padding: 1rem;
+  font-weight: 900;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.basic-table tr {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.basic-table tr:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+  font-weight: 700;
+}
+
+
+.basic-table td {
+  padding: 1rem;
+}
+
+
+.hover\:bg-purple-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(216 180 254 / var(--tw-bg-opacity));
+}
+
 
 .hover\:text-white:hover {
   --tw-text-opacity: 1;

@@ -4,8 +4,8 @@
 	import { navigate } from 'svelte-routing';
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-	import LoginForm from '../widgets/loginForm.svelte';
-	import RegisterForm from '../widgets/registerForm.svelte';
+	import LoginForm from '../widgets/forms/loginForm.svelte';
+	import RegisterForm from '../widgets/forms/registerForm.svelte';
 	export let id: string = '';
 
 	let loginShow: boolean = true;

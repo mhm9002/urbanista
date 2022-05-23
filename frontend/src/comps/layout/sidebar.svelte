@@ -3,9 +3,9 @@
 	import { onMount } from 'svelte';
 	import {fetchApi} from '../../helpers/api';
 	import { queryList} from '../../helpers/queryList';
-	import Keyword from '../widgets/keyword.svelte';
+	import Keyword from '../widgets/posts/keyword.svelte';
 	import ShortAuthorCard from '../widgets/shortAuthorCard.svelte';
-	import ShortPostCard from '../widgets/shortPostCard.svelte';
+	import ShortPostCard from '../widgets/posts/shortPostCard.svelte';
 import Footer from './footer.svelte';
 
 	let recommendedReadings: Post[] = [];

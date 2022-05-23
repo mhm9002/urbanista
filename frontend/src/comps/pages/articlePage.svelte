@@ -4,9 +4,8 @@
 
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-	import CommentBox from '../widgets/commentBox.svelte';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
-	import PostActionBar from '../widgets/postActionBar.svelte';
+import PostActionBar from '../widgets/posts/postActionBar.svelte';
 
 	export let id: string = '';
 	let articleId: string = '';

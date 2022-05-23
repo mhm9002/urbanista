@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { User } from '@prisma/client';
+
 	import { user } from '../../appStore';
-	import { uploadApi } from '../../helpers/api';
-	import { uploadQueryList } from '../../helpers/queryList';
-	import UserProperty from '../widgets/userProperty.svelte';
+	import UserProperty from '../widgets/settings/userProperty.svelte';
+	import UserPropertyImage from '../widgets/settings/userPropertyImage.svelte';
 
 	let activeUser: User;
-	let profilePhoto: File;
+	
 
 	user.subscribe((value) => {
 		activeUser = value;
@@ -56,61 +56,18 @@
 		},
 	];
 
-	const changeFile = async (e) => {
-		let file = e.target.files[0];
-		let res = await resizeImage(file);
-
-		console.log(res);
-		let res2 = await uploadApi(uploadQueryList.uploadProfile, res);
-		return res2;
-	};
-
-	const resizeImage = (file: File) => {
-		return new Promise((resolve, reject) => {
-			var reader = new FileReader();
-			reader.onload = (e) => {
-				var img = document.createElement('img');
-				img.onload = () => {
-					let ratio = img.height / img.width;
-
-					let sx = 0;
-					let sy = 0;
-					let ex = img.width;
-					let ey = img.height;
-
-					if (ratio > 1) {
-						sy = (img.height - img.width) / 2;
-						ey = sy + img.width;
-					} else {
-						sx = (img.width - img.height) / 2;
-						ex = sx + img.height;
-					}
-
-					// Dynamically create a canvas element
-					var canvas = document.createElement('canvas');
-					canvas.width = 128;
-					canvas.height = 128;
-					// var canvas = document.getElementById("canvas");
-					var ctx = canvas.getContext('2d');
-
-					// Actual resizing
-					ctx.drawImage(img, sx, sy, ex, ey, 0, 0, 128, 128);
-
-					// Show resized image in preview element
-					canvas.toBlob((b) => resolve(b), file.type);
-				};
-				img.src = e.target.result;
-			};
-			reader.readAsDataURL(file);
-		});
-	};
+	const setAsAdmin=  ()=>{
+		
+		user.login({...activeUser, role:1})
+	}
 </script>
 
 <div class="post">
 	{#each props as prop}
 		<UserProperty {...prop} />
 	{/each}
-	<div>
-		<input type="file" bind:value={profilePhoto} on:change={changeFile} />
-	</div>
+	<UserPropertyImage profile={activeUser.profile} userId={activeUser.id} updateProfile={(profile=>user.login({...activeUser, profile}))} />
+	<button on:click={setAsAdmin}>Set me as admin</button>
 </div>
+
+

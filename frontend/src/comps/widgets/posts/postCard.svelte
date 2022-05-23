@@ -2,26 +2,20 @@
 	import type { Post } from '@prisma/client';
 	import moment from 'moment';
 	import { link } from 'svelte-routing';
-	import { fetchApi } from '../../helpers/api';
-	import { queryList } from '../../helpers/queryList';
+	import { fetchApi } from '../../../helpers/api';
+	import { queryList } from '../../../helpers/queryList';
 
 	export let post: Post;
 	export let edit: boolean = false;
 
-	const publishDraft = async () => {
-		let res = await fetchApi(queryList.publishPost, { id: post.id }, true);
-
-		if (res.code.success) {
-			post.published = true;
-		}
-	};
+	
 </script>
 
 <div class="post-card">
 	<div class="post-card-meta">
 		<img
 			class="profile-inline"
-			src="https://bulma.io/images/placeholders/96x96.png"
+			src={post.author?.profile!==''?`http://localhost:4000/api/profiles/${post.author.profile}`:"https://bulma.io/images/placeholders/96x96.png"}
 			alt="Placeholder image"
 		/>
 		<p>
@@ -56,15 +50,7 @@
 			</figure>
 		</div>
 		{/if}
-		{#if edit}
-			<div>
-				Actions
-				<a href="newArticle/{post.id}" use:link>Edit</a>
-				{#if !post.published}
-					<a href="#" on:click={publishDraft}>Publish</a>
-				{/if}
-			</div>
-		{/if}
+		
 	</div>
 	<div class="media-bar">
 		{#each post.keywords as k}

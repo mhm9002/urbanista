@@ -37,7 +37,12 @@ const updateCategory = async (req: Request) => {
 	return missingReq;
 };
 const allCategories = async (req: Request) => {
-	let categories = await prisma.category.findMany({});
+	let categories = await prisma.category.findMany({
+		where:{}, 
+		include:{Children:true, _count:{ select: {posts:true}}},
+		
+
+	});
 
 	let res: queryRespose = { code:responseCodes.success, payload: categories};
 	return res;

@@ -2,7 +2,7 @@
 	import { Router, Route } from 'svelte-routing';
 	import Footer from '../comps/layout/footer.svelte';
 	import Header from '../comps/layout/header.svelte';
-	import Sidebar from '../comps/layout/sidebar.svelte';
+import AdminPage from '../comps/pages/adminPage.svelte';
 	import ArticlePage from '../comps/pages/articlePage.svelte';
 	import AuthorPage from '../comps/pages/authorPage.svelte';
 	import CatPage from '../comps/pages/catPage.svelte';
@@ -34,6 +34,7 @@ import UserProfile from '../comps/pages/userProfile.svelte';
 			<Route path="author/:id" let:params><AuthorPage id={params.id} /></Route>
 			<Route path="userBookmarks"><UserBookmarks /></Route>
 			<Route path="userProfile"><UserProfile /></Route>
+			<Route path="admin"><AdminPage /></Route>
 		</div>
 		<!--
 		<div class="side-bar">

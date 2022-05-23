@@ -26,9 +26,12 @@ const fetchApi = async (
 	return await res2;
 };
 
-const uploadApi = async (query: string, payload: File) => {
+const uploadApi = async (query: string, payload: File, userId?:string) => {
 	const fd = new FormData();
 	fd.append('file', payload);
+
+	if (userId && userId!=='')
+		fd.append('userId', userId);
 
 	let a = await fetch(`http://localhost:4000/api/${query}`, {
 		method: 'POST',
@@ -39,23 +42,13 @@ const uploadApi = async (query: string, payload: File) => {
 	let res = await a.json();
 	let res2: queryRespose = { ...res };
 
-	return 'http://localhost:4000/api/' + query === uploadQueryList.uploadImage
-		? 'images/'
-		: 'profiles/' + res2.payload.filename;
+	if (query === uploadQueryList.uploadImage)
+		return 'http://localhost:4000/api/images/'+res2.payload.filename;
+	else
+		return res2.payload.filename;
 	//return `http://localhost:4000/${res2.payload.destination}/${res2.payload.filename}`
 	//return 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png'
 };
 
-const loadFileApi = async (query: string, payload: { path: string }) => {
-	let a = await fetch(`http://localhost:4000/api/${query}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(payload),
-	});
 
-	return await a.json();
-};
-
-export { fetchApi, uploadApi, loadFileApi };
+export { fetchApi, uploadApi };

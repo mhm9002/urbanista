@@ -7,10 +7,10 @@
 	import { onMount } from 'svelte';
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-	import FormField from '../widgets/formField.svelte';
+	import FormField from '../widgets/forms/formField.svelte';
 	import { navigate } from 'svelte-routing';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
-	import FormFieldSelect from '../widgets/formFieldSelect.svelte';
+	import FormFieldSelect from '../widgets/forms/formFieldSelect.svelte';
 
 	export let id: string = '';
 
@@ -33,7 +33,7 @@
 		keywords: [],
 	};
 
-	let keywords: string[] = [];
+	let keywords: string = '';
 
 	let autosaved = false;
 	let loading = false;
@@ -91,7 +91,7 @@
 		}
 
 		if (sendKeywords) {
-			newPost.keywords = keywords.map((k) => {
+			newPost.keywords = keywords.split(' ').map((k) => {
 				return { name: k };
 			});
 		}
@@ -113,11 +113,6 @@
 			}
 		}
 
-		/*
-        articles.add({
-            id: Math.floor( Math.random()*100).toString(), author: activeUser, content:content.html, title:"blabla", date:new Date()
-        })
-        */
 	};
 
 	const sendReview = async () => {
@@ -131,16 +126,15 @@
 	<div class="new-article-top-bar">
 		<p>{autosaved ? 'Article autosaved' : '_____________'}</p>
 		<FormField
-			onValueChange={(value) => (newPost.title = value)}
+			bind:value = {newPost.title}	
 			placeholder="Title..."
 			type="text"
 		/>
 		<FormField
-			onValueChange={(value) => (keywords = value.split(' '))}
+			bind:value={keywords}
 			placeholder="Keywords... separate by whitespace"
 			type="text"
 		/>
-
 		<FormFieldSelect
 			onValueChange={(value) => (newPost.categoryId = value)}
 			options={loadedCats.map((c) => {

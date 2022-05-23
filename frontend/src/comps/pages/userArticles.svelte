@@ -6,7 +6,7 @@
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
 	import LoadMore from '../widgets/loadMore.svelte';
-	import PostCard from '../widgets/postCard.svelte';
+	import PostCard from '../widgets/posts/postCard.svelte';
 
 	let author: User = undefined;
 	let posts: Post[] = [];
@@ -67,7 +67,7 @@
 	{#if author !== undefined}
 		<p class="cat-title">{author.name}</p>
 		{#each posts as p}
-			<PostCard post={p} edit={true} />
+			<PostCard post={p} />
 		{/each}
 		{#if !allPostsLoaded}
 			<LoadMore load={loadPosts} />
