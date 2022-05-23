@@ -100,14 +100,35 @@ const publishPost = async (req: Request) => {
 	}
 };
 
+const featurePost = async (req: Request) => {
+	let { id } = req.body;
+	//let content = postData.content;
+
+	if (id) {
+		let post = await prisma.post.update({
+			where: { id },
+			data: {
+				featured: true,
+				featuredOn: new Date(),
+			},
+		});
+
+		return { code: responseCodes.success, payload: post.id };
+	} else {
+		return missingReq;
+	}
+};
+
 const removepost = async (req: Request) => {
 	let { id } = req.body;
 	//let content = postData.content;
 
 	if (id) {
-		await prisma.post.delete({where: { id }, include:{likes:true, comments:true}});
-		return { code: responseCodes.success, payload:null };
-
+		await prisma.post.delete({
+			where: { id },
+			include: { likes: true, comments: true },
+		});
+		return { code: responseCodes.success, payload: null };
 	}
 	return missingReq;
 };
@@ -156,7 +177,10 @@ const createKeywords = async (keywords: string[]) => {
 const allposts = async (req: Request) => {
 	let posts = await prisma.post.findMany({
 		where: {},
-		include: { author: true, _count:{select:{likes:true, comments:true}} },
+		include: {
+			author: true,
+			_count: { select: { likes: true, comments: true } },
+		},
 	});
 
 	if (posts) {
@@ -222,6 +246,7 @@ export default {
 	allposts,
 	createpost,
 	publishPost,
+	featurePost,
 	removepost,
 	updatepost,
 	byCategoryName,

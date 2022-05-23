@@ -1,28 +1,29 @@
 <script lang="ts">
-    import { uploadApi } from "../../../helpers/api";
-    import { uploadQueryList } from "../../../helpers/queryList";
+	import { uploadApi } from '../../../helpers/api';
+	import { uploadQueryList } from '../../../helpers/queryList';
 
-    export let userId
-    export let profile
-    export let updateProfile
+	export let userId;
+	export let profile;
+	export let updateProfile;
 
-    let profilePhoto: Blob;
-    let editMode:boolean = false
+	let profilePhoto: Blob;
+	let editMode: boolean = false;
 
-    const changeFile = async (e) => {
+	const changeFile = async (e) => {
 		let file = e.target.files[0];
 		profilePhoto = await resizeImage(file);
-
-	}
-
-	const uploadProfile = async ()=> {
-		let res2 = await uploadApi(uploadQueryList.uploadProfile, profilePhoto, userId);
-		editMode=false
-        console.log(res2)
-        updateProfile( res2);
 	};
 
-    
+	const uploadProfile = async () => {
+		let res2 = await uploadApi(
+			uploadQueryList.uploadProfile,
+			profilePhoto,
+			userId
+		);
+		editMode = false;
+		updateProfile(res2);
+	};
+
 	const resizeImage = (file: File) => {
 		return new Promise((resolve, reject) => {
 			var reader = new FileReader();
@@ -51,50 +52,54 @@
 					// var canvas = document.getElementById("canvas");
 					var ctx = canvas.getContext('2d');
 
-					console.log(sx,sy,ex,ey)
-
 					// Actual resizing
 					ctx.drawImage(img, sx, sy, ex, ey, 0, 0, 128, 128);
 
 					// Show resized image in preview element
-					document.getElementById('profile').src = canvas.toDataURL()
+					document.getElementById('profile').src = canvas.toDataURL();
 					canvas.toBlob((b) => resolve(b), file.type);
-					
-
 				};
 				img.src = e.target.result;
 			};
 			reader.readAsDataURL(file);
 		});
 	};
-
 </script>
 
-
 <div class="profile-user-prop">
-    <div class="profile-user-prop-details">
-        <div class="profile-user-prop-name">Profile Picture</div>
-        <div class="profile-user-prop-value">
-            <img 
-            src={profile!==''?"http://localhost:4000/api/profiles/"+profile:"https://bulma.io/images/placeholders/96x96.png"} 
-            class={`profile-user-photo ${!editMode?" profile-user-photo-edit":""}`} id="profile" 
-            on:click={()=>{if (editMode) document.getElementById('file').click()}}
-            />
-            <input hidden id='file' type="file" accept="image/*" on:change={changeFile} />
-        </div>
-        <div class="profile-user-prop-desc">Upload a photo that represents you or your character</div>
-        
-    </div>
-    <div class="profile-user-prop-actions">
-        
-        {#if editMode}
-            <button on:click={uploadProfile}>Save</button>
-            <button on:click={()=>editMode=false}>Cancel</button>
-        {:else}
-            <button on:click={()=>editMode=true}>Edit</button>
-        {/if}    
-    
-        
-    </div>
-    
+	<div class="profile-user-prop-details">
+		<div class="profile-user-prop-name">Profile Picture</div>
+		<div class="profile-user-prop-value">
+			<img
+				src={profile !== ''
+					? 'http://localhost:4000/api/profiles/' + profile
+					: 'https://bulma.io/images/placeholders/96x96.png'}
+				class={`profile-user-photo ${
+					!editMode ? ' profile-user-photo-edit' : ''
+				}`}
+				id="profile"
+				on:click={() => {
+					if (editMode) document.getElementById('file').click();
+				}}
+			/>
+			<input
+				hidden
+				id="file"
+				type="file"
+				accept="image/*"
+				on:change={changeFile}
+			/>
+		</div>
+		<div class="profile-user-prop-desc">
+			Upload a photo that represents you or your character
+		</div>
+	</div>
+	<div class="profile-user-prop-actions">
+		{#if editMode}
+			<button on:click={uploadProfile}>Save</button>
+			<button on:click={() => (editMode = false)}>Cancel</button>
+		{:else}
+			<button on:click={() => (editMode = true)}>Edit</button>
+		{/if}
+	</div>
 </div>

@@ -5,7 +5,7 @@
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
-import PostActionBar from '../widgets/posts/postActionBar.svelte';
+	import PostActionBar from '../widgets/posts/postActionBar.svelte';
 
 	export let id: string = '';
 	let articleId: string = '';
@@ -55,9 +55,6 @@ import PostActionBar from '../widgets/posts/postActionBar.svelte';
 
 <svelte:head>
 	<link
-		rel="stylesheet"
-		href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	/><link
 		rel="stylesheet"
 		href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	/>

@@ -7,30 +7,33 @@
 
 	export let post: Post;
 	export let edit: boolean = false;
-
-	
 </script>
 
 <div class="post-card">
 	<div class="post-card-meta">
 		<img
 			class="profile-inline"
-			src={post.author?.profile!==''?`http://localhost:4000/api/profiles/${post.author.profile}`:"https://bulma.io/images/placeholders/96x96.png"}
+			src={post.author?.profile !== ''
+				? `http://localhost:4000/api/profiles/${post.author.profile}`
+				: 'https://bulma.io/images/placeholders/96x96.png'}
 			alt="Placeholder image"
 		/>
-		<p>
-			<a class="post-card-author" href="\author\{post.authorId}" use:link>
-				{post.author.name}</a
-			>
-			in
-			<a class="post-card-author" href="\cat\{post.category.name}" use:link
-				>{post.category.name}</a
-			>
-			-
-			<time class="post-card-time" datetime={new Date(post.createdAt)}
-				>{moment(new Date(post.createdAt), false).fromNow()}</time
-			>
-		</p>
+
+		<a class="post-card-author" href="\author\{post.authorId}" use:link>
+			{post.author.name}</a
+		>
+
+		<a class="post-card-author" href="\cat\{post.category.name}" use:link
+			>{post.category.name}</a
+		>
+
+		<time class="post-card-time" datetime={new Date(post.createdAt)}
+			>{moment(new Date(post.createdAt), false).fromNow()}</time
+		>
+
+		{#if post.featured}
+			<img src="/assets/like.svg" alt="" width="32" height="32" />
+		{/if}
 	</div>
 	<div class="flex flex-row">
 		<div class="media-left">
@@ -40,17 +43,16 @@
 			<p class="post-card-content">{post.exerpt}</p>
 		</div>
 		{#if post.image !== ''}
-		<div class="media-content">
-			<figure>
-				<img
-					class="post-card-image" 
-					src={'http://localhost:4000/api/images/' + post.image}
-					alt="Placeholder image"
-				/>
-			</figure>
-		</div>
+			<div class="media-content">
+				<figure>
+					<img
+						class="post-card-image"
+						src={'http://localhost:4000/api/images/' + post.image}
+						alt="Placeholder image"
+					/>
+				</figure>
+			</div>
 		{/if}
-		
 	</div>
 	<div class="media-bar">
 		{#each post.keywords as k}

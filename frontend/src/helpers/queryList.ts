@@ -19,6 +19,7 @@ const queryList = {
 	postByAuthor: 'postByAuthor',
 	validateUser: 'validateUser',
 	publishPost: 'publishPost',
+	featurePost: 'featurePost',
 	userBookmarks: 'userBookmarks',
 	bookmarkPost: 'bookmarkPost',
 	userLikes: 'userLikes',
