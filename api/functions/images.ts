@@ -13,15 +13,17 @@ const upload = async (req: Request) => {
 };
 
 const uploadProfile = async (req: Request) => {
-	const {userId} = req.body
+	const { userId } = req.body;
 
-	await prisma.user.update({where:{id:userId},data:{profile:req.file?.filename}})
+	await prisma.user.update({
+		where: { id: userId },
+		data: { profile: req.file?.filename },
+	});
 
 	return {
 		code: responseCodes.success,
 		payload: { filename: req.file?.filename },
 	};
 };
-
 
 export default { upload, uploadProfile };

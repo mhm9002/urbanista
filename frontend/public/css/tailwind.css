@@ -223,6 +223,10 @@
     @apply whitespace-nowrap ml-1 text-sm overflow-ellipsis overflow-x-clip flex-nowrap self-center justify-self-center
 }
 
+.post-card-meta a {
+    @apply pr-2 border-r-2
+}
+
 .post-card-title {
     @apply mt-2 mb-2 font-bold text-2xl visited:text-pink-900 text-pink-900 hover:no-underline hover:text-pink-600
 }
