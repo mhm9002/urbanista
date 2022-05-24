@@ -794,8 +794,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .menu-brand:focus {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  background-color: transparent;
   --tw-text-opacity: 1;
   color: rgb(131 24 67 / var(--tw-text-opacity));
   --tw-shadow: 0 0 #0000;

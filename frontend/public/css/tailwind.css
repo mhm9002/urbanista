@@ -67,7 +67,7 @@
 .menu-brand {
     @apply text-pink-700 font-bold text-lg px-2 py-1 mt-2 bg-transparent rounded-lg 
     md:mt-0 md:ml-4 hover:text-pink-900 focus:text-pink-900 
-    focus:bg-gray-200 focus:outline-none focus:shadow-none hover:no-underline 
+    focus:bg-transparent focus:outline-none focus:shadow-none hover:no-underline 
     visited:text-pink-700
 }
 

@@ -193,10 +193,10 @@ const byCategoryName = async (req: Request) => {
 	let { options } = req.body;
 
 	if (name) {
-		let cat = await prisma.category.findFirst({ where: { name } });
+		let cat = await prisma.category.findFirst({ where: { name }, include: {Children: true} });
 		if (cat) {
 			let posts = await loadby(
-				{ categoryId: cat.id },
+				{ OR:  [{categoryId: cat.id}, ...cat.Children.map(c=>{return {categoryId:c.id}})]},
 				options.createdAt,
 				options.published
 			);
@@ -207,6 +207,7 @@ const byCategoryName = async (req: Request) => {
 	}
 	return missingReq;
 };
+
 const byAuthor = async (req: Request) => {
 	let { id } = req.body;
 	let { options } = req.body;

@@ -29,15 +29,16 @@ model Post {
   content    String?
   exerpt     String?
   authorId   String
-  author     User      @relation(fields: [authorId], references: [id])
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   categoryId String
-  category   Category  @relation(fields: [categoryId], references: [id])
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   keywords   Keyword[]
-  likes      Like[]
+  likes      Like[] 
   comments    Comment[]
   featured   Boolean   @default(false)
   featuredOn DateTime?
   published  Boolean   @default(false)
+  publishedOn DateTime?
   image      String    @default("")
   words      Int       @default(0)
 }
@@ -55,9 +56,9 @@ model Category {
 model Like {
   id      String @id @default(cuid())
   likerId String
-  liker   User   @relation(fields: [likerId], references: [id])
+  liker   User   @relation(fields: [likerId], references: [id], onDelete: Cascade)
   postId  String
-  post    Post   @relation(fields: [postId], references: [id])
+  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Keyword {
@@ -77,9 +78,9 @@ model Bookmark {
 model Comment {
   id      String @id @default(cuid())
   commenterId String
-  commenter   User   @relation(fields: [commenterId], references: [id])
+  commenter   User   @relation(fields: [commenterId], references: [id], onDelete: Cascade)
   postId  String
-  post    Post   @relation(fields: [postId], references: [id])
+  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   content String  @default("")
 
   Children  Comment[] @relation("Comment_Children")

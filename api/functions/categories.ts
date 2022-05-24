@@ -34,6 +34,15 @@ const removeCategory = async (req: Request) => {
 	return missingReq;
 };
 const updateCategory = async (req: Request) => {
+	const {id, name, parent_id} = req.body;
+
+	if (id){
+		let cat = await prisma.category.update({where:{id}, data:{name, parent_id}})
+
+		if (cat)
+			return  {code:responseCodes.success, payload: null}
+	}
+
 	return missingReq;
 };
 const allCategories = async (req: Request) => {
@@ -44,8 +53,8 @@ const allCategories = async (req: Request) => {
 
 	});
 
-	let res: queryRespose = { code:responseCodes.success, payload: categories};
-	return res;
+	return { code:responseCodes.success, payload: categories};
+	
 };
 
 export default {

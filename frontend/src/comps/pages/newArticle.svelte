@@ -35,6 +35,8 @@
 
 	let keywords: string = '';
 
+	let mainCategory: string = ''
+
 	let autosaved = false;
 	let loading = false;
 
@@ -49,6 +51,7 @@
 		let res = await fetchApi(queryList.allCategories, {});
 		if (res.code.success) {
 			loadedCats = res.payload;
+			mainCategory = res.payload[0].id;
 			newPost.categoryId = res.payload[0].id;
 		}
 
@@ -136,11 +139,21 @@
 			type="text"
 		/>
 		<FormFieldSelect
-			onValueChange={(value) => (newPost.categoryId = value)}
-			options={loadedCats.map((c) => {
+			bind:value={mainCategory}
+			options={loadedCats.filter(c=>c.parent_id===null).map((c) => {
 				return { value: c.id, name: c.name };
 			})}
-			defaultValue={loadedCats[0]?.id || ''}
+			
+		/>
+		<FormFieldSelect
+			bind:value={newPost.categoryId}
+			options={[
+				{value:mainCategory, name:'Main'},
+				...loadedCats.filter(c=>c.parent_id===mainCategory).map((c) => {
+					return { value: c.id, name: c.name };
+				})
+			]}
+			
 		/>
 		<div class="field is-grouped">
 			<div class="control">
