@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import { uploadQueryList } from '../../helpers/queryList';
 
+	export let value;
 	export let onContentChange;
 
 	Quill.register('modules/imageUploader', ImageUploader);
@@ -14,6 +15,8 @@
 
 	const maxH = 400;
 	const maxW = 800;
+
+	$: value, quill !== undefined ? (quill.root.innerHTML = value) : () => {};
 
 	//let Delta = Quill.import('delta')
 	//let change = new Delta();
@@ -43,9 +46,9 @@
 
 	onMount(async () => {
 		quill = new Quill(editor, options);
-		let placeholder = 'Write something from outside...';
-		quill.setText(placeholder);
-		quill.setSelection(0, placeholder.length, 'user');
+		//let placeholder = 'Write something from outside...';
+		//quill.root.innerHTML = value;
+		//quill.setSelection(0, placeholder.length, 'user');
 
 		let changeHandler = (delta) => {
 			//change = change.compose(delta)

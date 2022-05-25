@@ -35,7 +35,7 @@
 
 	let keywords: string = '';
 
-	let mainCategory: string = ''
+	let mainCategory: string = '';
 
 	let autosaved = false;
 	let loading = false;
@@ -49,6 +49,7 @@
 
 	onMount(async () => {
 		let res = await fetchApi(queryList.allCategories, {});
+
 		if (res.code.success) {
 			loadedCats = res.payload;
 			mainCategory = res.payload[0].id;
@@ -58,8 +59,10 @@
 		if (id !== '') {
 			let res = await fetchApi(queryList.getPost, { id }, true);
 			if (res.code.success) {
-				newPost = res.payload;
+				console.log(res.payload);
+				newPost = res.payload.post;
 				postContent = newPost.content;
+				keywords = newPost.keywords.map((k) => k.name).join(' ');
 			}
 		}
 
@@ -115,7 +118,6 @@
 				newPost.id = res.payload;
 			}
 		}
-
 	};
 
 	const sendReview = async () => {
@@ -128,11 +130,7 @@
 <main class="new-article-page">
 	<div class="new-article-top-bar">
 		<p>{autosaved ? 'Article autosaved' : '_____________'}</p>
-		<FormField
-			bind:value = {newPost.title}	
-			placeholder="Title..."
-			type="text"
-		/>
+		<FormField bind:value={newPost.title} placeholder="Title..." type="text" />
 		<FormField
 			bind:value={keywords}
 			placeholder="Keywords... separate by whitespace"
@@ -140,20 +138,22 @@
 		/>
 		<FormFieldSelect
 			bind:value={mainCategory}
-			options={loadedCats.filter(c=>c.parent_id===null).map((c) => {
-				return { value: c.id, name: c.name };
-			})}
-			
+			options={loadedCats
+				.filter((c) => c.parent_id === null)
+				.map((c) => {
+					return { value: c.id, name: c.name };
+				})}
 		/>
 		<FormFieldSelect
 			bind:value={newPost.categoryId}
 			options={[
-				{value:mainCategory, name:'Main'},
-				...loadedCats.filter(c=>c.parent_id===mainCategory).map((c) => {
-					return { value: c.id, name: c.name };
-				})
+				{ value: mainCategory, name: 'Main' },
+				...loadedCats
+					.filter((c) => c.parent_id === mainCategory)
+					.map((c) => {
+						return { value: c.id, name: c.name };
+					}),
 			]}
-			
 		/>
 		<div class="field is-grouped">
 			<div class="control">
@@ -163,6 +163,7 @@
 	</div>
 
 	<Editor
+		bind:value={postContent}
 		onContentChange={(content, exerpt, words) => {
 			postContent = content;
 			newPost.exerpt = exerpt;

@@ -1,12 +1,10 @@
 <script lang="ts">
 	import type { Post } from '@prisma/client';
 	import moment from 'moment';
-	import { link } from 'svelte-routing';
-	import { fetchApi } from '../../../helpers/api';
-	import { queryList } from '../../../helpers/queryList';
+	import { link, navigate } from 'svelte-routing';
 
 	export let post: Post;
-	export let edit: boolean = false;
+	export let editable: boolean = false;
 </script>
 
 <div class="post-card">
@@ -41,6 +39,10 @@
 				>{post.title}</a
 			>
 			<p class="post-card-content">{post.exerpt}</p>
+			{#if editable}
+				<button on:click={() => navigate(`/newArticle/${post.id}`)}>Edit</button
+				>
+			{/if}
 		</div>
 		{#if post.image !== ''}
 			<div class="media-content">

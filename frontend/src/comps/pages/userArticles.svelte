@@ -67,7 +67,7 @@
 	{#if author !== undefined}
 		<p class="cat-title">{author.name}</p>
 		{#each posts as p}
-			<PostCard post={p} />
+			<PostCard post={p} editable={true} />
 		{/each}
 		{#if !allPostsLoaded}
 			<LoadMore load={loadPosts} />
