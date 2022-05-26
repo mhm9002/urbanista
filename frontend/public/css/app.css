@@ -537,7 +537,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 * {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 .main-box {

@@ -6,25 +6,27 @@ import { missingReq, responseCodes } from './readyResponse';
 const prisma = new PrismaClient();
 
 const getpost = async (req: Request) => {
-	let { id, fullPost, userId } = req.body;
+	let { id, fullPost, userId, details } = req.body;
+
+	let include = details?{
+		author: true,
+		category: true,
+		keywords: true,
+		likes: true,
+		comments: {
+			include: {
+				commenter: true,
+				Children: {
+					include: { commenter: true },
+				},
+			},
+		},
+	}:{keywords:true}
 
 	if (id) {
 		let post = await prisma.post.findUnique({
 			where: { id },
-			include: {
-				author: true,
-				category: true,
-				keywords: true,
-				likes: true,
-				comments: {
-					include: {
-						commenter: true,
-						Children: {
-							include: { commenter: true },
-						},
-					},
-				},
-			},
+			include
 		});
 
 		if (post) {
@@ -73,7 +75,9 @@ const createpost = async (req: Request) => {
 		writeFile(
 			`${__dirname}/articles/${post.id}.html`,
 			postData.content,
-			() => {}
+			() => {
+				postData.content = ''
+			}
 		);
 
 		return { code: responseCodes.success, payload: post.id };
@@ -135,24 +139,44 @@ const removepost = async (req: Request) => {
 const updatepost = async (req: Request) => {
 	let { postData } = req.body;
 
+	/*
+	delete postData.content
+	console.log(postData)
+
+	return missingReq
+	*/
+
+	
 	if (postData) {
 		let keywords = postData.keywords;
 		delete postData.keywords;
+
+		console.log (keywords)
+
+		/*
+		let k = keywords.forEach(async(key:{id:string, name:string})=>{
+			let existing = await prisma.keyword.findFirst({where:{key.name}})
+			if (!existing)
+				await prisma.keyword.create({data:{key.name}})
+		}) 
+		*/
+
+		//await Promise.all(k)
 
 		let post = await prisma.post.update({
 			where: { id: postData.id },
 			data: {
 				...postData,
-				keywords: {
-					create: keywords,
-				},
+				
 			},
 		});
 
 		writeFile(
 			`${__dirname}/articles/${post.id}.html`,
 			postData.content,
-			() => {}
+			() => {
+				postData.content = ''
+			}
 		);
 
 		return { code: responseCodes.success, payload: post.id };

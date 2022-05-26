@@ -25,6 +25,7 @@ const validateToken = (
 	return new Promise((resolve, reject)=>{
 		jwt.verify(token||'', secret, (err, decoded) => {
 			if (!err) {
+				console.log(req.originalUrl)
 				console.log(decoded)
 				next(req).then(resolve)		
 			} else {

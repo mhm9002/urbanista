@@ -38,6 +38,7 @@
 				id: articleId,
 				fullPost: true,
 				userId: activeUser?.id || '',
+				details:true
 			},
 			true
 		);

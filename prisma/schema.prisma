@@ -34,7 +34,7 @@ model Post {
   category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   keywords   Keyword[]
   likes      Like[] 
-  comments    Comment[]
+  comments   Comment[]
   featured   Boolean   @default(false)
   featuredOn DateTime?
   published  Boolean   @default(false)

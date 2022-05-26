@@ -15,6 +15,7 @@
 	export let id: string = '';
 
 	let postContent: string = '';
+	let loadedContent: string = '';
 	let loadedCats: Category[] = [];
 
 	let newPost: Post = {
@@ -57,17 +58,18 @@
 		}
 
 		if (id !== '') {
-			let res = await fetchApi(queryList.getPost, { id }, true);
+			let res = await fetchApi(queryList.getPost, { id, details:false }, true);
 			if (res.code.success) {
-				console.log(res.payload);
 				newPost = res.payload.post;
 				postContent = newPost.content;
+				loadedContent = newPost.content;
 				keywords = newPost.keywords.map((k) => k.name).join(' ');
+				
 			}
 		}
 
 		let autosave = setInterval(() => {
-			if (postContent !== newPost.content) {
+			if ( postContent !== newPost.content) {
 				savePost();
 				setTimeout(() => {
 					autosaved = false;
@@ -90,9 +92,7 @@
 			let end = postContent.indexOf('"', firstImage);
 			if (end > -1) {
 				imagefile = postContent.substring(firstImage + 11, end);
-				console.log(imagefile);
 				newPost.image = imagefile;
-				//console.log(imagefile)
 			}
 		}
 
@@ -101,6 +101,8 @@
 				return { name: k };
 			});
 		}
+
+		console.log(newPost.keywords)
 
 		if (newPost.title === '') newPost.title = 'Draft';
 
@@ -163,11 +165,11 @@
 	</div>
 
 	<Editor
-		bind:value={postContent}
-		onContentChange={(content, exerpt, words) => {
-			postContent = content;
-			newPost.exerpt = exerpt;
-			newPost.words = words;
+		{loadedContent}
+		onChange = {(content)=>{
+			postContent = content.html
+			newPost.exerpt = content.text.substring(0,100)
+			newPost.words = content.text.split(' ').length
 		}}
 	/>
 
