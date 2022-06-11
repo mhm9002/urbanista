@@ -6,12 +6,10 @@ import { missingReq, responseCodes } from './readyResponse';
 const prisma = new PrismaClient();
 
 const getpost = async (req: Request) => {
-	let { id, fullPost, userId } = req.body;
+	let { id, fullPost, userId, details } = req.body;
 
-	if (id) {
-		let post = await prisma.post.findUnique({
-			where: { id },
-			include: {
+	let include = details
+		? {
 				author: true,
 				category: true,
 				keywords: true,
@@ -24,7 +22,13 @@ const getpost = async (req: Request) => {
 						},
 					},
 				},
-			},
+		  }
+		: { keywords: true };
+
+	if (id) {
+		let post = await prisma.post.findUnique({
+			where: { id },
+			include,
 		});
 
 		if (post) {
@@ -70,11 +74,9 @@ const createpost = async (req: Request) => {
 				},
 			},
 		});
-		writeFile(
-			`${__dirname}/articles/${post.id}.html`,
-			postData.content,
-			() => {}
-		);
+		writeFile(`${__dirname}/articles/${post.id}.html`, postData.content, () => {
+			postData.content = '';
+		});
 
 		return { code: responseCodes.success, payload: post.id };
 	} else {
@@ -135,6 +137,13 @@ const removepost = async (req: Request) => {
 const updatepost = async (req: Request) => {
 	let { postData } = req.body;
 
+	/*
+	delete postData.content
+	console.log(postData)
+
+	return missingReq
+	*/
+
 	if (postData) {
 		let keywords = postData.keywords;
 		delete postData.keywords;
@@ -150,17 +159,12 @@ const updatepost = async (req: Request) => {
 			where: { id: postData.id },
 			data: {
 				...postData,
-				keywords: {
-					create: keywords,
-				},
 			},
 		});
 
-		writeFile(
-			`${__dirname}/articles/${post.id}.html`,
-			postData.content,
-			() => {}
-		);
+		writeFile(`${__dirname}/articles/${post.id}.html`, postData.content, () => {
+			postData.content = '';
+		});
 
 		return { code: responseCodes.success, payload: post.id };
 	} else {

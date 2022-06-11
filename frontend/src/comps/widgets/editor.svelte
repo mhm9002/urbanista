@@ -48,20 +48,12 @@
 
 	onMount(async () => {
 		quill = new Quill(editor, options);
-		//let placeholder = 'Write something from outside...';
-		//quill.root.innerHTML = value;
-		//quill.setSelection(0, placeholder.length, 'user');
 
-		let changeHandler = (delta) => {
-			//change = change.compose(delta)
-
-			//onchange(quill.getContents(),quill.getText(0,300))
-			onContentChange(
-				quill.root.innerHTML,
-				quill.getText(0, 100),
-				quill.root.innerText.split(' ').length
-			);
+		let changeHandler = () => {
+			onChange({ html: quill.root.innerHTML, text: quill.root.innerText });
 		};
+
+		quill.on('text-change', changeHandler);
 
 		quill.on('text-change', changeHandler);
 

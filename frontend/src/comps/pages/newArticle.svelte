@@ -15,6 +15,7 @@
 	export let id: string = '';
 
 	let postContent: string = '';
+	let loadedContent: string = '';
 	let loadedCats: Category[] = [];
 
 	let newPost: Post = {
@@ -32,8 +33,6 @@
 		words: 0,
 		keywords: [],
 	};
-
-	let loadedContent = '';
 
 	let keywords: string = '';
 
@@ -59,9 +58,8 @@
 		}
 
 		if (id !== '') {
-			let res = await fetchApi(queryList.getPost, { id }, true);
+			let res = await fetchApi(queryList.getPost, { id, details: false }, true);
 			if (res.code.success) {
-				console.log(res.payload);
 				newPost = res.payload.post;
 
 				delete newPost.author;
@@ -100,9 +98,7 @@
 			let end = postContent.indexOf('"', firstImage);
 			if (end > -1) {
 				imagefile = postContent.substring(firstImage + 11, end);
-				console.log(imagefile);
 				newPost.image = imagefile;
-				//console.log(imagefile)
 			}
 		}
 
@@ -111,6 +107,8 @@
 				return { name: k };
 			});
 		}
+
+		console.log(newPost.keywords);
 
 		if (newPost.title === '') newPost.title = 'Draft';
 
