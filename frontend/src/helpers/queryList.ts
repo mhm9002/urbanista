@@ -25,6 +25,7 @@ const queryList = {
 	userLikes: 'userLikes',
 	likePost: 'likePost',
 	addComment: 'addComment',
+	searchTerm: 'searchTerm',
 };
 
 const uploadQueryList = {

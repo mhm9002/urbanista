@@ -72,7 +72,7 @@
 		<div class="profile-user-prop-value">
 			<img
 				src={profile !== ''
-					? 'http://localhost:4000/api/profiles/' + profile
+					? 'http://192.168.8.187:4000/api/profiles/' + profile
 					: 'https://bulma.io/images/placeholders/96x96.png'}
 				class={`profile-user-photo ${
 					!editMode ? ' profile-user-photo-edit' : ''

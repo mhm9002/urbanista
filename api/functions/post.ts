@@ -139,7 +139,14 @@ const updatepost = async (req: Request) => {
 		let keywords = postData.keywords;
 		delete postData.keywords;
 
-		let post = await prisma.post.update({
+		let post = await prisma.post.findUnique({ where: { id: postData.id } });
+
+		if (!post) {
+			console.log(postData.id);
+			return missingReq;
+		}
+
+		post = await prisma.post.update({
 			where: { id: postData.id },
 			data: {
 				...postData,
@@ -193,10 +200,20 @@ const byCategoryName = async (req: Request) => {
 	let { options } = req.body;
 
 	if (name) {
-		let cat = await prisma.category.findFirst({ where: { name }, include: {Children: true} });
+		let cat = await prisma.category.findFirst({
+			where: { name },
+			include: { Children: true },
+		});
 		if (cat) {
 			let posts = await loadby(
-				{ OR:  [{categoryId: cat.id}, ...cat.Children.map(c=>{return {categoryId:c.id}})]},
+				{
+					OR: [
+						{ categoryId: cat.id },
+						...cat.Children.map((c) => {
+							return { categoryId: c.id };
+						}),
+					],
+				},
 				options.createdAt,
 				options.published
 			);
@@ -242,6 +259,37 @@ const loadby = async (
 	return posts;
 };
 
+const search = async (req: Request) => {
+	let { term } = req.body;
+	let { options } = req.body;
+
+	if (term) {
+		let posts = await loadby(
+			{
+				OR: [
+					{
+						title: {
+							contains: term,
+						},
+					},
+					{
+						exerpt: {
+							contains: term,
+						},
+					},
+				],
+			},
+			options.createdAt,
+			options.published
+		);
+		if (posts) {
+			return { code: responseCodes.success, payload: posts };
+		}
+	}
+	console.log(1);
+	return missingReq;
+};
+
 export default {
 	getpost,
 	allposts,
@@ -252,4 +300,5 @@ export default {
 	updatepost,
 	byCategoryName,
 	byAuthor,
+	search,
 };

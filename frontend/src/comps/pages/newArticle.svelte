@@ -33,6 +33,8 @@
 		keywords: [],
 	};
 
+	let loadedContent = '';
+
 	let keywords: string = '';
 
 	let mainCategory: string = '';
@@ -61,7 +63,15 @@
 			if (res.code.success) {
 				console.log(res.payload);
 				newPost = res.payload.post;
+
+				delete newPost.author;
+				delete newPost.category;
+				delete newPost.comments;
+				delete newPost.likes;
+
 				postContent = newPost.content;
+				loadedContent = postContent;
+
 				keywords = newPost.keywords.map((k) => k.name).join(' ');
 			}
 		}
@@ -164,6 +174,7 @@
 
 	<Editor
 		bind:value={postContent}
+		bind:initialValue={loadedContent}
 		onContentChange={(content, exerpt, words) => {
 			postContent = content;
 			newPost.exerpt = exerpt;

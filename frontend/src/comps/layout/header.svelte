@@ -3,11 +3,31 @@
 	import { link, navigate } from 'svelte-routing';
 	import { token, user } from '../../appStore';
 	import type { User } from '@prisma/client';
+	import SearchForm from '../widgets/forms/searchForm.svelte';
+	import { onMount } from 'svelte';
+	import { fetchApi } from '../../helpers/api';
+	import { queryList } from '../../helpers/queryList';
+	import PostCard from '../widgets/posts/postCard.svelte';
 
 	let mainCats = [
-		{ name: 'Architecture', slug: 'architecture' },
-		{ name: 'Urban Design', slug: 'urbandesign' },
-		{ name: 'Urban Planning', slug: 'planning' },
+		{
+			name: 'Architecture',
+			slug: 'architecture',
+			featuredPosts: [],
+			showFeatured: false,
+		},
+		{
+			name: 'Urban Design',
+			slug: 'urbandesign',
+			featuredPosts: [],
+			showFeatured: false,
+		},
+		{
+			name: 'Urban Planning',
+			slug: 'planning',
+			featuredPosts: [],
+			showFeatured: false,
+		},
 	];
 
 	let showDropmenu = false;
@@ -21,10 +41,32 @@
 		};
 	});
 
+	onMount(() => {
+		getFeaturedFromCats();
+	});
+
 	const logout = () => {
 		user.logout();
 		token.removeToken();
 		navigate('/');
+	};
+
+	const getFeaturedFromCats = async () => {
+		let options = {
+			createdAt: new Date(),
+			published: true,
+		};
+
+		mainCats.forEach((c) => {
+			fetchApi(queryList.postByCategoryName, {
+				name: c.name,
+				options,
+			}).then((res) => {
+				if (res.code.success) {
+					c.featuredPosts = res.payload;
+				}
+			});
+		});
 	};
 
 	//{showDropmenu ? 'absolute' : 'hidden'}"
@@ -50,10 +92,28 @@
 
 	<div id="navbarBasicExample" class="menu-center-div">
 		{#each mainCats as cat}
-			<a class="menu-item" use:link href="\cat\{cat.name}">
+			<a
+				class="menu-item"
+				use:link
+				href="\cat\{cat.name}"
+				on:mouseover={() => {
+					cat.showFeatured = true;
+				}}
+				on:mouseout={() => {
+					cat.showFeatured = false;
+				}}
+			>
 				{cat.name}
 			</a>
+			{#if cat.showFeatured}
+				<div class="fixed absolute top-20 bg-slate-50">
+					{#each cat.featuredPosts as p}
+						<PostCard post={p} />
+					{/each}
+				</div>
+			{/if}
 		{/each}
+		<SearchForm />
 	</div>
 
 	<div class="menu-right-div">
@@ -68,7 +128,12 @@
 					aria-expanded="true"
 					aria-haspopup="true"
 				>
-					<img class="profile-inline" src={activeUser.profile!==''?'http://localhost:4000/api/profiles/'+activeUser.profile:"https://bulma.io/images/placeholders/96x96.png"} />
+					<img
+						class="profile-inline"
+						src={activeUser.profile !== ''
+							? 'http://192.168.8.187:4000/api/profiles/' + activeUser.profile
+							: 'https://bulma.io/images/placeholders/96x96.png'}
+					/>
 					{activeUser.name}
 				</button>
 				<div
@@ -119,17 +184,17 @@
 						My Profile
 					</a>
 					<hr />
-					{#if  activeUser.role>0}
-					<a
-						on:click={() => (showDropmenu = false)}
-						href="\admin"
-						use:link
-						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
-					>
-						Admin Page
-					</a>
-					
-					<hr />
+					{#if activeUser.role > 0}
+						<a
+							on:click={() => (showDropmenu = false)}
+							href="\admin"
+							use:link
+							class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+						>
+							Admin Page
+						</a>
+
+						<hr />
 					{/if}
 					<a
 						href="#"

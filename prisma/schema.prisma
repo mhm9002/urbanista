@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -18,29 +19,29 @@ model User {
   desc      String?
   activated Boolean    @default(false)
   comments  Comment[]
-  role  Int @default(0)
-  profile String  @default("")
+  role      Int        @default(0)
+  profile   String     @default("")
 }
 
 model Post {
-  id         String    @id @default(cuid())
-  createdAt  DateTime  @default(now())
-  title      String
-  content    String?
-  exerpt     String?
-  authorId   String
-  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  categoryId String
-  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  keywords   Keyword[]
-  likes      Like[] 
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  title       String
+  content     String?
+  exerpt      String?
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  keywords    Keyword[]
+  likes       Like[]
   comments    Comment[]
-  featured   Boolean   @default(false)
-  featuredOn DateTime?
-  published  Boolean   @default(false)
+  featured    Boolean   @default(false)
+  featuredOn  DateTime?
+  published   Boolean   @default(false)
   publishedOn DateTime?
-  image      String    @default("")
-  words      Int       @default(0)
+  image       String    @default("")
+  words       Int       @default(0)
 }
 
 model Category {
@@ -76,12 +77,12 @@ model Bookmark {
 }
 
 model Comment {
-  id      String @id @default(cuid())
+  id          String @id @default(cuid())
   commenterId String
   commenter   User   @relation(fields: [commenterId], references: [id], onDelete: Cascade)
-  postId  String
-  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  content String  @default("")
+  postId      String
+  post        Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  content     String @default("")
 
   Children  Comment[] @relation("Comment_Children")
   parent    Comment?  @relation("Comment_Children", fields: [parent_id], references: [id])

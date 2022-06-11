@@ -1,9 +1,11 @@
 <script lang="ts">
 	import type { Post, User, Comment } from '@prisma/client';
+	import { navigate } from 'svelte-routing';
 	import { user } from '../../appStore';
 
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
+	import SearchForm from '../widgets/forms/searchForm.svelte';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 	import PostActionBar from '../widgets/posts/postActionBar.svelte';
 
@@ -62,8 +64,14 @@
 
 {#if loginRequired}
 	<LoadingWrapper
-		message={`Don't have an account. Please sign up to enjoy Urbanista articles`}
-	/>
+		message={`Don't have an account. Please sign up to enjoy Urbanista articles.`}
+	>
+		<button
+			on:click={() => {
+				navigate('/login');
+			}}>Login</button
+		>
+	</LoadingWrapper>
 {:else if !loaded}
 	<LoadingWrapper message="Loading" />
 {:else}

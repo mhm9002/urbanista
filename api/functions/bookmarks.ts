@@ -1,5 +1,5 @@
-import { Bookmark, PrismaClient } from "@prisma/client";
-import { responseCodes, missingReq } from "./readyResponse";
+import { Bookmark, PrismaClient } from '@prisma/client';
+import { responseCodes, missingReq } from './readyResponse';
 import { Request } from 'express';
 
 const prisma = new PrismaClient();
@@ -46,7 +46,7 @@ const addToBookmarks = async (req: Request) => {
 		});
 
 		if (bookmark) {
-			await prisma.bookmark.delete({where:{id:bookmark.id}})
+			await prisma.bookmark.delete({ where: { id: bookmark.id } });
 			return { code: responseCodes.bookmarkedRemoved, payload: null };
 		}
 
@@ -64,9 +64,7 @@ const addToBookmarks = async (req: Request) => {
 	return missingReq;
 };
 
-
 export default {
-
 	getUserBookmarks,
 	addToBookmarks,
 };

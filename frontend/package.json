@@ -5,11 +5,11 @@
 	"scripts": {
 		"watch:tailwind": "postcss public/css/tailwind.css -o public/css/app.css -w",
 		"build": "rollup -c",
-		"dev": "rollup -c -w",
-		"start": "sirv public --single",
+		"dev": "HOST=0.0.0.0 rollup -c -w",
+		"start": "sirv public --host 0.0.0.0",
 		"check": "svelte-check --tsconfig ./tsconfig.json"
 	},
-	"proxy": "http://localhost:4000/",
+	"proxy": "https://localhost:4000/",
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.0.0",
 		"@rollup/plugin-json": "^4.1.0",

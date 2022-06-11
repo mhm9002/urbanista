@@ -5,12 +5,16 @@ import { requests, uploadRequests } from './api/requests';
 import { validateToken } from './api/functions/token';
 import multer from 'multer';
 import { queryList, uploadQueryList } from './frontend/src/helpers/queryList';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 4000;
 
+//console.log('10');
+
+app.use(cors());
 app.use(bodyParser.json());
 
 requests.forEach((r) =>
@@ -34,7 +38,6 @@ uploadRequests.forEach((r) => {
 	const upload = multer({ dest });
 
 	app.post(`/api/${r.query}`, upload.single('file'), async (req, res) =>
-		
 		res.send(await r.function(req))
 	);
 });

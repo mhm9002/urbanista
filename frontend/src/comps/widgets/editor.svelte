@@ -7,6 +7,7 @@
 
 	export let value;
 	export let onContentChange;
+	export let initialValue;
 
 	Quill.register('modules/imageUploader', ImageUploader);
 
@@ -16,7 +17,8 @@
 	const maxH = 400;
 	const maxW = 800;
 
-	$: value, quill !== undefined ? (quill.root.innerHTML = value) : () => {};
+	$: initialValue,
+		quill !== undefined ? (quill.root.innerHTML = initialValue) : () => {};
 
 	//let Delta = Quill.import('delta')
 	//let change = new Delta();
