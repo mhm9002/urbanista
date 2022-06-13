@@ -15,6 +15,8 @@
 	export let id: string = '';
 
 	let postContent: string = '';
+	let postText: string = '';
+
 	let loadedContent: string = '';
 	let loadedCats: Category[] = [];
 
@@ -108,14 +110,13 @@
 			});
 		}
 
-		console.log(newPost.keywords);
-
 		if (newPost.title === '') newPost.title = 'Draft';
 
 		let res = await fetchApi(
 			newPost.id === '' ? queryList.createPost : queryList.updatePost,
 			{
 				postData: newPost,
+				content: postText,
 			},
 			true
 		);
@@ -173,10 +174,11 @@
 	<Editor
 		bind:value={postContent}
 		bind:initialValue={loadedContent}
-		onContentChange={(content, exerpt, words) => {
+		onContentChange={(content, text) => {
 			postContent = content;
-			newPost.exerpt = exerpt;
-			newPost.words = words;
+			newPost.exerpt = text.substring(0, 300);
+			newPost.words = text.split(' ').length;
+			postText = text;
 		}}
 	/>
 

@@ -131,7 +131,7 @@
 					<img
 						class="profile-inline"
 						src={activeUser.profile !== ''
-							? 'http://192.168.8.187:4000/api/profiles/' + activeUser.profile
+							? 'http://192.168.100.11:4000/api/profiles/' + activeUser.profile
 							: 'https://bulma.io/images/placeholders/96x96.png'}
 					/>
 					{activeUser.name}

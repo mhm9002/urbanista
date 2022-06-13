@@ -11,7 +11,7 @@ const fetchApi = async (
 		? { authorization: 'Bearer ' + token.get() }
 		: {};
 
-	let a = await fetch(`http://192.168.8.187:4000/api/${query}`, {
+	let a = await fetch(`http://192.168.100.11:4000/api/${query}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const uploadApi = async (query: string, payload: File, userId?: string) => {
 
 	if (userId && userId !== '') fd.append('userId', userId);
 
-	let a = await fetch(`http://192.168.8.187:4000/api/${query}`, {
+	let a = await fetch(`http://192.168.100.11:4000/api/${query}`, {
 		method: 'POST',
 
 		body: fd,
@@ -42,7 +42,7 @@ const uploadApi = async (query: string, payload: File, userId?: string) => {
 	let res2: queryRespose = { ...res };
 
 	if (query === uploadQueryList.uploadImage)
-		return 'http://192.168.8.187:4000/api/images/' + res2.payload.filename;
+		return 'http://192.168.100.11:4000/api/images/' + res2.payload.filename;
 	else return res2.payload.filename;
 	//return `http://localhost:4000/${res2.payload.destination}/${res2.payload.filename}`
 	//return 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png'

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Quill, { QuillOptionsStatic, Sources } from 'quill';
+	import Quill, { QuillOptionsStatic } from 'quill';
 	import ImageUploader from 'quill-image-uploader';
 	import { uploadApi } from '../../helpers/api';
 	import { onMount } from 'svelte';
@@ -19,9 +19,6 @@
 
 	$: initialValue,
 		quill !== undefined ? (quill.root.innerHTML = initialValue) : () => {};
-
-	//let Delta = Quill.import('delta')
-	//let change = new Delta();
 
 	let options: QuillOptionsStatic = {
 		modules: {
@@ -50,10 +47,8 @@
 		quill = new Quill(editor, options);
 
 		let changeHandler = () => {
-			onChange({ html: quill.root.innerHTML, text: quill.root.innerText });
+			onContentChange(quill.root.innerHTML, quill.root.innerText);
 		};
-
-		quill.on('text-change', changeHandler);
 
 		quill.on('text-change', changeHandler);
 

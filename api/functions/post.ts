@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { Request } from 'express';
-import { readFile, readFileSync, writeFile } from 'fs';
+import { readFileSync, writeFile } from 'fs';
 import { missingReq, responseCodes } from './readyResponse';
+import natural from 'natural';
 
 const prisma = new PrismaClient();
 
@@ -55,7 +56,7 @@ const getpost = async (req: Request) => {
 };
 
 const createpost = async (req: Request) => {
-	let { postData } = req.body;
+	let { postData, content } = req.body;
 	//let content = postData.content;
 
 	if (postData) {
@@ -74,9 +75,16 @@ const createpost = async (req: Request) => {
 				},
 			},
 		});
+
 		writeFile(`${__dirname}/articles/${post.id}.html`, postData.content, () => {
 			postData.content = '';
 		});
+
+		writeFile(
+			`${__dirname}/articles/${post.id}.json`,
+			JSON.stringify(analyizeText(content)),
+			() => {}
+		);
 
 		return { code: responseCodes.success, payload: post.id };
 	} else {
@@ -84,9 +92,23 @@ const createpost = async (req: Request) => {
 	}
 };
 
+const analyizeText = (text: string) => {
+	let a = natural.PorterStemmer.tokenizeAndStem(text);
+
+	let b = new Set(a);
+	let c: Array<{ word: string; count: number }> = [];
+
+	b.forEach((t) => {
+		c.push({ word: t, count: a.find((t2) => t2 === t)?.length || 0 });
+	});
+
+	c = c.sort((c1, c2) => (c1.count < c2.count ? 1 : -1));
+
+	return c;
+};
+
 const publishPost = async (req: Request) => {
 	let { id } = req.body;
-	//let content = postData.content;
 
 	if (id) {
 		let post = await prisma.post.update({
@@ -104,7 +126,6 @@ const publishPost = async (req: Request) => {
 
 const featurePost = async (req: Request) => {
 	let { id } = req.body;
-	//let content = postData.content;
 
 	if (id) {
 		let post = await prisma.post.update({
@@ -123,7 +144,6 @@ const featurePost = async (req: Request) => {
 
 const removepost = async (req: Request) => {
 	let { id } = req.body;
-	//let content = postData.content;
 
 	if (id) {
 		await prisma.post.delete({
@@ -135,14 +155,7 @@ const removepost = async (req: Request) => {
 	return missingReq;
 };
 const updatepost = async (req: Request) => {
-	let { postData } = req.body;
-
-	/*
-	delete postData.content
-	console.log(postData)
-
-	return missingReq
-	*/
+	let { postData, content } = req.body;
 
 	if (postData) {
 		let keywords = postData.keywords;
@@ -165,6 +178,12 @@ const updatepost = async (req: Request) => {
 		writeFile(`${__dirname}/articles/${post.id}.html`, postData.content, () => {
 			postData.content = '';
 		});
+
+		writeFile(
+			`${__dirname}/articles/${post.id}.json`,
+			JSON.stringify(analyizeText(content)),
+			() => {}
+		);
 
 		return { code: responseCodes.success, payload: post.id };
 	} else {
