@@ -436,9 +436,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
-.top-20 {
-  top: 5rem;
-}
 .left-0 {
   left: 0px;
 }
@@ -545,10 +542,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-none {
   border-style: none;
 }
-.bg-slate-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
-}
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
@@ -580,6 +573,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 .italic {
   font-style: italic;
@@ -810,6 +807,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 .drop-menu {
   position: absolute;
   right: 0px;
+  z-index: 50;
   margin-top: 0.5rem;
   width: 14rem;
   transform-origin: top right;
@@ -928,6 +926,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
+  flex-direction: column;
+  justify-content: space-between;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.upper-bar {
+  display: flex;
+  width: 100vw;
+  flex-direction: row;
+  align-content: space-between;
   justify-content: space-between;
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -935,10 +944,89 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  --tw-shadow-color: #000;
+  --tw-shadow-color: #cbd5e1;
   --tw-shadow: var(--tw-shadow-colored);
   --tw-drop-shadow: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.lower-bar {
+  left: 0px;
+  right: 0px;
+  z-index: -10;
+  width: 100vw;
+  border-bottom-width: 2px;
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(203 213 225 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
+  padding: 0.5rem;
+    -webkit-animation: slide 1s;
+            animation: slide 1s;
+}
+
+@-webkit-keyframes slide {
+    0% {
+    top: -12rem;
+  }
+    100% {
+    top: 0px;
+  }
+
+}
+
+@keyframes slide {
+    0% {
+    top: -12rem;
+  }
+    100% {
+    top: 0px;
+  }
+
+}
+
+.featuredPanel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.featuredImage {
+  margin-bottom: 1.5rem;
+  height: 12rem;
+  width: 16rem;
+  overflow: hidden;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+.mainPost {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  text-align: justify;
+}
+
+.featuredPanel.other {
+  display: flex;
+  flex-direction: column;
+}
+
+.featured-author {
+  display: inline-flex;
+  align-items: center;
+  text-align: justify;
+}
+
+.featured-author .child {
+  border-right-width: 2px;
+  --tw-border-opacity: 1;
+  border-right-color: rgb(203 213 225 / var(--tw-border-opacity));
+  padding: 0.25rem;
 }
 
 .page-footer {

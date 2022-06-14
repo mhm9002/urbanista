@@ -11,6 +11,8 @@
 	let users: User[] = [];
 	let posts: Post[] = [];
 
+	let loading = false;
+
 	onMount(async () => {
 		let res = await fetchApi(queryList.allCategories, {});
 
@@ -36,10 +38,18 @@
 			posts = [];
 		};
 	});
+
+	const updateSearchTerms = async ()=>{
+		loading = true
+		console.log(await fetchApi(queryList.refillTerms,{}))
+		
+		loading = false
+	}
 </script>
 
 <div class="post">
 	<CategoriesTable {categories} />
 	<UsersTable {users} />
 	<PostsTable {posts} {categories} />
+	<button on:click={updateSearchTerms} disabled={loading} >Update search terms</button>
 </div>

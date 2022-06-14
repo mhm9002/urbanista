@@ -12,7 +12,7 @@
 		<img
 			class="profile-inline"
 			src={post.author?.profile !== ''
-				? `http://192.168.100.11:4000/api/profiles/${post.author.profile}`
+				? `http://localhost:4000/api/profiles/${post.author.profile}`
 				: 'https://bulma.io/images/placeholders/96x96.png'}
 			alt="Placeholder image"
 		/>

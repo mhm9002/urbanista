@@ -117,6 +117,11 @@ const requests: Array<requestForm> = [
 		tokenValidation: false,
 	},
 	{
+		query: queryList.refillTerms,
+		function: postFunctions.refillTerms,
+		tokenValidation: false,
+	},
+	{
 		query: queryList.postByCategoryName,
 		function: postFunctions.byCategoryName,
 		tokenValidation: false,

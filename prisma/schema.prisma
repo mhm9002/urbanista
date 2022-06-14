@@ -89,3 +89,10 @@ model Comment {
   parent_id String?
 
 }
+
+model Term {
+  id      Int @id @default(autoincrement())
+  postId  String
+  word    String
+  count   Int
+}

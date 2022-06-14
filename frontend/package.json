@@ -5,7 +5,7 @@
 	"scripts": {
 		"watch:tailwind": "postcss public/css/tailwind.css -o public/css/app.css -w",
 		"build": "rollup -c",
-		"dev": "HOST=0.0.0.0 rollup -c -w",
+		"dev": "rollup -c -w",
 		"start": "sirv public --host 0.0.0.0",
 		"check": "svelte-check --tsconfig ./tsconfig.json"
 	},

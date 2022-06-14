@@ -26,6 +26,7 @@ const queryList = {
 	likePost: 'likePost',
 	addComment: 'addComment',
 	searchTerm: 'searchTerm',
+	refillTerms:'refillTerms'
 };
 
 const uploadQueryList = {

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Term } from '@prisma/client';
 import { Request } from 'express';
 import { readFileSync, writeFile } from 'fs';
 import { missingReq, responseCodes } from './readyResponse';
@@ -56,7 +56,7 @@ const getpost = async (req: Request) => {
 };
 
 const createpost = async (req: Request) => {
-	let { postData, content } = req.body;
+	let { postData } = req.body;
 	//let content = postData.content;
 
 	if (postData) {
@@ -80,23 +80,23 @@ const createpost = async (req: Request) => {
 			postData.content = '';
 		});
 
-		writeFile(
-			`${__dirname}/articles/${post.id}.json`,
-			JSON.stringify(analyizeText(content)),
-			() => {}
-		);
-
 		return { code: responseCodes.success, payload: post.id };
 	} else {
 		return missingReq;
 	}
 };
 
-const analyizeText = (text: string) => {
-	let a = natural.PorterStemmer.tokenizeAndStem(text);
+const analyizeText = (postId:string, postContent: string|null) => {
+	
+	if (postContent===null) return
 
+	postContent = postContent.replace(/(<([^>]+)>)/gi, "")
+	postContent = postContent.replace('&nbsp;', ' ')
+
+	let a = natural.PorterStemmer.tokenizeAndStem(postContent);
 	let b = new Set(a);
 	let c: Array<{ word: string; count: number }> = [];
+	
 
 	b.forEach((t) => {
 		c.push({ word: t, count: a.find((t2) => t2 === t)?.length || 0 });
@@ -104,8 +104,63 @@ const analyizeText = (text: string) => {
 
 	c = c.sort((c1, c2) => (c1.count < c2.count ? 1 : -1));
 
-	return c;
+
+	for (let i = 0; i< c.length; i++){
+		prisma.term.create({data:{ postId, ...c[i]}}).then(r=>console.log(r))
+
+		if (i>=50) break;
+	}	
+
+	
 };
+
+const refillTerms = async(req: Request)=>{
+	prisma.post.findMany({where:{published:true}}).then(posts=>{
+		for (let post of posts) {
+			prisma.term.findFirst({where:{postId:post.id}}).then(res=>{
+				
+				if (res===null){
+					
+					analyizeText(post.id, post.content)
+				}
+			})
+		}
+	})
+
+	return { code: responseCodes.success, payload: null };
+
+}
+
+const searchInPosts = async (search:string )=>{
+	let a = natural.PorterStemmer.tokenizeAndStem(search);
+	let bestArticles: Array<{postId:string, score:number}> = []
+
+	for (let i = 0; i< a.length; i++){
+		let df = await prisma.term.count({where:{word:{contains:a[i]}}})
+		let totalD = await prisma.post.count({where:{published:true}}) 
+		let idf = Math.log(totalD/df)
+
+		let articles = await prisma.term.findMany({where:{word:{contains:a[i]}}, orderBy:{count: 'desc'}, take: 10})
+
+		for (let d of articles){
+			let tfIdf = d.count * idf
+			console.log(d.postId, tfIdf)
+
+			let acl =  bestArticles.find(b=>b.postId===d.postId)
+
+			if (acl)
+				acl.score += tfIdf
+			else
+				bestArticles.push({postId:d.postId, score: tfIdf})
+			
+		}
+		
+	}	
+
+	bestArticles = bestArticles.sort((a1,a2)=>a1.score<a2.score?1:-1)
+
+	return bestArticles.map(acl=>acl.postId);
+}
 
 const publishPost = async (req: Request) => {
 	let { id } = req.body;
@@ -117,6 +172,8 @@ const publishPost = async (req: Request) => {
 				published: true,
 			},
 		});
+
+		analyizeText(id, post.content)
 
 		return { code: responseCodes.success, payload: post.id };
 	} else {
@@ -155,7 +212,7 @@ const removepost = async (req: Request) => {
 	return missingReq;
 };
 const updatepost = async (req: Request) => {
-	let { postData, content } = req.body;
+	let { postData } = req.body;
 
 	if (postData) {
 		let keywords = postData.keywords;
@@ -179,11 +236,13 @@ const updatepost = async (req: Request) => {
 			postData.content = '';
 		});
 
+		/*
 		writeFile(
 			`${__dirname}/articles/${post.id}.json`,
 			JSON.stringify(analyizeText(content)),
 			() => {}
 		);
+		*/
 
 		return { code: responseCodes.success, payload: post.id };
 	} else {
@@ -238,7 +297,8 @@ const byCategoryName = async (req: Request) => {
 					],
 				},
 				options.createdAt,
-				options.published
+				options.published,
+				options.featured===true?true:false,
 			);
 			if (posts) {
 				return { code: responseCodes.success, payload: posts };
@@ -247,6 +307,8 @@ const byCategoryName = async (req: Request) => {
 	}
 	return missingReq;
 };
+
+
 
 const byAuthor = async (req: Request) => {
 	let { id } = req.body;
@@ -269,14 +331,16 @@ const byAuthor = async (req: Request) => {
 const loadby = async (
 	criteria: {},
 	createdAt: Date = new Date(),
-	published: boolean = true
+	published: boolean = true,
+	featured: boolean = false,
 ) => {
 	if (published) criteria = { ...criteria, published: true };
+	if (featured) criteria = {...criteria, featured: true}
 
 	let posts = await prisma.post.findMany({
 		where: { ...criteria, createdAt: { lt: createdAt } },
 		include: { author: true, category: true, keywords: true },
-		orderBy: { createdAt: 'desc' },
+		orderBy: featured? {featuredOn:'desc'}: { createdAt: 'desc' },
 		take: 5,
 	});
 	return posts;
@@ -286,6 +350,14 @@ const search = async (req: Request) => {
 	let { term } = req.body;
 	let { options } = req.body;
 
+	let bestArticles = await searchInPosts(term)
+
+	let posts = await prisma.post.findMany({
+		where:{id: {in: bestArticles}},
+		include: { author: true, category: true, keywords: true },
+	})
+
+	/*
 	if (term) {
 		let posts = await loadby(
 			{
@@ -305,11 +377,11 @@ const search = async (req: Request) => {
 			options.createdAt,
 			options.published
 		);
+	*/
 		if (posts) {
 			return { code: responseCodes.success, payload: posts };
 		}
-	}
-	console.log(1);
+	
 	return missingReq;
 };
 
@@ -324,4 +396,5 @@ export default {
 	byCategoryName,
 	byAuthor,
 	search,
+	refillTerms,
 };

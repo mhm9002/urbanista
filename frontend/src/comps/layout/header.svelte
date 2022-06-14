@@ -7,26 +7,28 @@
 	import { onMount } from 'svelte';
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-	import PostCard from '../widgets/posts/postCard.svelte';
+import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
+
+	let showFeatured = 0;
 
 	let mainCats = [
 		{
 			name: 'Architecture',
 			slug: 'architecture',
 			featuredPosts: [],
-			showFeatured: false,
+			
 		},
 		{
 			name: 'Urban Design',
 			slug: 'urbandesign',
 			featuredPosts: [],
-			showFeatured: false,
+			
 		},
 		{
 			name: 'Urban Planning',
 			slug: 'planning',
 			featuredPosts: [],
-			showFeatured: false,
+			
 		},
 	];
 
@@ -55,6 +57,7 @@
 		let options = {
 			createdAt: new Date(),
 			published: true,
+			featured: true,
 		};
 
 		mainCats.forEach((c) => {
@@ -72,139 +75,142 @@
 	//{showDropmenu ? 'absolute' : 'hidden'}"
 </script>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-	<div class="menu-brand-div">
-		<Brand />
+<nav 
+	class="navbar" role="navigation" aria-label="main navigation"
+	on:mouseleave={()=>showFeatured=0}
+>
+	<div class="upper-bar">
 
-		<a
-			href="/"
-			role="button"
-			class="navbar-burger"
-			aria-label="menu"
-			aria-expanded="false"
-			data-target="navbarBasicExample"
-		>
-			<span aria-hidden="true" />
-			<span aria-hidden="true" />
-			<span aria-hidden="true" />
-		</a>
-	</div>
-
-	<div id="navbarBasicExample" class="menu-center-div">
-		{#each mainCats as cat}
+		<div class="menu-brand-div">
+			<Brand />
+	
 			<a
-				class="menu-item"
-				use:link
-				href="\cat\{cat.name}"
-				on:mouseover={() => {
-					cat.showFeatured = true;
-				}}
-				on:mouseout={() => {
-					cat.showFeatured = false;
-				}}
+				href="/"
+				role="button"
+				class="navbar-burger"
+				aria-label="menu"
+				aria-expanded="false"
+				data-target="navbarBasicExample"
 			>
-				{cat.name}
+				<span aria-hidden="true" />
+				<span aria-hidden="true" />
+				<span aria-hidden="true" />
 			</a>
-			{#if cat.showFeatured}
-				<div class="fixed absolute top-20 bg-slate-50">
-					{#each cat.featuredPosts as p}
-						<PostCard post={p} />
-					{/each}
-				</div>
-			{/if}
-		{/each}
-		<SearchForm />
-	</div>
-
-	<div class="menu-right-div">
-		{#if activeUser === undefined}
-			<a class="menu-item" href="\login" use:link> Log in </a>
-		{:else}
-			<div class="relative">
-				<button
-					class="inline-flex items-center"
-					on:click={() => (showDropmenu = true)}
-					id="menu-button"
-					aria-expanded="true"
-					aria-haspopup="true"
+		</div>
+	
+		<div id="navbarBasicExample" class="menu-center-div">
+			{#each mainCats as cat}
+				<a
+					class="menu-item"
+					use:link
+					href="\cat\{cat.name}"
+					on:mouseover={
+						()=>showFeatured=mainCats.findIndex(c=>c===cat)+1
+					}
 				>
-					<img
-						class="profile-inline"
-						src={activeUser.profile !== ''
-							? 'http://192.168.100.11:4000/api/profiles/' + activeUser.profile
-							: 'https://bulma.io/images/placeholders/96x96.png'}
+					{cat.name}
+				</a>
+			{/each}
+			<SearchForm />
+		</div>
+	
+		<div class="menu-right-div">
+			{#if activeUser === undefined}
+				<a class="menu-item" href="\login" use:link> Log in </a>
+			{:else}
+				<div class="relative">
+					<button
+						class="inline-flex items-center"
+						on:click={() => (showDropmenu = true)}
+						id="menu-button"
+						aria-expanded="true"
+						aria-haspopup="true"
+					>
+						<img
+							class="profile-inline"
+							src={activeUser.profile !== ''
+								? 'http://localhost:4000/api/profiles/' + activeUser.profile
+								: 'https://bulma.io/images/placeholders/96x96.png'}
+						/>
+						{activeUser.name}
+					</button>
+					<div
+						class=" {showDropmenu
+							? 'fixed'
+							: 'hidden'} h-screen w-screen left-0 right-0 top-0 bottom-0 bg-black bg-opacity-30"
+						on:click={() => (showDropmenu = false)}
 					/>
-					{activeUser.name}
-				</button>
-				<div
-					class=" {showDropmenu
-						? 'fixed'
-						: 'hidden'} h-screen w-screen left-0 right-0 top-0 bottom-0 bg-black bg-opacity-30"
-					on:click={() => (showDropmenu = false)}
-				/>
-
-				<div
-					class="drop-menu flex flex-col {showDropmenu ? 'relative' : 'hidden'}"
-					role="menu"
-					aria-orientation="vertical"
-					aria-labelledby="menu-button"
-					tabindex="-1"
-				>
-					<a
-						on:click={() => (showDropmenu = false)}
-						href="\newArticle"
-						use:link
-						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+	
+					<div
+						class="drop-menu flex flex-col {showDropmenu ? 'relative' : 'hidden'}"
+						role="menu"
+						aria-orientation="vertical"
+						aria-labelledby="menu-button"
+						tabindex="-1"
 					>
-						New Article
-					</a>
-					<hr />
-					<a
-						on:click={() => (showDropmenu = false)}
-						href="\userArticles"
-						use:link
-						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
-					>
-						My Articles
-					</a>
-					<a
-						on:click={() => (showDropmenu = false)}
-						href="\userBookmarks"
-						use:link
-						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
-					>
-						My Bookmarks
-					</a>
-					<a
-						on:click={() => (showDropmenu = false)}
-						href="\userProfile"
-						use:link
-						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
-					>
-						My Profile
-					</a>
-					<hr />
-					{#if activeUser.role > 0}
 						<a
 							on:click={() => (showDropmenu = false)}
-							href="\admin"
+							href="\newArticle"
 							use:link
 							class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
 						>
-							Admin Page
+							New Article
 						</a>
-
 						<hr />
-					{/if}
-					<a
-						href="#"
-						on:click={logout}
-						class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
-					>
-						Logout
-					</a>
+						<a
+							on:click={() => (showDropmenu = false)}
+							href="\userArticles"
+							use:link
+							class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+						>
+							My Articles
+						</a>
+						<a
+							on:click={() => (showDropmenu = false)}
+							href="\userBookmarks"
+							use:link
+							class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+						>
+							My Bookmarks
+						</a>
+						<a
+							on:click={() => (showDropmenu = false)}
+							href="\userProfile"
+							use:link
+							class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+						>
+							My Profile
+						</a>
+						<hr />
+						{#if activeUser.role > 0}
+							<a
+								on:click={() => (showDropmenu = false)}
+								href="\admin"
+								use:link
+								class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+							>
+								Admin Page
+							</a>
+	
+							<hr />
+						{/if}
+						<a
+							href="#"
+							on:click={logout}
+							class="menu-item block p-2 hover:bg-purple-300 hover:text-white"
+						>
+							Logout
+						</a>
+					</div>
 				</div>
-			</div>
-		{/if}
+			{/if}
+		</div>
 	</div>
+
+	
+	<div class="lower-bar {showFeatured==0?'hidden':'relative'}">
+		<FeaturedPostPanel posts={mainCats[Math.max(showFeatured-1,0)].featuredPosts} />
+	</div>
+	
+
 </nav>
