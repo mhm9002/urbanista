@@ -4,21 +4,36 @@
 	import { onMount } from 'svelte';
 	import {fetchApi} from '../../helpers/api';
 	import { queryList} from '../../helpers/queryList';
+	import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
+import FeaturedPosts from '../widgets/posts/featuredPosts.svelte';
 
-	let loadedCats: Category[] = [];
+	let options = {
+		createdAt: new Date(),
+		published: true,
+		featured: true,
+	};
+
+	let featuredPosts = []
 
 	onMount(async () => {
-		let res = await fetchApi(queryList.allCategories, {});
-		if (res.code.success) {
-			loadedCats = res.payload;
-		}
+	
+		
+		fetchApi(queryList.getFeaturedPosts, {
+			options,
+		},false).then((res) => {
+			if (res.code.success) {
+				featuredPosts = res.payload;
+			} else {
+				console.log(res.code)
+			}
+		});
+		
 
 		return () => {};
 	});
 </script>
 
-<main>
-	{#each loadedCats as c}
-		{c.name}<br />
-	{/each}
-</main>
+<div class="cat-page">
+	<FeaturedPosts posts={featuredPosts} />
+
+</div>

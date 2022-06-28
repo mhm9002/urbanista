@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-    @apply font-serif
+    @apply font-sans
 }
 
 .main-box {
@@ -16,11 +16,16 @@
 }
 
 .side-bar {
-    @apply w-2/12 border-l border-slate-200 min-h-full
+    @apply hidden md:flex w-2/12 border-l border-slate-200 min-h-full;
+    
+}
+
+.navbar-burger {
+    @apply block md:hidden
 }
 
 .menu-brand-div {
-    @apply px-2 self-center
+    @apply px-2 self-center flex flex-row justify-between content-between items-center
 }
 
 .menu-brand-div span {
@@ -49,11 +54,11 @@
 }
 
 .menu-center-div {
-    @apply justify-self-center self-center sm:hidden md:flex
+    @apply hidden md:justify-self-center md:self-center md:flex
 }
 
 .menu-right-div {
-    @apply self-center justify-end flex flex-row
+    @apply hidden md:self-center md:justify-end md:flex md:flex-row
 }
 
 .menu-item {
@@ -81,6 +86,10 @@
     @apply z-50 flex flex-col  fixed bg-white  
     min-w-max justify-between w-screen 
     top-0 left-0 right-0 
+}
+
+.navbar-hidden {
+    @apply hidden bg-pink-300
 }
 
 .upper-bar {

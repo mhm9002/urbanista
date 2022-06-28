@@ -277,6 +277,27 @@ const allposts = async (req: Request) => {
 	}
 	return missingReq;
 };
+
+const getFeaturedPosts = async (req: Request) => {
+
+	let { options } = req.body;
+	
+	let posts = await loadby(
+		{},
+		options.createdAt,
+		options.published,
+		options.featured===true?true:false,
+	);
+
+	if (posts) {
+		return { code: responseCodes.success, payload: posts };
+	}
+	
+	
+	return missingReq;
+}
+
+
 const byCategoryName = async (req: Request) => {
 	let { name } = req.body;
 	let { options } = req.body;
@@ -397,4 +418,5 @@ export default {
 	byAuthor,
 	search,
 	refillTerms,
+	getFeaturedPosts,
 };

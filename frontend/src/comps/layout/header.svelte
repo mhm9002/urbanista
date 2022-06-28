@@ -95,7 +95,9 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 				<span aria-hidden="true" />
 				<span aria-hidden="true" />
 				<span aria-hidden="true" />
+				
 			</a>
+			
 		</div>
 	
 		<div id="navbarBasicExample" class="menu-center-div">
@@ -212,5 +214,5 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 		<FeaturedPostPanel posts={mainCats[Math.max(showFeatured-1,0)].featuredPosts} />
 	</div>
 	
-
+	
 </nav>

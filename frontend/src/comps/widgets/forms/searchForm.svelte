@@ -21,7 +21,7 @@
 			name="serch"
 			on:change={(e) => (searchTerm = e.currentTarget.value)}
 			placeholder="Search"
-			class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+			class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none "
 		/>
 	{/if}
 	<button

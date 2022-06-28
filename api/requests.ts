@@ -107,6 +107,11 @@ const requests: Array<requestForm> = [
 		tokenValidation: true,
 	},
 	{
+		query: queryList.getFeaturedPosts,
+		function: postFunctions.getFeaturedPosts,
+		tokenValidation: false,
+	},
+	{
 		query: queryList.allPost,
 		function: postFunctions.allposts,
 		tokenValidation: true,

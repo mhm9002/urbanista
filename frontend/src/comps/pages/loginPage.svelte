@@ -6,6 +6,7 @@
 	import { queryList } from '../../helpers/queryList';
 	import LoginForm from '../widgets/forms/loginForm.svelte';
 	import RegisterForm from '../widgets/forms/registerForm.svelte';
+
 	export let id: string = '';
 
 	let loginShow: boolean = true;
@@ -13,7 +14,7 @@
 	let validationMsg: string = '';
 
 	onMount(() => {
-		console.log(id);
+		
 		if (id !== '') {
 			validateUser();
 		}
@@ -60,4 +61,6 @@
 		{/if}
 	</div>
 	<div class="login-bg" />
+
 </div>
+

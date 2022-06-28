@@ -8,6 +8,7 @@ const queryList = {
 	removePost: 'removePost',
 	updatePost: 'updatePost',
 	getPost: 'getPost',
+	getFeaturedPosts:'getFeaturedPosts',
 	allPost: 'allPost',
 	createCategory: 'createCategory',
 	removeCategory: 'removeCategory',
