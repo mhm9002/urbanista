@@ -6,7 +6,7 @@
 		"watch:tailwind": "postcss public/css/tailwind.css -o public/css/app.css -w",
 		"build": "rollup -c",
 		"dev": "rollup -c -w",
-		"start": "sirv public --host 0.0.0.0",
+		"start": "sirv public --single",
 		"check": "svelte-check --tsconfig ./tsconfig.json"
 	},
 	"proxy": "https://localhost:4000/",

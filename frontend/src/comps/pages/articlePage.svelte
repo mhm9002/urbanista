@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { Post, User, Comment } from '@prisma/client';
+	import type { Post, User } from '@prisma/client';
 	import { navigate } from 'svelte-routing';
 	import { user } from '../../appStore';
 
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-	import SearchForm from '../widgets/forms/searchForm.svelte';
 	import LoadingWrapper from '../widgets/loadingWrapper.svelte';
 	import PostActionBar from '../widgets/posts/postActionBar.svelte';
 

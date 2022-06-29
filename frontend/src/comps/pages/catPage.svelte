@@ -3,6 +3,7 @@
 	import type { postReqOptions } from '../../commonTypes';
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
+import Sidebar from '../layout/sidebar.svelte';
 	import LoadMore from '../widgets/loadMore.svelte';
 import PostCard from '../widgets/posts/postCard.svelte';
 

@@ -657,6 +657,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .side-bar {
+  margin-top: 5rem;
   display: none;
   min-height: 100%;
   width: 16.666667%;
@@ -694,42 +695,46 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 0.5rem;
 }
 
-.menu-brand-div span {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+.menu-brand {
+  margin-top: 0.5rem;
+  background-color: transparent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
 }
 
-.menu-brand-div span:first-child {
-  --tw-text-opacity: 1;
-  color: rgb(190 24 93 / var(--tw-text-opacity));
+.menu-brand-div-animated {
+   
+    -webkit-animation: color 2s infinite linear ;
+   
+            animation: color 2s infinite linear ;
 }
 
-
-.menu-brand-div-animated span {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-    -webkit-animation: color 2s infinite;
-            animation: color 2s infinite;
-    -webkit-animation-delay: calc(.1s * var(--i));
-            animation-delay: calc(.1s * var(--i));
-}
 
 @-webkit-keyframes color {
     0%, 80% {
-        color: rgb(calc(35*var(--i)),calc(15*var(--i)),calc(40*var(--i)))
+        color: black;
+        
     }
     50% {
-        color: white
+        color: maroon;
+        
+        
     }
 
 }
 
+
 @keyframes color {
     0%, 80% {
-        color: rgb(calc(35*var(--i)),calc(15*var(--i)),calc(40*var(--i)))
+        color: black;
+        
     }
     50% {
-        color: white
+        color: maroon;
+        
+        
     }
 
 }
@@ -857,50 +862,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   outline-offset: 2px;
 }
 
-.menu-brand {
-  margin-top: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: transparent;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-  --tw-text-opacity: 1;
-  color: rgb(190 24 93 / var(--tw-text-opacity));
-}
-
-.menu-brand:visited {
-  color: rgb(190 24 93 );
-}
-
-.menu-brand:hover {
-  --tw-text-opacity: 1;
-  color: rgb(131 24 67 / var(--tw-text-opacity));
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
-}
-
-.menu-brand:focus {
-  background-color: transparent;
-  --tw-text-opacity: 1;
-  color: rgb(131 24 67 / var(--tw-text-opacity));
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-@media (min-width: 768px) {
-
-  .menu-brand {
-    margin-top: 0px;
-    margin-left: 1rem;
-  }
-}
 
 #menu-button {
   display: inline-flex;
@@ -926,10 +887,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+
 #menu-button:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
+
 
 #menu-button:focus {
   outline: 2px solid transparent;
@@ -1080,12 +1043,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .post {
   left: auto;
   right: auto;
-  margin-right: 5rem;
   margin-top: 5rem;
-  width: 75%;
   overflow-y: scroll;
   text-align: justify;
-    position: fixed !important    ;
     height: 80% !important;
     min-height: 200px;
     padding-bottom: 200px ;
@@ -1157,6 +1117,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .post-content * {
   margin-top: 0.75rem;
+}
+
+.posts-featured {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.posts-featured * {
+  width: 50%;
 }
 
 .post-interaction {
@@ -1797,28 +1766,46 @@ ql-formats button {
   padding: 1rem;
 }
 
+.side-article-author {
+  display: flex;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.side-article-author * {
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+}
+
+.side-article-author-name {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.side-article-author-photo {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+}
 
 .hover\:bg-purple-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(216 180 254 / var(--tw-bg-opacity));
 }
 
-
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-
 
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 
-
-@media (min-width: 640px) {
-
-  .sm\:hidden {
-    display: none;
-  }
-}
