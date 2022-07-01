@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import { fetchApi } from '../../helpers/api';
 	import { queryList } from '../../helpers/queryList';
-import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
+	import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 
 	let showFeatured = 0;
 
@@ -16,19 +16,16 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 			name: 'Architecture',
 			slug: 'architecture',
 			featuredPosts: [],
-			
 		},
 		{
 			name: 'Urban Design',
 			slug: 'urbandesign',
 			featuredPosts: [],
-			
 		},
 		{
 			name: 'Urban Planning',
 			slug: 'planning',
 			featuredPosts: [],
-			
 		},
 	];
 
@@ -75,15 +72,15 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 	//{showDropmenu ? 'absolute' : 'hidden'}"
 </script>
 
-<nav 
-	class="navbar" role="navigation" aria-label="main navigation"
-	on:mouseleave={()=>showFeatured=0}
+<nav
+	class="navbar"
+	aria-label="main navigation"
+	on:mouseleave={() => (showFeatured = 0)}
 >
 	<div class="upper-bar">
-
 		<div class="menu-brand-div">
 			<Brand />
-	
+
 			<a
 				href="/"
 				role="button"
@@ -95,27 +92,25 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 				<span aria-hidden="true" />
 				<span aria-hidden="true" />
 				<span aria-hidden="true" />
-				
 			</a>
-			
 		</div>
-	
+
 		<div id="navbarBasicExample" class="menu-center-div">
 			{#each mainCats as cat}
 				<a
 					class="menu-item"
 					use:link
 					href="\cat\{cat.name}"
-					on:mouseover={
-						()=>showFeatured=mainCats.findIndex(c=>c===cat)+1
-					}
+					on:mouseover={() =>
+						(showFeatured = mainCats.findIndex((c) => c === cat) + 1)}
+					on:focus={() => {}}
 				>
 					{cat.name}
 				</a>
 			{/each}
 			<SearchForm />
 		</div>
-	
+
 		<div class="menu-right-div">
 			{#if activeUser === undefined}
 				<a class="menu-item" href="\login" use:link> Log in </a>
@@ -130,6 +125,7 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 					>
 						<img
 							class="profile-inline"
+							alt=""
 							src={activeUser.profile !== ''
 								? 'http://localhost:4000/api/profiles/' + activeUser.profile
 								: 'https://bulma.io/images/placeholders/96x96.png'}
@@ -142,9 +138,11 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 							: 'hidden'} h-screen w-screen left-0 right-0 top-0 bottom-0 bg-black bg-opacity-30"
 						on:click={() => (showDropmenu = false)}
 					/>
-	
+
 					<div
-						class="drop-menu flex flex-col {showDropmenu ? 'relative' : 'hidden'}"
+						class="drop-menu flex flex-col {showDropmenu
+							? 'relative'
+							: 'hidden'}"
 						role="menu"
 						aria-orientation="vertical"
 						aria-labelledby="menu-button"
@@ -193,7 +191,7 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 							>
 								Admin Page
 							</a>
-	
+
 							<hr />
 						{/if}
 						<a
@@ -209,10 +207,9 @@ import FeaturedPostPanel from '../widgets/posts/featuredPostPanel.svelte';
 		</div>
 	</div>
 
-	
-	<div class="lower-bar {showFeatured==0?'hidden':'relative'}">
-		<FeaturedPostPanel posts={mainCats[Math.max(showFeatured-1,0)].featuredPosts} />
+	<div class="lower-bar {showFeatured == 0 ? 'hidden' : 'relative'}">
+		<FeaturedPostPanel
+			posts={mainCats[Math.max(showFeatured - 1, 0)].featuredPosts}
+		/>
 	</div>
-	
-	
 </nav>

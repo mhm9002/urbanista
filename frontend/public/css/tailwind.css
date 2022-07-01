@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "trispace";
+    src: url("../fonts/Italian Type - Noctis Thin.otf");
+}
+
+
 * {
-    @apply font-sans
+    @apply font-trispace
 }
 
 .main-box {
@@ -146,7 +152,7 @@
 
 
 .post {
-    @apply left-auto right-auto mr-20 mt-20 w-3/4 overflow-y-scroll text-justify;
+    @apply left-auto right-auto mr-20 mt-20 w-3/4 md:w-2/3 overflow-y-scroll text-justify;
     position: fixed !important    ;
     height: 80% !important;
     min-height: 200px;
@@ -372,7 +378,7 @@
 }
 
 .loading-wrapper {
-    @apply fixed left-0 right-0 top-0 bottom-0 flex opacity-80  bg-gradient-to-b overflow-clip from-slate-100 bg-pink-600;
+    @apply fixed content-center justify-center left-0 right-0 top-0 bottom-0 flex opacity-80  bg-gradient-to-b overflow-clip from-slate-100 bg-pink-600;
     z-index: 100;
 }
 

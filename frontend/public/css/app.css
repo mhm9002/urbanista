@@ -600,8 +600,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+@font-face {
+    font-family: "trispace";
+    src: url("../fonts/Italian Type - Noctis Thin.otf");
+}
+
+
 * {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: trispace, sans-serif;
 }
 
 .main-box {
@@ -1085,12 +1091,26 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 75%;
   overflow-y: scroll;
   text-align: justify;
+}
+
+
+@media (min-width: 768px) {
+
+  .post {
+    width: 66.666667%;
+  }
+}
+
+
+.post {
     position: fixed !important    ;
     height: 80% !important;
     min-height: 200px;
     padding-bottom: 200px ;
     -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+    
+    
 }
 
 .post::-webkit-scrollbar {
@@ -1614,6 +1634,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 0px;
   bottom: 0px;
   display: flex;
+  align-content: center;
+  justify-content: center;
   overflow: clip;
   --tw-bg-opacity: 1;
   background-color: rgb(219 39 119 / var(--tw-bg-opacity));
@@ -1813,12 +1835,4 @@ ql-formats button {
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-
-@media (min-width: 640px) {
-
-  .sm\:hidden {
-    display: none;
-  }
 }
