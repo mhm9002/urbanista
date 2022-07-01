@@ -22,8 +22,7 @@
 }
 
 .side-bar {
-    @apply hidden md:flex w-2/12 border-l border-slate-200 min-h-full;
-    
+    @apply hidden md:flex w-2/12 mt-20 border-l border-slate-200 min-h-full;
 }
 
 .navbar-burger {
@@ -31,30 +30,28 @@
 }
 
 .menu-brand-div {
-    @apply px-2 self-center flex flex-row justify-between content-between items-center
+    @apply  px-2 self-center flex flex-row justify-between content-between items-center
 }
 
-.menu-brand-div span {
-    @apply text-white
+.menu-brand {
+    @apply font-mono font-bold text-lg mt-2 bg-transparent 
 }
 
-.menu-brand-div span:first-child {
-    @apply text-pink-700
+.menu-brand-div-animated {
+   
+    animation: color 2s infinite linear ;
 }
 
-
-.menu-brand-div-animated span {
-    @apply text-white;
-    animation: color 2s infinite;
-    animation-delay: calc(.1s * var(--i))
-}
 
 @keyframes color {
     0%, 80% {
-        color: rgb(calc(35*var(--i)),calc(15*var(--i)),calc(40*var(--i)))
+        color: black;
+        
     }
     50% {
-        color: white
+        color: maroon;
+        
+        
     }
 
 }
@@ -77,12 +74,6 @@
     ring-opacity-5 focus:outline-none
 }
 
-.menu-brand {
-    @apply text-pink-700 font-bold text-lg px-2 py-1 mt-2 bg-transparent rounded-lg 
-    md:mt-0 md:ml-4 hover:text-pink-900 focus:text-pink-900 
-    focus:bg-transparent focus:outline-none focus:shadow-none hover:no-underline 
-    visited:text-pink-700
-}
 
 #menu-button {
     @apply inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500
@@ -152,8 +143,7 @@
 
 
 .post {
-    @apply left-auto right-auto mr-20 mt-20 w-3/4 md:w-2/3 overflow-y-scroll text-justify;
-    position: fixed !important    ;
+    @apply left-auto right-auto mt-20 overflow-y-scroll text-justify;
     height: 80% !important;
     min-height: 200px;
     padding-bottom: 200px ;
@@ -206,6 +196,14 @@
 
 .post-content * {
     @apply mt-3
+}
+
+.posts-featured {
+    @apply flex flex-wrap
+}
+
+.posts-featured * {
+    @apply w-1/2
 }
 
 .post-interaction {
@@ -476,3 +474,20 @@ ql-formats button {
 .basic-table td {
     @apply p-4
 }
+
+.side-article-author {
+    @apply flex flex-wrap w-full justify-center h-fit text-center items-center
+}
+
+.side-article-author * {
+    @apply mb-4 ml-2 
+}
+
+.side-article-author-name {
+    @apply text-lg
+}
+
+.side-article-author-photo {
+    @apply w-10 h-10 rounded-full
+}
+

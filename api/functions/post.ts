@@ -86,7 +86,7 @@ const createpost = async (req: Request) => {
 	}
 };
 
-const analyizeText = (postId:string, postContent: string|null) => {
+const analyizeText = async (postId:string, postContent: string|null) => {
 	
 	if (postContent===null) return
 
@@ -103,29 +103,26 @@ const analyizeText = (postId:string, postContent: string|null) => {
 	});
 
 	c = c.sort((c1, c2) => (c1.count < c2.count ? 1 : -1));
-
-
-	for (let i = 0; i< c.length; i++){
-		prisma.term.create({data:{ postId, ...c[i]}}).then(r=>console.log(r))
-
-		if (i>=50) break;
-	}	
-
+	
+	for (let i = 0; i< c.length && i<=50; i++)
+		await prisma.term.create({data:{ postId, ...c[i]}})
 	
 };
 
 const refillTerms = async(req: Request)=>{
-	prisma.post.findMany({where:{published:true}}).then(posts=>{
-		for (let post of posts) {
-			prisma.term.findFirst({where:{postId:post.id}}).then(res=>{
-				
-				if (res===null){
-					
-					analyizeText(post.id, post.content)
-				}
-			})
+	let x =0 
+	let posts = await prisma.post.findMany({where:{published:true}})
+	
+	for (let post of posts) {
+		let res = await prisma.term.findFirst({where:{postId:post.id}})
+		if (res===null){
+			x++
+			await analyizeText(post.id, post.content)
 		}
-	})
+		
+	}
+	
+	console.log(x)
 
 	return { code: responseCodes.success, payload: null };
 
@@ -369,8 +366,7 @@ const loadby = async (
 
 const search = async (req: Request) => {
 	let { term } = req.body;
-	let { options } = req.body;
-
+	
 	let bestArticles = await searchInPosts(term)
 
 	let posts = await prisma.post.findMany({
