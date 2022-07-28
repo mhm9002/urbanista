@@ -1,22 +1,18 @@
 <script lang="ts">
 	import { fetchApi } from '../../../helpers/api';
 	import { queryList } from '../../../helpers/queryList';
-	import CommentAdder from '../comments/commentAdder.svelte';
-	import CommentBox from '../comments/commentBox.svelte';
+	import { showComments } from '../../../appStore';
 
 	export let userId: string = '';
 	export let articleId: string = '';
 	export let liked: boolean;
 	export let bookmarked: boolean;
-	export let comments: Comment[] = [];
 
 	let liking = false;
 	let bookmarking = false;
-	let onCommentOne: string = '';
+	let showCommentsBox = false;
 
-	const setOnCommentOne = (value) => (onCommentOne = value);
-
-	let showComments = false;
+	showComments.set(false);
 
 	const bookmarkPost = async () => {
 		if (bookmarking) return;
@@ -59,39 +55,16 @@
 
 		liking = false;
 	};
-
-	const addComment = async (content, onCommentId = '') => {
-		let res = await fetchApi(
-			queryList.addComment,
-			{
-				userId,
-				postId: articleId,
-				content,
-				onCommentId,
-			},
-			true
-		);
-
-		if (res.code.success) {
-			let comment = res.payload;
-			if (onCommentId) {
-				let parentComment = comments.findIndex((c) => c.id === onCommentId);
-				comments[parentComment].Children = [
-					...comments[parentComment].Children,
-					comment,
-				];
-			} else {
-				comments = [...comments, comment];
-			}
-		}
-	};
 </script>
 
 <div class="post-interaction">
 	<div class="post-interaction-1">
 		<div class="post-interaction-2">
 			<button
-				on:click={() => (showComments = !showComments)}
+				on:click={() => {
+					showComments.set(!showCommentsBox);
+					showCommentsBox = !showCommentsBox;
+				}}
 				class="action-clickable"
 			>
 				<i class="material-icons">chat_bubble</i>
@@ -117,18 +90,5 @@
 				<i class="material-icons">flag</i>
 			</button>
 		</div>
-	</div>
-	<div class="post-interaction-1">
-		{#if showComments}
-			{#if onCommentOne == ''}
-				<CommentAdder {addComment} />
-			{/if}
-			<CommentBox
-				{addComment}
-				{comments}
-				setOnComment={setOnCommentOne}
-				onComment={onCommentOne}
-			/>
-		{/if}
 	</div>
 </div>

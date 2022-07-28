@@ -1,5 +1,4 @@
 <script lang="ts">
-	import CommentAdder from './commentAdder.svelte';
 	import CommentCard from './commentCard.svelte';
 	import type { Comment } from '@prisma/client';
 

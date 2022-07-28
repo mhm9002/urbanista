@@ -2,16 +2,18 @@ import type { User } from '@prisma/client';
 import SecureLS from 'secure-ls';
 import { writable } from 'svelte/store';
 
-let store = new SecureLS({encodingType:'aes', isCompression: true, encryptionSecret:'halawallah' })
-
+let store = new SecureLS({
+	encodingType: 'aes',
+	isCompression: true,
+	encryptionSecret: 'halawallah',
+});
 
 try {
-	store.get('activeUser')
+	store.get('activeUser');
 } catch (e) {
-	store.set('activeUser',undefined)
-	store.set('token','')
+	store.set('activeUser', undefined);
+	store.set('token', '');
 }
-
 
 const createUser = () => {
 	const { subscribe, update, set } = writable<User>(
@@ -25,7 +27,7 @@ const createUser = () => {
 			set(value);
 		},
 		logout: () => {
-			store.set('activeUser',undefined);
+			store.set('activeUser', undefined);
 			set(undefined);
 		},
 	};
@@ -43,12 +45,12 @@ const createToken = () => {
 			set(value);
 		},
 		removeToken: () => {
-			store.set('token','');
+			store.set('token', '');
 			set(undefined);
 		},
-		get: ()=>{
-			return store.get('token') || undefined
-		}
+		get: () => {
+			return store.get('token') || undefined;
+		},
 	};
 };
 
@@ -74,4 +76,5 @@ const createCats = () => {
 
 export const user = createUser();
 export const token = createToken();
+export const showComments = writable(false);
 //export const cats = createCats();

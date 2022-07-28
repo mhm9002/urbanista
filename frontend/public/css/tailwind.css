@@ -9,7 +9,7 @@
 
 
 * {
-    @apply font-trispace
+    @apply font-trispace font-sans
 }
 
 .main-box {
@@ -34,22 +34,26 @@
 }
 
 .menu-brand {
-    @apply font-mono font-bold text-lg mt-2 bg-transparent 
+    @apply font-bold text-lg mt-2 bg-transparent 
 }
 
-.menu-brand-div-animated {
+
+
+
+.menu-brand-div-animated * {
    
-    animation: color 2s infinite linear ;
+    animation: color 2s infinite  ;
+    animation-direction: normal;
 }
 
 
 @keyframes color {
     0%, 80% {
-        color: black;
+        color: maroon;
         
     }
     50% {
-        color: maroon;
+        color: white;
         
         
     }
